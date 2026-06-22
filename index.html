@@ -17,62 +17,34 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500;600&family=Reem+Kufi:wght@400;500&display=swap" rel="stylesheet">
 
-<!--
-  ═══════════════════════════════════════════════════════════
-  PANDUAN CEPAT UNTUK PEMULA
-  ═══════════════════════════════════════════════════════════
-
-  Semua data pernikahan ada di SATU tempat:
-  cari →  const C = { ... }
-  di bagian paling bawah file ini (di dalam <script>).
-
-  Yang paling sering diubah:
-  ┌─────────────────────────────────────────────────────┐
-  │  displayOrder : 'groom-bride' atau 'bride-groom'   │
-  │  showAmplop   : true  atau  false                   │
-  │  C.groom / C.bride  → nama, orang tua, instagram    │
-  │  C.akad / C.walimah → waktu, tempat, alamat        │
-  │  C.bankAccounts     → daftar rekening               │
-  │  C.audioSrc         → file musik latar              │
-  └─────────────────────────────────────────────────────┘
-
-  Urutan section halaman:
-  1. Cover      2. Ayat       3. Hero (nama + countdown)
-  4. Mempelai   5. Jadwal     6. Lokasi
-  7. RSVP       8. Buku Tamu  9. Amplop (bisa dimatikan)
-  10. Penutup
-  ═══════════════════════════════════════════════════════════
--->
-
 <style>
 /* ═══════════════════════════════════════════════════════════
-   DESIGN TOKENS — Islamic Luxury, Navy + Gold
+   DESIGN TOKENS — Dusty Blue Floral Wedding
    ═══════════════════════════════════════════════════════════ */
 :root {
-  --gold:     #D6B97A;
-  --gold-soft:#E7D2A0;
-  --gold-dim: rgba(214,185,122,.18);
-  --gold-low: rgba(214,185,122,.08);
-  --ivory:    #F8F4EC;
-  --text-l:   #EDE8DD;
-  --text-lm:  rgba(237,232,221,.55);
-  --text-d:   #1F2937;
-  --text-dm:  #4B5563;
-  --text-dml: #9CA3AF;
-  --ease:     cubic-bezier(0.22,1,0.36,1);
-  --maxw:     560px;
+  --gold:      #D8C8A0;
+  --gold-soft: #D8C8A0;
+  --gold-dim:  rgba(216,200,160,.10);
+  --gold-low:  rgba(216,200,160,.05);
+  --ivory:     #F8F7F5;
+  --text-l:    #4A627D;
+  --text-lm:   #7C8DA3;
+  --text-d:    #4A627D;
+  --text-dm:   #7C8DA3;
+  --text-dml:  #AAB5C2;
+  --ease:      cubic-bezier(0.22,1,0.36,1);
+  --maxw:      560px;
 
-  /* ── WARNA PER SECTION (ganti hex-nya saja) ─────────── */
-  --c-cover:    #0B1228;
-  --c-ayat:     #0B1228;
-  --c-hero:     #1A2754;
-  --c-mempelai: #0F1733;  /* gelap */
-  --c-jadwal:   #161F38;  /* lebih terang dari mempelai */
-  --c-lokasi:   #F5F1E8;
-  --c-rsvp:     #142042;
-  --c-tamu:     #F5F1E8;
-  --c-amplop:   #142042;
-  --c-penutup:  #0B1228;
+  --c-cover:    #F8F7F5;
+  --c-ayat:     #FFFFFF;
+  --c-hero:     #F8F7F5;
+  --c-mempelai: #F8F7F5;
+  --c-jadwal:   #FFFFFF;
+  --c-lokasi:   #F8F7F5;
+  --c-rsvp:     #FFFFFF;
+  --c-tamu:     #F8F7F5;
+  --c-amplop:   #FFFFFF;
+  --c-penutup:  #FFFFFF;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -82,7 +54,7 @@
 html{scroll-behavior:smooth}
 body{
   font-family:'Jost',sans-serif;
-  background:var(--c-cover);
+  background:#F8F7F5;
   color:var(--text-d);
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
@@ -101,7 +73,6 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 #prog{
   position:fixed;top:0;left:0;height:1px;width:0;z-index:999;
   background:var(--gold);transition:width .08s linear;
-  box-shadow:0 0 6px rgba(214,185,122,.4);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -110,20 +81,18 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 #toast{
   position:fixed;bottom:28px;left:50%;
   transform:translate(-50%,14px);opacity:0;pointer-events:none;
-  background:rgba(11,18,40,.97);backdrop-filter:blur(16px);
-  color:var(--text-l);padding:11px 24px;border-radius:40px;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(16px);
+  color:var(--text-d);padding:11px 24px;border-radius:40px;
   font-size:.8rem;letter-spacing:.02em;
-  border:1px solid var(--gold-dim);z-index:900;
+  border:1px solid #D8DCE2;z-index:900;
   transition:opacity .5s var(--ease),transform .5s var(--ease);
   max-width:88vw;text-align:center;
+  box-shadow:0 4px 20px rgba(74,98,125,.08);
 }
 #toast.show{opacity:1;transform:translate(-50%,0)}
 
 /* ═══════════════════════════════════════════════════════════
-   ANIMATION SYSTEM — 3 varian agar tidak monoton
-   .a       → muncul dari bawah (fade-up)
-   .a-left  → muncul dari kiri
-   .a-right → muncul dari kanan
+   ANIMATION SYSTEM
    ═══════════════════════════════════════════════════════════ */
 .a{
   opacity:0;transform:translateY(24px);
@@ -144,7 +113,6 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
   opacity:1;transform:translate(0);
 }
 
-/* Delay bertingkat */
 [data-d="1"]{transition-delay:.1s}
 [data-d="2"]{transition-delay:.2s}
 [data-d="3"]{transition-delay:.3s}
@@ -157,102 +125,207 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 }
 
 /* ═══════════════════════════════════════════════════════════
-   ISLAMIC PATTERN — Full halaman pada setiap section
-   Pola bintang 8-titik yang saling mengunci (khas Islamic)
+   FLORAL PATTERN — Diganti aset PNG
    ═══════════════════════════════════════════════════════════ */
-section::before{
-  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
-  opacity:.035;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cpath d='M40,2 L46,25.4 L66.9,13.1 L54.6,34 L78,40 L54.6,46 L66.9,66.9 L46,54.6 L40,78 L34,54.6 L13.1,66.9 L25.4,46 L2,40 L25.4,34 L13.1,13.1 L34,25.4Z' fill='none' stroke='%23D6B97A' stroke-width='.4'/%3E%3C/svg%3E");
-  background-size:80px 80px;
-  background-repeat:repeat;
-}
-#lokasi::before,#bukutamu::before{
-  opacity:.028;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cpath d='M40,2 L46,25.4 L66.9,13.1 L54.6,34 L78,40 L54.6,46 L66.9,66.9 L46,54.6 L40,78 L34,54.6 L13.1,66.9 L25.4,46 L2,40 L25.4,34 L13.1,13.1 L34,25.4Z' fill='none' stroke='%231F2937' stroke-width='.4'/%3E%3C/svg%3E");
-}
+section::before{display:none}
 
 /* ═══════════════════════════════════════════════════════════
    SECTION BASE
    ═══════════════════════════════════════════════════════════ */
-section{padding:80px 28px;position:relative;overflow:hidden}
+section{padding:100px 28px;position:relative;overflow:hidden}
 .sec-inner{max-width:var(--maxw);margin:0 auto;position:relative;z-index:1}
 .eyebrow{
   display:block;font-family:'Reem Kufi',sans-serif;
   font-size:.62rem;letter-spacing:.26em;
   text-transform:uppercase;text-align:center;margin-bottom:14px;
 }
-.eyebrow.g{color:var(--gold)}
-.eyebrow.gd{color:rgba(214,185,122,.65)}
+.eyebrow.g{color:#8DA5BE}
+.eyebrow.gd{color:#7C8DA3}
 h2.st{
   font-family:'Cormorant Garamond',serif;font-weight:400;
   font-size:clamp(1.8rem,5vw,2.2rem);
   text-align:center;letter-spacing:.02em;line-height:1.1;
+  color:#4A627D;
 }
-h2.st.light{color:var(--ivory)}
-h2.st.dark{color:var(--text-d)}
-.g-rule{width:32px;height:1px;background:var(--gold);opacity:.4;margin:20px auto 0}
+h2.st.light{color:#4A627D}
+h2.st.dark{color:#4A627D}
+.g-rule{width:32px;height:1px;background:#D8DCE2;opacity:.5;margin:20px auto 0}
 
 /* ═══════════════════════════════════════════════════════════
-   1. COVER
+   DIVIDER IMAGE — Floral divider dekoratif
    ═══════════════════════════════════════════════════════════ */
+#ayat .g-rule,
+#mempelai .g-rule,
+#jadwal .g-rule,
+#penutup .ft-rule{
+  background:none;
+  width:140px;height:28px;
+  background-image:url('assets/floral/divider.png');
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:contain;
+  margin:28px auto 0;
+  opacity:.5;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FLORAL CORNER HELPER — Posisi sudut yang konsisten
+   ═══════════════════════════════════════════════════════════ */
+
+/* --- Cover: sudut kiri atas + kanan bawah, besar --- */
 #cover{
   position:fixed;inset:0;z-index:50;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  background:var(--c-cover);
+  background-color:#F8F7F5;
+  background-image:
+    url('assets/floral/top-left.png'),
+    url('assets/floral/bottom-right.png');
+  background-position:
+    -10px -10px,
+    calc(100% + 10px) calc(100% + 10px);
+  background-repeat:no-repeat;
+  background-size:
+    min(56vw, 380px) auto,
+    min(56vw, 380px) auto;
   transition:opacity .9s var(--ease),visibility .9s;
   overflow:hidden;padding:48px 32px;text-align:center;
 }
 #cover.out{opacity:0;visibility:hidden;pointer-events:none}
+
+/* --- Penutup: sudut kiri bawah + kanan bawah, sedang --- */
+#penutup{
+  background-color:#FFFFFF;
+  background-image:
+    url('assets/floral/bottom-left.png'),
+    url('assets/floral/bottom-right.png');
+  background-position:
+    -6px calc(100% + 6px),
+    calc(100% + 6px) calc(100% + 6px);
+  background-repeat:no-repeat;
+  background-size:
+    min(46vw, 310px) auto,
+    min(46vw, 310px) auto;
+  text-align:center;
+  padding:90px 28px 80px;
+}
+
+/* --- Ayat: sudut kanan atas kecil sebagai aksen --- */
+#ayat{
+  background-color:#FFFFFF;
+  background-image:url('assets/floral/top-right.png');
+  background-position:calc(100% + 6px) -6px;
+  background-repeat:no-repeat;
+  background-size:min(34vw, 220px) auto;
+  padding:80px 28px;
+}
+
+/* --- Mempelai: sudut kiri atas kecil sebagai aksen --- */
+#mempelai{
+  background-color:#F8F7F5;
+  background-image:url('assets/floral/top-left.png');
+  background-position:-6px -6px;
+  background-repeat:no-repeat;
+  background-size:min(32vw, 210px) auto;
+}
+
+/* --- Jadwal: sudut kanan bawah kecil --- */
+#jadwal{
+  background-color:#FFFFFF;
+  background-image:url('assets/floral/bottom-right.png');
+  background-position:calc(100% + 6px) calc(100% + 6px);
+  background-repeat:no-repeat;
+  background-size:min(32vw, 210px) auto;
+}
+
+/* --- Lokasi: sudut kiri bawah kecil --- */
+#lokasi{
+  background-color:#F8F7F5;
+  background-image:url('assets/floral/bottom-left.png');
+  background-position:-6px calc(100% + 6px);
+  background-repeat:no-repeat;
+  background-size:min(30vw, 200px) auto;
+}
+
+/* --- RSVP: sudut kanan atas kecil --- */
+#rsvp{
+  background-color:#FFFFFF;
+  background-image:url('assets/floral/top-right.png');
+  background-position:calc(100% + 6px) -6px;
+  background-repeat:no-repeat;
+  background-size:min(30vw, 200px) auto;
+}
+
+/* --- Buku Tamu: sudut kiri atas kecil --- */
+#bukutamu{
+  background-color:#F8F7F5;
+  background-image:url('assets/floral/top-left.png');
+  background-position:-6px -6px;
+  background-repeat:no-repeat;
+  background-size:min(28vw, 185px) auto;
+}
+
+/* --- Amplop: sudut kanan bawah kecil --- */
+#amplop{
+  background-color:#FFFFFF;
+  background-image:url('assets/floral/bottom-right.png');
+  background-position:calc(100% + 6px) calc(100% + 6px);
+  background-repeat:no-repeat;
+  background-size:min(28vw, 185px) auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   1. COVER — Konten
+   ═══════════════════════════════════════════════════════════ */
 .cv-bismillah{
   font-family:'Amiri',serif;direction:rtl;
   font-size:clamp(1.3rem,4vw,1.6rem);
-  color:var(--gold);letter-spacing:.02em;line-height:1.5;
+  color:#8DA5BE;letter-spacing:.02em;line-height:1.5;
   margin-bottom:48px;opacity:0;animation:fadeUp .8s .2s var(--ease) forwards;
 }
 .cv-eyebrow{
   font-family:'Reem Kufi',sans-serif;
   font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--gold);opacity:.7;margin-bottom:18px;
+  color:#7C8DA3;margin-bottom:18px;
   opacity:0;animation:fadeUp .8s .35s var(--ease) forwards;
 }
 .cv-couple{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2.6rem,8vw,3.6rem);
-  font-weight:300;letter-spacing:.04em;
-  color:var(--ivory);line-height:1.05;
+  font-size:clamp(3rem,9vw,4.2rem);
+  font-weight:400;letter-spacing:.04em;
+  color:#4A627D;line-height:1.05;
   opacity:0;animation:fadeUp .8s .48s var(--ease) forwards;
 }
 .cv-date{
   font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--text-lm);margin-top:14px;
+  color:#7C8DA3;margin-top:14px;
   opacity:0;animation:fadeUp .8s .58s var(--ease) forwards;
 }
 .cv-rule{
-  width:28px;height:1px;background:var(--gold);opacity:.4;
+  width:28px;height:1px;background:#D8DCE2;opacity:.5;
   margin:36px auto;opacity:0;animation:fadeUp .8s .66s var(--ease) forwards;
 }
 .cv-to{
-  font-size:.72rem;letter-spacing:.1em;color:var(--text-lm);margin-bottom:8px;
+  font-size:.72rem;letter-spacing:.1em;color:#AAB5C2;margin-bottom:8px;
   opacity:0;animation:fadeUp .8s .74s var(--ease) forwards;
 }
 .cv-guest{
   font-family:'Cormorant Garamond',serif;
   font-size:clamp(1.3rem,4.5vw,1.6rem);
-  font-style:italic;color:var(--ivory);margin-bottom:44px;
+  font-style:italic;color:#7C8DA3;margin-bottom:44px;
   word-break:break-word;
   opacity:0;animation:fadeUp .8s .82s var(--ease) forwards;
 }
 .cv-btn{
   display:inline-flex;align-items:center;gap:10px;
-  border:1px solid var(--gold-dim);color:var(--ivory);
-  padding:14px 32px;border-radius:3px;
+  background:#8DA5BE;color:#FFFFFF;
+  border:none;padding:14px 32px;border-radius:40px;
   font-size:.84rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;
-  transition:background .4s var(--ease),border-color .4s,color .4s;
+  transition:background .4s var(--ease),transform .3s var(--ease),box-shadow .3s;
   opacity:0;animation:fadeUp .8s .94s var(--ease) forwards;
+  box-shadow:0 4px 16px rgba(141,165,190,.25);
 }
-.cv-btn:hover{background:var(--gold-dim);border-color:rgba(214,185,122,.4)}
+.cv-btn:hover{background:#7B96B0;transform:translateY(-1px);box-shadow:0 6px 20px rgba(141,165,190,.3)}
 .cv-btn svg{width:15px;height:15px}
 
 /* ═══════════════════════════════════════════════════════════
@@ -267,336 +340,355 @@ h2.st.dark{color:var(--text-d)}
 #inv.show{opacity:1;transform:translateY(0);pointer-events:all}
 
 /* ═══════════════════════════════════════════════════════════
-   2. AYAT
+   2. AYAT — Konten
    ═══════════════════════════════════════════════════════════ */
-#ayat{background:var(--c-ayat);padding:60px 28px}
 .ayat-box{max-width:440px;margin:0 auto;text-align:center}
 .ayat-ar{
   font-family:'Amiri',serif;direction:rtl;
   font-size:clamp(1.05rem,3.6vw,1.25rem);
-  line-height:2.25;color:var(--gold-soft);
+  line-height:2.25;color:#8DA5BE;
 }
 .ayat-tr{
   font-size:.82rem;font-style:italic;font-weight:300;
-  color:var(--text-lm);margin-top:18px;line-height:1.95;
+  color:#7C8DA3;margin-top:18px;line-height:1.95;
 }
 .ayat-src{
   font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(214,185,122,.55);margin-top:12px;
+  color:#AAB5C2;margin-top:12px;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   3. HERO — nama pengantin + countdown
+   3. HERO — Wreath proporsional di belakang nama
    ═══════════════════════════════════════════════════════════ */
 #hero{
-  background:
-    radial-gradient(ellipse 90% 60% at 50% 0%,rgba(214,185,122,.10),transparent 60%),
-    linear-gradient(165deg,var(--c-hero) 0%,#11193B 65%,#0B1228 100%);
-  padding:96px 28px 110px;text-align:center;
+  background-color:#F8F7F5;
+  background-image:url('assets/floral/floral-wreath.png');
+  background-position:center 47%;
+  background-repeat:no-repeat;
+  background-size:min(80vw, 420px) auto;
+  padding:100px 28px 120px;text-align:center;
   min-height:90vh;
   display:flex;align-items:center;justify-content:center;
 }
 #hero .sec-inner{width:100%}
 .h-greeting{
   max-width:440px;margin:0 auto 40px;
-  font-size:.88rem;font-weight:300;line-height:2;color:var(--text-lm);
+  font-size:.88rem;font-weight:300;line-height:2;color:#7C8DA3;
 }
-.h-greeting .tamu{color:var(--ivory);font-style:italic}
+.h-greeting .tamu{color:#4A627D;font-style:italic}
 .h-names{margin-bottom:22px}
 .h-name{
   display:block;
   font-family:'Cormorant Garamond',serif;
-  font-weight:300;font-size:clamp(3.1rem,11vw,4.4rem);
-  letter-spacing:.03em;line-height:1.0;color:var(--ivory);
-  text-shadow:0 0 40px rgba(214,185,122,.18);
+  font-weight:400;font-size:clamp(3.5rem,12vw,5rem);
+  letter-spacing:.03em;line-height:1.0;color:#4A627D;
 }
 .h-amp{
   display:block;
   font-family:'Cormorant Garamond',serif;
-  font-style:italic;font-size:1.6rem;color:var(--gold);
-  margin:10px 0;opacity:.9;
+  font-style:italic;font-size:1.6rem;color:#D8C8A0;
+  margin:10px 0;opacity:.85;
 }
 .h-date{
   font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--gold-soft);margin-bottom:60px;
+  color:#8DA5BE;margin-bottom:60px;
 }
 
-/* ── Countdown — animasi perpindahan angka halus ── */
+/* ── Countdown ── */
 .cd-wrap{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
 .cd-box{
   min-width:60px;padding:14px 8px 12px;
-  background:rgba(255,255,255,.04);
-  border:1px solid var(--gold-dim);
-  border-radius:6px;text-align:center;
-  backdrop-filter:blur(4px);
+  background:#FFFFFF;
+  border:1px solid #D8DCE2;
+  border-radius:12px;text-align:center;
+  box-shadow:0 2px 10px rgba(74,98,125,.04);
   overflow:hidden;position:relative;
 }
 .cd-n{
   display:block;
   font-family:'Cormorant Garamond',serif;
-  font-size:1.55rem;font-weight:300;color:var(--gold);
+  font-size:1.55rem;font-weight:400;color:#4A627D;
   line-height:1;
   transition:opacity .3s ease-out,transform .3s ease-out;
 }
 .cd-l{
   display:block;font-size:.56rem;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--text-lm);margin-top:6px;
+  text-transform:uppercase;color:#7C8DA3;margin-top:6px;
 }
-.cd-done{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold)}
+.cd-done{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#4A627D}
 
 /* ═══════════════════════════════════════════════════════════
-   4. MEMPELAI — nama di-highlight, & menyatu dengan garis
+   4. MEMPELAI — Konten
    ═══════════════════════════════════════════════════════════ */
-#mempelai{background:var(--c-mempelai)}
-
-/* Judul "Yang Berbahagia" diperkecil agar nama mempelai lebih menonjol */
 #mempelai h2.st{font-size:clamp(1.3rem,4vw,1.6rem)}
 
 .couple-wrap{max-width:420px;margin:0 auto}
 .cp{
   padding:36px 24px;text-align:center;
+  background:#FFFFFF;
+  border:1px solid #D8DCE2;
+  border-radius:14px;
+  box-shadow:0 2px 12px rgba(74,98,125,.04);
 }
 .cp-name{
   font-family:'Cormorant Garamond',serif;
   font-size:1.85rem;font-weight:500;
-  color:var(--ivory);letter-spacing:.03em;
+  color:#4A627D;letter-spacing:.03em;
   margin-bottom:8px;position:relative;
   display:inline-block;
-  text-shadow:0 0 28px rgba(214,185,122,.12);
 }
 .cp-name::after{
   content:'';position:absolute;bottom:-6px;left:50%;
   transform:translateX(-50%);width:44px;height:1px;
-  background:var(--gold);opacity:.5;
+  background:#D8C8A0;opacity:.45;
 }
 .cp-role{
   font-size:.68rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--gold);
+  text-transform:uppercase;color:#8DA5BE;
   margin-bottom:14px;opacity:.9;
 }
 .cp-parents{
   font-size:.84rem;font-weight:300;
-  color:var(--text-lm);line-height:1.85;margin-bottom:14px;
+  color:#7C8DA3;line-height:1.85;margin-bottom:14px;
 }
 .cp-ig{
   display:inline-flex;align-items:center;gap:6px;
-  font-size:.78rem;color:var(--text-l);
-  border-bottom:1px solid var(--gold-dim);padding-bottom:2px;
+  font-size:.78rem;color:#4A627D;
+  border-bottom:1px solid rgba(141,165,190,.2);padding-bottom:2px;
   transition:color .3s,border-color .3s;
 }
-.cp-ig:hover{color:var(--gold);border-color:var(--gold)}
+.cp-ig:hover{color:#8DA5BE;border-color:#8DA5BE}
 .cp-ig svg{width:12px;height:12px}
 
-/* Separator: garis — & — garis (menyatu, tidak terpisah) */
 .cp-sep{
   display:flex;align-items:center;gap:18px;
   padding:8px 0;
 }
-.cp-line{flex:1;height:1px;background:var(--gold-dim)}
+.cp-line{flex:1;height:1px;background:rgba(141,165,190,.18)}
 .cp-amp{
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:1.6rem;color:var(--gold);opacity:.9;
+  font-size:1.6rem;color:#D8C8A0;opacity:.85;
   flex-shrink:0;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   5. JADWAL — Timeline vertikal, range jam
+   5. JADWAL — Konten
    ═══════════════════════════════════════════════════════════ */
-#jadwal{background:var(--c-jadwal)}
 .timeline{max-width:400px;margin:0 auto;position:relative;padding-left:2px}
 .tl-line{
   position:absolute;left:0;top:14px;bottom:14px;width:1px;
-  background:linear-gradient(to bottom,transparent,var(--gold-dim) 20%,var(--gold-dim) 80%,transparent);
+  background:linear-gradient(to bottom,transparent,rgba(141,165,190,.18) 20%,rgba(141,165,190,.18) 80%,transparent);
 }
-.tl-item{display:flex;gap:22px;padding:0 0 42px 20px;position:relative}
-.tl-item:last-child{padding-bottom:0}
+.tl-item{
+  display:flex;gap:22px;padding:20px 20px 20px 24px;position:relative;
+  background:#FFFFFF;
+  border:1px solid #D8DCE2;
+  border-radius:14px;
+  box-shadow:0 2px 12px rgba(74,98,125,.04);
+  margin-bottom:16px;
+}
+.tl-item:last-child{margin-bottom:0}
 .tl-dot{
-  position:absolute;left:-3.5px;top:9px;
+  position:absolute;left:-3.5px;top:24px;
   width:7px;height:7px;border-radius:50%;
-  border:1.2px solid var(--gold);background:var(--c-jadwal);flex-shrink:0;
+  border:1.2px solid #8DA5BE;background:#FFFFFF;flex-shrink:0;
 }
 
-/* Lebar jam fleksibel untuk range jam */
 .tl-time{flex-shrink:0;width:auto;min-width:80px;padding-top:5px;text-align:right}
 .tl-time .tl-hour{
   font-family:'Cormorant Garamond',serif;
-  font-size:1.1rem;font-weight:300;color:var(--gold);line-height:1;display:block;
+  font-size:1.1rem;font-weight:400;color:#4A627D;line-height:1;display:block;
 }
 .tl-time .tl-wib{
-  font-size:.58rem;letter-spacing:.1em;color:var(--text-lm);
+  font-size:.58rem;letter-spacing:.1em;color:#AAB5C2;
   text-transform:uppercase;display:block;margin-top:3px;
 }
 .tl-content{flex:1}
 .tl-label{
   font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:7px;display:block;opacity:.85;
+  color:#8DA5BE;margin-bottom:7px;display:block;opacity:.85;
 }
 .tl-event{
   font-family:'Cormorant Garamond',serif;
-  font-size:1.18rem;font-weight:400;color:var(--ivory);margin-bottom:8px;
+  font-size:1.18rem;font-weight:400;color:#4A627D;margin-bottom:8px;
 }
-.tl-venue{font-size:.82rem;font-weight:300;color:var(--text-l);margin-bottom:4px;line-height:1.6}
-.tl-addr{font-size:.74rem;color:var(--text-lm);line-height:1.6}
+.tl-venue{font-size:.82rem;font-weight:300;color:#4A627D;margin-bottom:4px;line-height:1.6}
+.tl-addr{font-size:.74rem;color:#7C8DA3;line-height:1.6}
+#jadwal .tl-addr[style]{color:#AAB5C2 !important}
 
 /* ═══════════════════════════════════════════════════════════
-   6. LOKASI
+   6. LOKASI — Konten
    ═══════════════════════════════════════════════════════════ */
-#lokasi{background:var(--c-lokasi)}
-.map-frame{border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,.1);margin-bottom:20px}
+.map-frame{
+  border-radius:14px;overflow:hidden;
+  border:1px solid #D8DCE2;
+  margin-bottom:20px;
+  box-shadow:0 2px 14px rgba(74,98,125,.05);
+}
 .map-frame iframe{display:block;width:100%;height:280px;border:0}
 .loc-btns{display:flex;flex-direction:column;gap:10px}
 .btn-loc{
   display:flex;align-items:center;justify-content:center;gap:9px;
-  border:1px solid rgba(31,41,55,.2);color:var(--text-d);
-  padding:13px 18px;border-radius:4px;
+  border:1px solid #D8DCE2;color:#4A627D;
+  padding:13px 18px;border-radius:10px;
   font-size:.84rem;font-weight:400;letter-spacing:.04em;
-  transition:background .3s var(--ease),border-color .3s;
+  background:#FFFFFF;
+  transition:background .3s var(--ease),border-color .3s,color .3s,box-shadow .3s;
+  box-shadow:0 2px 8px rgba(74,98,125,.03);
 }
-.btn-loc:hover{background:rgba(0,0,0,.05);border-color:rgba(31,41,55,.35)}
+.btn-loc:hover{background:rgba(141,165,190,.06);border-color:rgba(141,165,190,.35);color:#4A627D;box-shadow:0 4px 14px rgba(74,98,125,.06)}
 .btn-loc svg{width:15px;height:15px;flex-shrink:0}
 
 /* ═══════════════════════════════════════════════════════════
-   7. RSVP
+   7. RSVP — Konten
    ═══════════════════════════════════════════════════════════ */
-#rsvp{background:var(--c-rsvp)}
+#rsvp h2.st.light{color:#4A627D}
+#rsvp .eyebrow.gd{color:#7C8DA3}
+
 .rsvp-form{max-width:400px;margin:0 auto}
 .fg{margin-bottom:16px}
-.fg label{
+#rsvp .fg label{
   display:block;font-size:.7rem;font-weight:500;
   letter-spacing:.12em;text-transform:uppercase;
-  color:rgba(214,185,122,.65);margin-bottom:9px;
+  color:#7C8DA3;margin-bottom:9px;
 }
-.fg input,.fg textarea{
+#rsvp .fg input,
+#rsvp .fg textarea{
   width:100%;padding:13px 16px;
-  background:rgba(255,255,255,.045);
-  border:1px solid var(--gold-dim);border-radius:4px;
-  color:var(--text-l);font-family:'Jost',sans-serif;
+  background:#FFFFFF;
+  border:1px solid #D8DCE2;border-radius:10px;
+  color:#4A627D;font-family:'Jost',sans-serif;
   font-size:.88rem;font-weight:300;outline:none;
   transition:border-color .3s,background .3s,box-shadow .3s;
+  box-shadow:0 1px 6px rgba(74,98,125,.03);
 }
-.fg input::placeholder,.fg textarea::placeholder{color:var(--text-lm)}
-.fg input:focus,.fg textarea:focus{
-  border-color:rgba(214,185,122,.45);
-  background:rgba(255,255,255,.065);
-  box-shadow:0 0 0 3px rgba(214,185,122,.07);
+#rsvp .fg input::placeholder,
+#rsvp .fg textarea::placeholder{color:#AAB5C2}
+#rsvp .fg input:focus,
+#rsvp .fg textarea:focus{
+  border-color:rgba(141,165,190,.45);
+  background:#FFFFFF;
+  box-shadow:0 0 0 3px rgba(141,165,190,.08),0 2px 12px rgba(74,98,125,.04);
 }
-.fg textarea{resize:vertical;min-height:88px;line-height:1.7}
+#rsvp .fg textarea{resize:vertical;min-height:88px;line-height:1.7}
 .fg input[type=number]{-moz-appearance:textfield}
 .fg input[type=number]::-webkit-inner-spin-button,
 .fg input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
 
 .select-wrap{position:relative}
-.select-wrap select{
+#rsvp .select-wrap select{
   width:100%;padding:13px 40px 13px 16px;
-  background:rgba(255,255,255,.045);
-  border:1px solid var(--gold-dim);border-radius:4px;
-  color:var(--text-l);font-family:'Jost',sans-serif;
+  background:#FFFFFF;
+  border:1px solid #D8DCE2;border-radius:10px;
+  color:#4A627D;font-family:'Jost',sans-serif;
   font-size:.88rem;font-weight:300;outline:none;
   appearance:none;-webkit-appearance:none;-moz-appearance:none;
   cursor:pointer;transition:border-color .3s,background .3s,box-shadow .3s;
+  box-shadow:0 1px 6px rgba(74,98,125,.03);
 }
-.select-wrap select:focus{
-  border-color:rgba(214,185,122,.45);
-  background:rgba(255,255,255,.065);
-  box-shadow:0 0 0 3px rgba(214,185,122,.07);
+#rsvp .select-wrap select:focus{
+  border-color:rgba(141,165,190,.45);
+  background:#FFFFFF;
+  box-shadow:0 0 0 3px rgba(141,165,190,.08),0 2px 12px rgba(74,98,125,.04);
 }
-.select-wrap select option{background:#142042;color:var(--text-l)}
-.select-arrow{
+#rsvp .select-wrap select option{background:#fff;color:#4A627D}
+#rsvp .select-arrow{
   position:absolute;right:16px;top:50%;transform:translateY(-50%);
-  width:11px;height:11px;color:var(--gold);pointer-events:none;
+  width:11px;height:11px;color:#7C8DA3;pointer-events:none;
 }
 .btn-submit{
   width:100%;padding:15px;
-  background:var(--gold);color:#0B1228;
-  border-radius:4px;font-size:.86rem;
-  font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  transition:opacity .3s,transform .3s var(--ease);
+  background:#8DA5BE;color:#fff;
+  border-radius:40px;font-size:.86rem;
+  font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  transition:background .3s,transform .3s var(--ease),box-shadow .3s;
+  box-shadow:0 4px 16px rgba(141,165,190,.2);
 }
-.btn-submit:hover{opacity:.9;transform:translateY(-1px)}
+.btn-submit:hover{background:#7B96B0;transform:translateY(-1px);box-shadow:0 6px 20px rgba(141,165,190,.28)}
 .btn-submit:active{transform:scale(.98)}
-.btn-submit:disabled{opacity:.45;cursor:not-allowed;transform:none}
-.form-msg{font-size:.8rem;text-align:center;margin-top:14px;min-height:1.2em;color:var(--gold);line-height:1.6}
+.btn-submit:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.form-msg{font-size:.8rem;text-align:center;margin-top:14px;min-height:1.2em;color:#7C8DA3;line-height:1.6}
 
 /* ═══════════════════════════════════════════════════════════
-   8. BUKU TAMU
+   8. BUKU TAMU — Konten
    ═══════════════════════════════════════════════════════════ */
-#bukutamu{background:var(--c-tamu)}
 .gb-feed{max-width:400px;margin:0 auto;max-height:480px;overflow-y:auto;padding-right:2px}
 .gb-feed::-webkit-scrollbar{width:2px}
-.gb-feed::-webkit-scrollbar-thumb{background:rgba(0,0,0,.12);border-radius:2px}
-.gb-empty{text-align:center;color:var(--text-dml);font-size:.84rem;padding:32px 0;font-weight:300}
+.gb-feed::-webkit-scrollbar-thumb{background:rgba(141,165,190,.15);border-radius:2px}
+.gb-empty{text-align:center;color:#AAB5C2;font-size:.84rem;padding:32px 0;font-weight:300}
 .gb-comment{
   padding:18px 20px;margin-bottom:10px;
-  background:#fff;border:1px solid rgba(0,0,0,.06);
-  border-radius:10px;box-shadow:0 4px 18px rgba(15,23,42,.04);
+  background:#fff;border:1px solid #D8DCE2;
+  border-radius:14px;box-shadow:0 2px 10px rgba(74,98,125,.03);
   animation:fadeUp .5s var(--ease) both;
 }
 .gb-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;flex-wrap:wrap}
-.gb-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text-d);font-weight:400}
+.gb-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:#4A627D;font-weight:400}
 .gb-badge{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
-.gb-badge.hadir{background:rgba(16,185,129,.1);color:#059669}
-.gb-badge.tidak{background:rgba(0,0,0,.06);color:var(--text-dm)}
-.gb-text{font-size:.84rem;color:var(--text-dm);font-weight:300;line-height:1.75;margin-bottom:8px}
-.gb-time{font-size:.68rem;color:var(--text-dml)}
+.gb-badge.hadir{background:rgba(141,165,190,.1);color:#4A627D}
+.gb-badge.tidak{background:rgba(0,0,0,.03);color:#7C8DA3}
+.gb-text{font-size:.84rem;color:#7C8DA3;font-weight:300;line-height:1.75;margin-bottom:8px}
+.gb-time{font-size:.68rem;color:#AAB5C2}
 
 /* ═══════════════════════════════════════════════════════════
-   9. AMPLOP DIGITAL
+   9. AMPLOP DIGITAL — Konten
    ═══════════════════════════════════════════════════════════ */
-#amplop{background:var(--c-amplop)}
+#amplop h2.st.light{color:#4A627D}
+#amplop .eyebrow.gd{color:#7C8DA3}
+
 .amp-note{
   text-align:center;font-size:.84rem;font-weight:300;
-  color:var(--text-lm);line-height:1.9;max-width:400px;margin:0 auto 36px;
+  color:#7C8DA3;line-height:1.9;max-width:400px;margin:0 auto 36px;
 }
 .bank-list{display:flex;flex-direction:column;gap:12px}
-.bank-card{
+#amplop .bank-card{
   display:flex;align-items:center;gap:16px;
-  background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
-  border:1px solid var(--gold-dim);
-  padding:20px 22px;border-radius:10px;
-  transition:border-color .3s,background .3s;
+  background:#FFFFFF;
+  border:1px solid #D8DCE2;
+  padding:20px 22px;border-radius:14px;
+  transition:border-color .3s,background .3s,box-shadow .3s;
+  box-shadow:0 2px 10px rgba(74,98,125,.03);
 }
-.bank-card:hover{border-color:rgba(214,185,122,.4)}
-.bk-name{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;opacity:.9}
-.bk-num{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--ivory);letter-spacing:.03em}
-.bk-holder{font-size:.76rem;color:var(--text-lm);margin-top:2px}
+#amplop .bank-card:hover{border-color:rgba(141,165,190,.3);box-shadow:0 4px 16px rgba(74,98,125,.06)}
+.bk-name{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:#D8C8A0;margin-bottom:4px;opacity:.9}
+#amplop .bk-num{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:#4A627D;letter-spacing:.03em}
+#amplop .bk-holder{font-size:.76rem;color:#7C8DA3;margin-top:2px}
 .bk-info{flex:1}
-.btn-cp{
-  border:1px solid var(--gold-dim);color:var(--text-l);
+#amplop .btn-cp{
+  border:1px solid #D8DCE2;color:#4A627D;
   padding:9px 16px;border-radius:20px;font-size:.76rem;
   letter-spacing:.06em;flex-shrink:0;
   transition:background .3s,border-color .3s,color .3s;
 }
-.btn-cp:hover{background:var(--gold-dim);border-color:rgba(214,185,122,.4)}
-.btn-cp.ok{background:var(--gold-dim);color:var(--gold);border-color:rgba(214,185,122,.45)}
+#amplop .btn-cp:hover{background:rgba(141,165,190,.08);border-color:rgba(141,165,190,.35)}
+#amplop .btn-cp.ok{background:rgba(141,165,190,.1);color:#4A627D;border-color:rgba(141,165,190,.35)}
 
 /* ═══════════════════════════════════════════════════════════
-   10. PENUTUP
+   10. PENUTUP — Konten
    ═══════════════════════════════════════════════════════════ */
-#penutup{background:var(--c-penutup);text-align:center;padding:72px 28px 56px}
-.ft-ar{font-family:'Amiri',serif;direction:rtl;font-size:1.3rem;color:var(--gold);margin-bottom:16px}
-.ft-doa{font-size:.84rem;font-weight:300;font-style:italic;color:var(--text-lm);max-width:360px;margin:0 auto 32px;line-height:1.95}
-.ft-rule{width:24px;height:1px;background:var(--gold);opacity:.35;margin:0 auto 22px}
-.ft-thanks{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--ivory);margin-bottom:5px}
-.ft-couple{font-size:.82rem;color:var(--gold);letter-spacing:.06em}
-.ft-credit{font-size:.62rem;color:rgba(255,255,255,.18);margin-top:36px;letter-spacing:.04em}
+.ft-ar{font-family:'Amiri',serif;direction:rtl;font-size:1.3rem;color:#8DA5BE;margin-bottom:16px}
+.ft-doa{font-size:.84rem;font-weight:300;font-style:italic;color:#7C8DA3;max-width:360px;margin:0 auto 32px;line-height:1.95}
+.ft-thanks{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:#4A627D;margin-bottom:5px}
+.ft-couple{font-size:.82rem;color:#8DA5BE;letter-spacing:.06em}
+.ft-credit{font-size:.62rem;color:#AAB5C2;margin-top:36px;letter-spacing:.04em}
 
 /* ═══════════════════════════════════════════════════════════
-   FLOATING BUTTONS — Musik & Back to Top
+   FLOATING BUTTONS
    ═══════════════════════════════════════════════════════════ */
 #aBtn{
   position:fixed;bottom:26px;right:26px;z-index:40;
   width:46px;height:46px;border-radius:50%;
-  background:rgba(11,18,40,.92);backdrop-filter:blur(12px);
-  border:1px solid var(--gold-dim);color:var(--gold);
+  background:rgba(141,165,190,.92);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.2);color:#FFFFFF;
   display:flex;align-items:center;justify-content:center;gap:2px;
-  box-shadow:0 6px 24px rgba(0,0,0,.4);
+  box-shadow:0 4px 16px rgba(141,165,190,.3);
   transition:transform .3s var(--ease),border-color .3s;
 }
-#aBtn:hover{transform:scale(1.08);border-color:rgba(214,185,122,.4)}
+#aBtn:hover{transform:scale(1.08);border-color:rgba(255,255,255,.35)}
 #aBtn.hidden{display:none}
 #aBtn .note-icon{width:15px;height:15px;flex-shrink:0}
 .wave-bars{display:flex;align-items:center;gap:2px;height:13px}
-.wave-bars span{display:block;width:2px;border-radius:1px;background:var(--gold);height:4px;transition:height .25s ease}
+.wave-bars span{display:block;width:2px;border-radius:1px;background:#FFFFFF;height:4px;transition:height .25s ease}
 #aBtn.playing .wave-bars span{animation:waveMove 1s ease-in-out infinite}
 #aBtn.playing .wave-bars span:nth-child(1){animation-delay:0s}
 #aBtn.playing .wave-bars span:nth-child(2){animation-delay:.18s}
@@ -607,9 +699,9 @@ h2.st.dark{color:var(--text-d)}
 #toTop{
   position:fixed;bottom:26px;right:82px;z-index:40;
   width:36px;height:36px;border-radius:50%;
-  background:var(--gold);color:#0B1228;
+  background:#8DA5BE;color:#fff;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 14px rgba(214,185,122,.35);
+  box-shadow:0 3px 12px rgba(141,165,190,.25);
   opacity:0;transform:translateY(10px) scale(.9);pointer-events:none;
   transition:opacity .35s var(--ease),transform .35s var(--ease);
 }
@@ -618,12 +710,56 @@ h2.st.dark{color:var(--text-d)}
 #toTop svg{width:17px;height:17px}
 
 /* ═══════════════════════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE — Floral menyesuaikan layar kecil
    ═══════════════════════════════════════════════════════════ */
-@media(max-width:400px){
-  section{padding:60px 20px}
+@media(max-width:480px){
+  /* Cover: floral lebih besar % agar tetap terlihat */
+  #cover{
+    background-size:
+      min(68vw, 320px) auto,
+      min(68vw, 320px) auto;
+  }
+
+  /* Hero: wreath lebih kecil agar sesuai nama */
+  #hero{
+    background-size:min(88vw, 310px) auto;
+    background-position:center 45%;
+  }
+
+  /* Penutup: floral disesuaikan */
+  #penutup{
+    background-size:
+      min(56vw, 260px) auto,
+      min(56vw, 260px) auto;
+  }
+
+  /* Section accent floral: sedikit diperbesar % */
+  #ayat{background-size:min(42vw, 190px) auto}
+  #mempelai{background-size:min(40vw, 180px) auto}
+  #jadwal{background-size:min(40vw, 180px) auto}
+  #lokasi{background-size:min(38vw, 170px) auto}
+  #rsvp{background-size:min(38vw, 170px) auto}
+  #bukutamu{background-size:min(36vw, 160px) auto}
+  #amplop{background-size:min(36vw, 160px) auto}
+}
+
+@media(max-width:360px){
+  #cover{
+    background-size:
+      min(78vw, 280px) auto,
+      min(78vw, 280px) auto;
+  }
+  #hero{
+    background-size:min(92vw, 260px) auto;
+  }
+  #penutup{
+    background-size:
+      min(64vw, 230px) auto,
+      min(64vw, 230px) auto;
+  }
+  section{padding:72px 20px}
   .h-name{font-size:2.8rem}
-  .cv-couple{font-size:2.4rem}
+  .cv-couple{font-size:2.6rem}
   h2.st{font-size:1.7rem}
   #mempelai h2.st{font-size:1.3rem}
   .cp-name{font-size:1.6rem}
@@ -835,28 +971,9 @@ h2.st.dark{color:var(--text-d)}
 
 const C = {
 
-  /* ╔═══════════════════════════════════════════════════════════╗
-     ║  URUTAN TAMPIL MEMPELAI                                  ║
-     ║                                                          ║
-     ║  'groom-bride'  → Laki-laki di atas, perempuan di bawah  ║
-     ║  'bride-groom'  → Perempuan di atas, laki-laki di bawah  ║
-     ║                                                          ║
-     ║  PENTING: Sesuaikan dengan tempat acara.                 ║
-     ║  Jika acara di rumah/keluarga PEREMPUAN,                ║
-     ║  maka nama perempuan ditulis lebih dulu (atas).         ║
-     ║  Ini menyangkut sopan santun adat.                       ║
-     ╚═══════════════════════════════════════════════════════════╝ */
   displayOrder: 'bride-groom',
-
-  /* ╔═══════════════════════════════════════════════════════════╗
-     ║  AMPLOP DIGITAL                                          ║
-     ║                                                          ║
-     ║  true  → tampilkan section amplop digital                ║
-     ║  false → SEMBUNYIKAN section amplop digital              ║
-     ╚═══════════════════════════════════════════════════════════╝ */
   showAmplop: false,
 
-  /* ── Data Mempelai Laki-laki ──────────────────────────────── */
   groom: {
     fullName : 'Arviadi Anggara',
     nickname : 'Arvi',
@@ -864,7 +981,6 @@ const C = {
     instagram: '@arvi.js'
   },
 
-  /* ── Data Mempelai Perempuan ──────────────────────────────── */
   bride: {
     fullName : 'Rahma Anisa',
     nickname : 'Rahma',
@@ -872,56 +988,42 @@ const C = {
     instagram: '@rahmanniisa'
   },
 
-  /* ── Tanggal ──────────────────────────────────────────────── */
   heroDate       : 'Sabtu, 10 Oktober 2026',
   coverDate      : '10 · 10 · 2026',
   countdownTarget: '2026-10-10T08:00:00',
 
-  /* ── Akad Nikah ───────────────────────────────────────────── */
   akad: {
     date     : 'Sabtu, 10 Oktober 2026',
-    timeStr  : '08.00 - 10.00',           /* range jam */
+    timeStr  : '08.00 - 10.00',
     venue    : 'Masjid Agung Al-Akbar Surabaya',
     address  : 'Jl. Masjid Al-Akbar Timur No.1, Pagesangan, Surabaya',
     mapsUrl  : 'https://maps.google.com/?q=Masjid+Al+Akbar+Surabaya',
     mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.9697609985!2d112.70682!3d-7.34437!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb9a4e50e3c9%3A0x7d71f1e74aab9dde!2sMasjid%20Al-Akbar%20Surabaya!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid'
   },
 
-  /* ── Resepsi / Walimah ────────────────────────────────────── */
   walimah: {
     date     : 'Sabtu, 10 Oktober 2026',
-    timeStr  : '11.00 - 14.00',           /* range jam */
+    timeStr  : '11.00 - 14.00',
     venue    : 'Gedung Graha Pena Surabaya',
     address  : 'Jl. Ahmad Yani No.88, Gayungan, Surabaya',
     mapsUrl  : 'https://maps.google.com/?q=Graha+Pena+Surabaya',
     mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.0!2d112.7323!3d-7.3105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fc48a55cf12d%3A0x4c720f8c51fe01f3!2sGraha%20Pena%20Surabaya!5e0!3m2!1sid!2sid!4v1700000000001!5m2!1sid!2sid'
   },
 
-  /* ── Ayat Al-Quran ────────────────────────────────────────── */
   ayat: {
     arabic     : 'وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِّنْ أَنْفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً',
     translation: '"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, agar kamu hidup tenang bersamanya, dan Dia menjadikan di antaramu rasa cinta dan kasih sayang."',
     source     : 'QS. Ar-Rum : 21'
   },
 
-  /* ── Rekening Amplop Digital ──────────────────────────────── */
   bankAccounts: [
     { bank: 'BCA',     number: '1234567890',     holder: 'Rahma Anisa' },
     { bank: 'Mandiri', number: '0987654321',     holder: 'Rahma Anisa' },
     { bank: 'GoPay',   number: '0812-3456-7890', holder: 'Rahma Anisa' }
   ],
 
-  /* ── Musik Latar ────────────────────────────────────────────
-     Taruh file musik di folder: assets/audio/musik.mp3
-     Kosongkan '' jika tidak ingin musik. */
   audioSrc: 'assets/audio/musik.mp3',
-
-  /* ── RSVP ke Google Sheets ──────────────────────────────────
-     Tempel URL Google Apps Script Web App Anda di sini.
-     Kosongkan '' jika tidak pakai Google Sheets. */
   googleSheetUrl: '',
-
-  /* ── Nama tamu default ── */
   defaultGuest: 'Tamu Undangan'
 };
 
@@ -977,29 +1079,24 @@ const MAP_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stro
 function initContent() {
   const nama = guestName();
 
-  /* Urutan mempelai */
   const first  = C.displayOrder === 'bride-groom' ? C.bride : C.groom;
   const second = C.displayOrder === 'bride-groom' ? C.groom : C.bride;
   const firstRole  = C.displayOrder === 'bride-groom' ? 'Putri' : 'Putra';
   const secondRole = C.displayOrder === 'bride-groom' ? 'Putra' : 'Putri';
 
-  /* Cover */
   $('cvCouple').textContent = `${first.nickname} & ${second.nickname}`;
   $('cvDate').textContent   = C.coverDate;
   $('cvGuest').textContent  = nama;
 
-  /* Ayat */
   $('hAyatAr').textContent  = C.ayat.arabic;
   $('hAyatTr').textContent  = C.ayat.translation;
   $('hAyatSrc').textContent = C.ayat.source;
 
-  /* Hero */
   $('hGuest').textContent = nama;
   $('hName1').textContent = first.nickname;
   $('hName2').textContent = second.nickname;
   $('hDate').textContent  = C.heroDate;
 
-  /* Mempelai (dinamis sesuai displayOrder) */
   $('coupleWrap').innerHTML = `
     <div class="cp a-left" data-d="1">
       <p class="cp-name">${esc(first.fullName)}</p>
@@ -1024,7 +1121,6 @@ function initContent() {
     </div>
   `;
 
-  /* Jadwal (timeline dengan range jam) */
   const tlItems = [
     { label: 'Akad Nikah', hour: C.akad.timeStr, venue: C.akad.venue, addr: C.akad.address, date: C.akad.date, animClass: 'a-left' },
     { label: 'Resepsi · Walimah', hour: C.walimah.timeStr, venue: C.walimah.venue, addr: C.walimah.address, date: C.walimah.date, animClass: 'a-right' }
@@ -1042,13 +1138,12 @@ function initContent() {
           <span class="tl-label">${esc(item.label)}</span>
           <p class="tl-event">${esc(item.venue)}</p>
           <p class="tl-addr">${esc(item.addr)}</p>
-          <p class="tl-addr" style="margin-top:6px;color:rgba(237,232,221,.4)">${esc(item.date)}</p>
+          <p class="tl-addr" style="margin-top:6px;color:rgba(248,247,245,.35)">${esc(item.date)}</p>
         </div>
       </div>`;
   });
   $('timelineWrap').innerHTML = tlHtml;
 
-  /* Lokasi */
   $('mapFrame').src = C.walimah.mapsEmbed || C.akad.mapsEmbed;
   $('locBtns').innerHTML = `
     <a class="btn-loc a-left" data-d="1" href="${esc(C.akad.mapsUrl)}" target="_blank" rel="noopener">
@@ -1059,7 +1154,6 @@ function initContent() {
     </a>
   `;
 
-  /* Amplop Digital */
   if (!C.showAmplop) {
     const amplopEl = $('amplop');
     if (amplopEl) amplopEl.remove();
@@ -1076,17 +1170,15 @@ function initContent() {
     `).join('');
   }
 
-  /* Penutup */
   $('ftCouple').textContent = `${first.nickname} & ${second.nickname}`;
 
-  /* Judul halaman & RSVP nama default */
   document.title = `Undangan Walimatul 'Ursy — ${first.nickname} & ${second.nickname}`;
   if (nama !== C.defaultGuest) $('rNama').value = nama;
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   COUNTDOWN — Animasi perpindahan angka halus
+   COUNTDOWN
    ══════════════════════════════════════════════════════════════ */
 function initCountdown() {
   const wrap = $('cdWrap');
@@ -1225,22 +1317,20 @@ function initRSVP() {
     msg.textContent = 'Terima kasih! Konfirmasi Anda telah diterima.';
     btn.textContent = 'Terkirim';
     form.reset();
-
-    renderGuests();
+    renderGuestbook();
 
     setTimeout(() => {
       btn.disabled = false;
       btn.textContent = 'Kirim RSVP';
-      msg.textContent = '';
-    }, 4000);
+    }, 3000);
   });
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   BUKU TAMU
+   GUESTBOOK / BUKU TAMU
    ══════════════════════════════════════════════════════════════ */
-function renderGuests() {
+function renderGuestbook() {
   const feed = $('gbFeed');
   const guests = LS.get('guests', []);
 
@@ -1251,37 +1341,34 @@ function renderGuests() {
 
   feed.innerHTML = guests.map(g => {
     const isHadir = g.kehadiran === 'hadir';
-    const badge = isHadir
-      ? '<span class="gb-badge hadir">Hadir</span>'
-      : '<span class="gb-badge tidak">Tidak Hadir</span>';
     const time = g.waktu ? new Date(g.waktu).toLocaleDateString('id-ID', {
-      day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+      day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
     }) : '';
-
     return `
       <div class="gb-comment">
         <div class="gb-top">
           <span class="gb-name">${esc(g.nama)}</span>
-          ${badge}
+          <span class="gb-badge ${isHadir ? 'hadir' : 'tidak'}">${isHadir ? 'Hadir' : 'Tidak Hadir'}</span>
         </div>
         ${g.ucapan ? `<p class="gb-text">${esc(g.ucapan)}</p>` : ''}
         <span class="gb-time">${esc(time)}</span>
       </div>`;
   }).join('');
+
+  feed.scrollTop = 0;
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   SALIN REKENING
+   AMPLOP — SALIN NOMOR REKENING
    ══════════════════════════════════════════════════════════════ */
-function initBankCopy() {
+function initAmplop() {
   document.addEventListener('click', async (e) => {
     const btn = e.target.closest('.btn-cp');
     if (!btn) return;
-
     const num = btn.dataset.num;
+    if (!num) return;
     const ok = await copyText(num);
-
     if (ok) {
       btn.textContent = 'Tersalin';
       btn.classList.add('ok');
@@ -1290,21 +1377,17 @@ function initBankCopy() {
         btn.textContent = 'Salin';
         btn.classList.remove('ok');
       }, 2000);
-    } else {
-      toast('Gagal menyalin. Silakan salin manual.');
     }
   });
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   MUSIK
+   AUDIO TOGGLE
    ══════════════════════════════════════════════════════════════ */
 function initAudio() {
   const btn = $('aBtn');
   const audio = $('bgA');
-  if (!C.audioSrc) { btn.remove(); return; }
-
   btn.addEventListener('click', () => {
     if (audio.paused) {
       audio.play().then(() => btn.classList.add('playing')).catch(() => {});
@@ -1317,49 +1400,47 @@ function initAudio() {
 
 
 /* ══════════════════════════════════════════════════════════════
-   SCROLL PROGRESS & BACK TO TOP
+   SCROLL PROGRESS BAR
    ══════════════════════════════════════════════════════════════ */
-function initScroll() {
-  const prog = $('prog');
-  const toTop = $('toTop');
-
-  window.addEventListener('scroll', () => {
+function initProgress() {
+  const bar = $('prog');
+  const update = () => {
     const h = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
-    prog.style.width = pct + '%';
+    bar.style.width = h > 0 ? (window.scrollY / h * 100) + '%' : '0%';
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
 
-    if (window.scrollY > 600) {
-      toTop.classList.add('show');
-    } else {
-      toTop.classList.remove('show');
-    }
+
+/* ══════════════════════════════════════════════════════════════
+   BACK TO TOP
+   ══════════════════════════════════════════════════════════════ */
+function initToTop() {
+  const btn = $('toTop');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('show', window.scrollY > 600);
   }, { passive: true });
-
-  toTop.addEventListener('click', () => {
+  btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   MULAI SEMUA
+   INIT
    ══════════════════════════════════════════════════════════════ */
-function init() {
+document.addEventListener('DOMContentLoaded', () => {
   initContent();
   initCountdown();
   initCover();
   initRSVP();
-  renderGuests();
-  initBankCopy();
+  renderGuestbook();
+  initAmplop();
   initAudio();
-  initScroll();
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
+  initProgress();
+  initToTop();
+});
 </script>
 </body>
 </html>
