@@ -51,18 +51,22 @@
    RESET & BASE
    ═══════════════════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   font-family:'Jost',sans-serif;
   background:#F8F7F5;
   color:var(--text-d);
   -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
   overflow-x:hidden;
+  /* Safe area untuk ponsel dengan notch */
+  padding-left:env(safe-area-inset-left);
+  padding-right:env(safe-area-inset-right);
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
 }
-img{display:block;max-width:100%}
+img{display:block;max-width:100%;height:auto}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
 a{color:inherit;text-decoration:none}
 button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
@@ -82,11 +86,13 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
   position:fixed;bottom:28px;left:50%;
   transform:translate(-50%,14px);opacity:0;pointer-events:none;
   background:rgba(255,255,255,.96);backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
   color:var(--text-d);padding:11px 24px;border-radius:40px;
   font-size:.8rem;letter-spacing:.02em;
   border:1px solid #D8DCE2;z-index:900;
   transition:opacity .5s var(--ease),transform .5s var(--ease);
-  max-width:88vw;text-align:center;
+  max-width:calc(88vw - env(safe-area-inset-left) - env(safe-area-inset-right));
+  text-align:center;
   box-shadow:0 4px 20px rgba(74,98,125,.08);
 }
 #toast.show{opacity:1;transform:translate(-50%,0)}
@@ -127,7 +133,7 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 /* ═══════════════════════════════════════════════════════════
    SECTION BASE
    ═══════════════════════════════════════════════════════════ */
-section{padding:100px 28px;position:relative;overflow:hidden}
+section{padding:100px 24px;position:relative;overflow:hidden}
 .sec-inner{max-width:var(--maxw);margin:0 auto;position:relative;z-index:1}
 .eyebrow{
   display:block;font-family:'Reem Kufi',sans-serif;
@@ -154,7 +160,7 @@ h2.st.dark{color:#4A627D}
 #jadwal .g-rule,
 #penutup .ft-rule{
   background:none;
-  width:140px;height:28px;
+  width:120px;height:24px;
   background-image:url('assets/floral/divider.png');
   background-position:center;
   background-repeat:no-repeat;
@@ -165,9 +171,6 @@ h2.st.dark{color:#4A627D}
 
 /* ═══════════════════════════════════════════════════════════
    FLORAL CORNER SYSTEM
-   Ditambahkan oleh JavaScript berdasarkan konfigurasi.
-   Setiap sudut bisa diaktifkan/nonaktifkan per section.
-   Ukuran: sm (kecil), md (sedang), lg (besar)
    ═══════════════════════════════════════════════════════════ */
 .floral-corner{
   position:absolute;
@@ -183,31 +186,22 @@ h2.st.dark{color:#4A627D}
 
 /* Ukuran sm (default) */
 .fc-tl,.fc-tr,.fc-bl,.fc-br{
-  width:min(30vw,200px);
-  height:min(30vw,200px);
+  width:180px;height:180px;
 }
 /* Ukuran md */
 .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{
-  width:min(42vw,300px);
-  height:min(42vw,300px);
+  width:260px;height:260px;
 }
 /* Ukuran lg */
 .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{
-  width:min(56vw,380px);
-  height:min(56vw,380px);
+  width:340px;height:340px;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   HERO FLORAL — floral-left & floral-right MELINGKARI NAMA
-   Ditempatkan di dalam .h-names agar selalu mengikuti posisi
+   HERO FLORAL — floral-left & floral-right
    ═══════════════════════════════════════════════════════════ */
-#hero{
-  overflow:visible !important;
-}
-.h-names{
-  position:relative;
-  overflow:visible;
-}
+#hero{overflow:visible !important}
+.h-names{position:relative;overflow:visible}
 .hero-floral{
   position:absolute;
   pointer-events:none;
@@ -215,8 +209,7 @@ h2.st.dark{color:#4A627D}
   background-repeat:no-repeat;
   background-size:contain;
   top:50%;
-  width:min(32vw,230px);
-  height:min(50vw,360px);
+  width:160px;height:240px;
 }
 .hero-floral-left{
   right:100%;
@@ -240,7 +233,7 @@ h2.st.dark{color:#4A627D}
 #rsvp{background-color:var(--c-rsvp)}
 #bukutamu{background-color:var(--c-tamu)}
 #amplop{background-color:var(--c-amplop)}
-#penutup{background-color:var(--c-penutup);text-align:center;padding:90px 28px 80px}
+#penutup{background-color:var(--c-penutup);text-align:center;padding:90px 24px 80px}
 
 /* ═══════════════════════════════════════════════════════════
    1. COVER — Konten
@@ -257,17 +250,16 @@ h2.st.dark{color:#4A627D}
     -10px -10px,
     calc(100% + 10px) calc(100% + 10px);
   background-repeat:no-repeat;
-  background-size:
-    min(56vw, 380px) auto,
-    min(56vw, 380px) auto;
+  background-size:280px auto, 280px auto;
   transition:opacity .9s var(--ease),visibility .9s;
-  overflow:hidden;padding:48px 32px;text-align:center;
+  overflow:hidden;padding:48px 24px;text-align:center;
+  max-width:100vw;
 }
 #cover.out{opacity:0;visibility:hidden;pointer-events:none}
 
 .cv-bismillah{
   font-family:'Amiri',serif;direction:rtl;
-  font-size:clamp(1.3rem,4vw,1.6rem);
+  font-size:clamp(1.3rem,4.5vw,1.6rem);
   color:#8DA5BE;letter-spacing:.02em;line-height:1.5;
   margin-bottom:48px;opacity:0;animation:fadeUp .8s .2s var(--ease) forwards;
 }
@@ -279,7 +271,7 @@ h2.st.dark{color:#4A627D}
 }
 .cv-couple{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(3rem,9vw,4.2rem);
+  font-size:clamp(2.6rem,10vw,4.2rem);
   font-weight:400;letter-spacing:.04em;
   color:#4A627D;line-height:1.05;
   opacity:0;animation:fadeUp .8s .48s var(--ease) forwards;
@@ -299,22 +291,24 @@ h2.st.dark{color:#4A627D}
 }
 .cv-guest{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(1.3rem,4.5vw,1.6rem);
+  font-size:clamp(1.2rem,5vw,1.6rem);
   font-style:italic;color:#7C8DA3;margin-bottom:44px;
   word-break:break-word;
+  max-width:90vw;
   opacity:0;animation:fadeUp .8s .82s var(--ease) forwards;
 }
 .cv-btn{
   display:inline-flex;align-items:center;gap:10px;
   background:#8DA5BE;color:#FFFFFF;
-  border:none;padding:14px 32px;border-radius:40px;
+  border:none;padding:14px 28px;border-radius:40px;
   font-size:.84rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;
   transition:background .4s var(--ease),transform .3s var(--ease),box-shadow .3s;
   opacity:0;animation:fadeUp .8s .94s var(--ease) forwards;
   box-shadow:0 4px 16px rgba(141,165,190,.25);
 }
 .cv-btn:hover{background:#7B96B0;transform:translateY(-1px);box-shadow:0 6px 20px rgba(141,165,190,.3)}
-.cv-btn svg{width:15px;height:15px}
+.cv-btn:active{transform:scale(.97)}
+.cv-btn svg{width:15px;height:15px;flex-shrink:0}
 
 /* ═══════════════════════════════════════════════════════════
    INVITATION WRAPPER
@@ -333,11 +327,11 @@ h2.st.dark{color:#4A627D}
 .ayat-box{max-width:440px;margin:0 auto;text-align:center}
 .ayat-ar{
   font-family:'Amiri',serif;direction:rtl;
-  font-size:clamp(1.05rem,3.6vw,1.25rem);
+  font-size:clamp(1rem,3.8vw,1.25rem);
   line-height:2.25;color:#8DA5BE;
 }
 .ayat-tr{
-  font-size:.82rem;font-style:italic;font-weight:300;
+  font-size:clamp(.78rem,2.5vw,.82rem);font-style:italic;font-weight:300;
   color:#7C8DA3;margin-top:18px;line-height:1.95;
 }
 .ayat-src{
@@ -349,21 +343,21 @@ h2.st.dark{color:#4A627D}
    3. HERO — Konten
    ═══════════════════════════════════════════════════════════ */
 #hero{
-  padding:100px 28px 120px;text-align:center;
-  min-height:90vh;
+  padding:100px 24px 120px;text-align:center;
+  min-height:80vh;
   display:flex;align-items:center;justify-content:center;
 }
 #hero .sec-inner{width:100%}
 .h-greeting{
   max-width:440px;margin:0 auto 40px;
-  font-size:.88rem;font-weight:300;line-height:2;color:#7C8DA3;
+  font-size:clamp(.82rem,2.6vw,.88rem);font-weight:300;line-height:2;color:#7C8DA3;
 }
 .h-greeting .tamu{color:#4A627D;font-style:italic}
 .h-names{margin-bottom:22px}
 .h-name{
   display:block;position:relative;z-index:1;
   font-family:'Cormorant Garamond',serif;
-  font-weight:400;font-size:clamp(3.5rem,12vw,5rem);
+  font-weight:400;font-size:clamp(2.8rem,12vw,5rem);
   letter-spacing:.03em;line-height:1.0;color:#4A627D;
 }
 .h-amp{
@@ -378,9 +372,10 @@ h2.st.dark{color:#4A627D}
 }
 
 /* ── Countdown ── */
-.cd-wrap{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.cd-wrap{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
 .cd-box{
-  min-width:60px;padding:14px 8px 12px;
+  min-width:56px;flex:1 1 56px;max-width:90px;
+  padding:14px 6px 12px;
   background:#FFFFFF;
   border:1px solid #D8DCE2;
   border-radius:12px;text-align:center;
@@ -390,12 +385,12 @@ h2.st.dark{color:#4A627D}
 .cd-n{
   display:block;
   font-family:'Cormorant Garamond',serif;
-  font-size:1.55rem;font-weight:400;color:#4A627D;
+  font-size:clamp(1.3rem,4vw,1.55rem);font-weight:400;color:#4A627D;
   line-height:1;
   transition:opacity .3s ease-out,transform .3s ease-out;
 }
 .cd-l{
-  display:block;font-size:.56rem;letter-spacing:.1em;
+  display:block;font-size:clamp(.5rem,1.6vw,.56rem);letter-spacing:.1em;
   text-transform:uppercase;color:#7C8DA3;margin-top:6px;
 }
 .cd-done{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#4A627D}
@@ -407,7 +402,7 @@ h2.st.dark{color:#4A627D}
 
 .couple-wrap{max-width:420px;margin:0 auto}
 .cp{
-  padding:36px 24px;text-align:center;
+  padding:32px 20px;text-align:center;
   background:#FFFFFF;
   border:1px solid #D8DCE2;
   border-radius:14px;
@@ -415,7 +410,7 @@ h2.st.dark{color:#4A627D}
 }
 .cp-name{
   font-family:'Cormorant Garamond',serif;
-  font-size:1.85rem;font-weight:500;
+  font-size:clamp(1.5rem,5vw,1.85rem);font-weight:500;
   color:#4A627D;letter-spacing:.03em;
   margin-bottom:8px;position:relative;
   display:inline-block;
@@ -431,7 +426,7 @@ h2.st.dark{color:#4A627D}
   margin-bottom:14px;opacity:.9;
 }
 .cp-parents{
-  font-size:.84rem;font-weight:300;
+  font-size:clamp(.78rem,2.5vw,.84rem);font-weight:300;
   color:#7C8DA3;line-height:1.85;margin-bottom:14px;
 }
 .cp-ig{
@@ -441,7 +436,7 @@ h2.st.dark{color:#4A627D}
   transition:color .3s,border-color .3s;
 }
 .cp-ig:hover{color:#8DA5BE;border-color:#8DA5BE}
-.cp-ig svg{width:12px;height:12px}
+.cp-ig svg{width:12px;height:12px;flex-shrink:0}
 
 .cp-sep{
   display:flex;align-items:center;gap:18px;
@@ -455,17 +450,17 @@ h2.st.dark{color:#4A627D}
 }
 
 /* ═══════════════════════════════════════════════════════════
-   5. JADWAL — Vertical Timeline (proporsional)
+   5. JADWAL — Vertical Timeline
    ═══════════════════════════════════════════════════════════ */
 .timeline{
-  max-width:400px;
+  max-width:440px;
   margin:0 auto;
   position:relative;
-  padding-left:32px;
+  padding-left:30px;
 }
 .tl-line{
   position:absolute;
-  left:10px;
+  left:9px;
   top:8px;
   bottom:8px;
   width:1px;
@@ -473,8 +468,8 @@ h2.st.dark{color:#4A627D}
 }
 .tl-item{
   display:flex;
-  gap:18px;
-  padding:26px 24px;
+  gap:14px;
+  padding:22px 20px;
   position:relative;
   background:#FFFFFF;
   border:1px solid #D8DCE2;
@@ -485,8 +480,8 @@ h2.st.dark{color:#4A627D}
 .tl-item:last-child{margin-bottom:0}
 .tl-dot{
   position:absolute;
-  left:-27px;
-  top:30px;
+  left:-26px;
+  top:28px;
   width:9px;
   height:9px;
   border-radius:50%;
@@ -497,13 +492,13 @@ h2.st.dark{color:#4A627D}
 .tl-time{
   flex-shrink:0;
   width:auto;
-  min-width:90px;
+  min-width:80px;
   padding-top:4px;
   text-align:right;
 }
 .tl-time .tl-hour{
   font-family:'Cormorant Garamond',serif;
-  font-size:1.15rem;font-weight:400;color:#4A627D;line-height:1;display:block;
+  font-size:clamp(1rem,3.2vw,1.15rem);font-weight:400;color:#4A627D;line-height:1;display:block;
 }
 .tl-time .tl-wib{
   font-size:.58rem;letter-spacing:.1em;color:#AAB5C2;
@@ -516,11 +511,11 @@ h2.st.dark{color:#4A627D}
 }
 .tl-event{
   font-family:'Cormorant Garamond',serif;
-  font-size:1.18rem;font-weight:400;color:#4A627D;margin-bottom:8px;
+  font-size:clamp(1rem,3.2vw,1.18rem);font-weight:400;color:#4A627D;margin-bottom:8px;
   line-height:1.35;
 }
-.tl-venue{font-size:.82rem;font-weight:300;color:#4A627D;margin-bottom:4px;line-height:1.6}
-.tl-addr{font-size:.74rem;color:#7C8DA3;line-height:1.6}
+.tl-venue{font-size:clamp(.76rem,2.5vw,.82rem);font-weight:300;color:#4A627D;margin-bottom:4px;line-height:1.6}
+.tl-addr{font-size:clamp(.7rem,2.3vw,.74rem);color:#7C8DA3;line-height:1.6}
 .tl-date-sub{font-size:.72rem;color:#AAB5C2;margin-top:8px;letter-spacing:.02em}
 
 /* ═══════════════════════════════════════════════════════════
@@ -532,7 +527,7 @@ h2.st.dark{color:#4A627D}
   margin-bottom:20px;
   box-shadow:0 2px 14px rgba(74,98,125,.05);
 }
-.map-frame iframe{display:block;width:100%;height:280px;border:0}
+.map-frame iframe{display:block;width:100%;height:260px;border:0}
 .loc-btns{display:flex;flex-direction:column;gap:10px}
 .btn-loc{
   display:flex;align-items:center;justify-content:center;gap:9px;
@@ -544,6 +539,7 @@ h2.st.dark{color:#4A627D}
   box-shadow:0 2px 8px rgba(74,98,125,.03);
 }
 .btn-loc:hover{background:rgba(141,165,190,.06);border-color:rgba(141,165,190,.35);color:#4A627D;box-shadow:0 4px 14px rgba(74,98,125,.06)}
+.btn-loc:active{transform:scale(.98)}
 .btn-loc svg{width:15px;height:15px;flex-shrink:0}
 
 /* ═══════════════════════════════════════════════════════════
@@ -565,7 +561,7 @@ h2.st.dark{color:#4A627D}
   background:#FFFFFF;
   border:1px solid #D8DCE2;border-radius:10px;
   color:#4A627D;font-family:'Jost',sans-serif;
-  font-size:.88rem;font-weight:300;outline:none;
+  font-size:clamp(.82rem,2.8vw,.88rem);font-weight:300;outline:none;
   transition:border-color .3s,background .3s,box-shadow .3s;
   box-shadow:0 1px 6px rgba(74,98,125,.03);
 }
@@ -588,7 +584,7 @@ h2.st.dark{color:#4A627D}
   background:#FFFFFF;
   border:1px solid #D8DCE2;border-radius:10px;
   color:#4A627D;font-family:'Jost',sans-serif;
-  font-size:.88rem;font-weight:300;outline:none;
+  font-size:clamp(.82rem,2.8vw,.88rem);font-weight:300;outline:none;
   appearance:none;-webkit-appearance:none;-moz-appearance:none;
   cursor:pointer;transition:border-color .3s,background .3s,box-shadow .3s;
   box-shadow:0 1px 6px rgba(74,98,125,.03);
@@ -631,10 +627,10 @@ h2.st.dark{color:#4A627D}
 }
 .gb-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;flex-wrap:wrap}
 .gb-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:#4A627D;font-weight:400}
-.gb-badge{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+.gb-badge{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;white-space:nowrap}
 .gb-badge.hadir{background:rgba(141,165,190,.1);color:#4A627D}
 .gb-badge.tidak{background:rgba(0,0,0,.03);color:#7C8DA3}
-.gb-text{font-size:.84rem;color:#7C8DA3;font-weight:300;line-height:1.75;margin-bottom:8px}
+.gb-text{font-size:clamp(.78rem,2.5vw,.84rem);color:#7C8DA3;font-weight:300;line-height:1.75;margin-bottom:8px;word-break:break-word}
 .gb-time{font-size:.68rem;color:#AAB5C2}
 
 /* ═══════════════════════════════════════════════════════════
@@ -644,27 +640,27 @@ h2.st.dark{color:#4A627D}
 #amplop .eyebrow.gd{color:#7C8DA3}
 
 .amp-note{
-  text-align:center;font-size:.84rem;font-weight:300;
+  text-align:center;font-size:clamp(.78rem,2.5vw,.84rem);font-weight:300;
   color:#7C8DA3;line-height:1.9;max-width:400px;margin:0 auto 36px;
 }
 .bank-list{display:flex;flex-direction:column;gap:12px}
 #amplop .bank-card{
-  display:flex;align-items:center;gap:16px;
+  display:flex;align-items:center;gap:14px;
   background:#FFFFFF;
   border:1px solid #D8DCE2;
-  padding:20px 22px;border-radius:14px;
+  padding:18px 20px;border-radius:14px;
   transition:border-color .3s,background .3s,box-shadow .3s;
   box-shadow:0 2px 10px rgba(74,98,125,.03);
 }
 #amplop .bank-card:hover{border-color:rgba(141,165,190,.3);box-shadow:0 4px 16px rgba(74,98,125,.06)}
 .bk-name{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:#D8C8A0;margin-bottom:4px;opacity:.9}
-#amplop .bk-num{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:#4A627D;letter-spacing:.03em}
+#amplop .bk-num{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,3.2vw,1.15rem);color:#4A627D;letter-spacing:.03em;word-break:break-all}
 #amplop .bk-holder{font-size:.76rem;color:#7C8DA3;margin-top:2px}
-.bk-info{flex:1}
+.bk-info{flex:1;min-width:0}
 #amplop .btn-cp{
   border:1px solid #D8DCE2;color:#4A627D;
-  padding:9px 16px;border-radius:20px;font-size:.76rem;
-  letter-spacing:.06em;flex-shrink:0;
+  padding:9px 14px;border-radius:20px;font-size:.76rem;
+  letter-spacing:.06em;flex-shrink:0;white-space:nowrap;
   transition:background .3s,border-color .3s,color .3s;
 }
 #amplop .btn-cp:hover{background:rgba(141,165,190,.08);border-color:rgba(141,165,190,.35)}
@@ -673,23 +669,31 @@ h2.st.dark{color:#4A627D}
 /* ═══════════════════════════════════════════════════════════
    10. PENUTUP — Konten
    ═══════════════════════════════════════════════════════════ */
-.ft-ar{font-family:'Amiri',serif;direction:rtl;font-size:1.3rem;color:#8DA5BE;margin-bottom:16px}
-.ft-doa{font-size:.84rem;font-weight:300;font-style:italic;color:#7C8DA3;max-width:360px;margin:0 auto 32px;line-height:1.95}
-.ft-thanks{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:#4A627D;margin-bottom:5px}
+.ft-ar{font-family:'Amiri',serif;direction:rtl;font-size:clamp(1.1rem,3.8vw,1.3rem);color:#8DA5BE;margin-bottom:16px}
+.ft-doa{font-size:clamp(.78rem,2.5vw,.84rem);font-weight:300;font-style:italic;color:#7C8DA3;max-width:360px;margin:0 auto 32px;line-height:1.95}
+.ft-thanks{font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,4vw,1.4rem);font-weight:300;color:#4A627D;margin-bottom:5px}
 .ft-couple{font-size:.82rem;color:#8DA5BE;letter-spacing:.06em}
 .ft-credit{font-size:.62rem;color:#AAB5C2;margin-top:36px;letter-spacing:.04em}
 
 /* ═══════════════════════════════════════════════════════════
    FLOATING BUTTONS
    ═══════════════════════════════════════════════════════════ */
+.fab-group{
+  position:fixed;bottom:24px;right:24px;z-index:40;
+  display:flex;align-items:flex-end;gap:10px;
+  /* Safe area untuk ponsel dengan home indicator */
+  bottom:calc(24px + env(safe-area-inset-bottom));
+  right:calc(24px + env(safe-area-inset-right));
+}
 #aBtn{
-  position:fixed;bottom:26px;right:26px;z-index:40;
   width:46px;height:46px;border-radius:50%;
   background:rgba(141,165,190,.92);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
   border:1px solid rgba(255,255,255,.2);color:#FFFFFF;
   display:flex;align-items:center;justify-content:center;gap:2px;
   box-shadow:0 4px 16px rgba(141,165,190,.3);
   transition:transform .3s var(--ease),border-color .3s;
+  flex-shrink:0;
 }
 #aBtn:hover{transform:scale(1.08);border-color:rgba(255,255,255,.35)}
 #aBtn.hidden{display:none}
@@ -704,75 +708,253 @@ h2.st.dark{color:#4A627D}
 @keyframes waveMove{0%,100%{height:4px}50%{height:13px}}
 
 #toTop{
-  position:fixed;bottom:26px;right:82px;z-index:40;
   width:36px;height:36px;border-radius:50%;
   background:#8DA5BE;color:#fff;
   display:flex;align-items:center;justify-content:center;
   box-shadow:0 3px 12px rgba(141,165,190,.25);
   opacity:0;transform:translateY(10px) scale(.9);pointer-events:none;
   transition:opacity .35s var(--ease),transform .35s var(--ease);
+  flex-shrink:0;
 }
 #toTop.show{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
 #toTop:hover{transform:translateY(-2px) scale(1.05)}
 #toTop svg{width:17px;height:17px}
 
 /* ═══════════════════════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE — Tablet (768px ke atas)
    ═══════════════════════════════════════════════════════════ */
-@media(max-width:480px){
+@media(min-width:768px){
+  section{padding:110px 32px}
+
+  /* Floral corner lebih besar di tablet+ */
+  .fc-tl,.fc-tr,.fc-bl,.fc-br{width:220px;height:220px}
+  .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:300px;height:300px}
+  .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:380px;height:380px}
+
+  /* Hero floral lebih besar */
+  .hero-floral{width:220px;height:330px}
+
+  /* Cover floral lebih besar */
   #cover{
-    background-size:
-      min(68vw, 320px) auto,
-      min(68vw, 320px) auto;
+    background-size:340px auto, 340px auto;
   }
 
-  /* Floral corner: sm lebih besar % agar tetap terlihat */
-  .fc-tl,.fc-tr,.fc-bl,.fc-br{width:min(38vw,190px);height:min(38vw,190px)}
-  .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:min(50vw,280px);height:min(50vw,280px)}
-  .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:min(68vw,320px);height:min(68vw,320px)}
+  /* Divider lebih besar */
+  #ayat .g-rule,
+  #mempelai .g-rule,
+  #jadwal .g-rule,
+  #penutup .ft-rule{
+    width:140px;height:28px;
+  }
 
-  /* Hero floral: sesuaikan ukuran */
-  .hero-floral{width:min(36vw,180px);height:min(54vw,270px)}
-  .hero-floral-left{transform:translateY(-50%) translateX(12%)}
-  .hero-floral-right{transform:translateY(-50%) translateX(-12%)}
+  /* Map lebih tinggi */
+  .map-frame iframe{height:340px}
 
-  /* Timeline */
-  .timeline{padding-left:28px}
-  .tl-line{left:9px}
-  .tl-dot{left:-24px}
-  .tl-time{min-width:80px}
-  .tl-item{padding:22px 20px}
+  /* Timeline lebih lega */
+  .timeline{padding-left:36px}
+  .tl-line{left:11px}
+  .tl-dot{left:-30px;top:32px}
+  .tl-item{padding:26px 24px;gap:18px}
+  .tl-time{min-width:100px}
+
+  /* Countdown lebih lega */
+  .cd-wrap{gap:14px}
+  .cd-box{min-width:68px;flex:1 1 68px;max-width:100px;padding:16px 10px 14px}
+
+  /* Mempelai card lebih lega */
+  .cp{padding:40px 32px}
+
+  /* Floating buttons sedikit lebih jauh */
+  .fab-group{bottom:32px;right:32px}
 }
 
-@media(max-width:360px){
-  #cover{
-    background-size:
-      min(78vw, 280px) auto,
-      min(78vw, 280px) auto;
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE — Desktop besar (1024px+)
+   ═══════════════════════════════════════════════════════════ */
+@media(min-width:1024px){
+  :root{--maxw:600px}
+
+  section{padding:120px 40px}
+
+  .fc-tl,.fc-tr,.fc-bl,.fc-br{width:250px;height:250px}
+  .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:340px;height:340px}
+  .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:420px;height:420px}
+
+  .hero-floral{width:260px;height:390px}
+
+  #cover{background-size:380px auto, 380px auto}
+
+  .map-frame iframe{height:400px}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE — Ponsel kecil (480px ke bawah)
+   ═══════════════════════════════════════════════════════════ */
+@media(max-width:480px){
+  section{padding:80px 18px}
+  #penutup{padding:72px 18px 60px}
+
+  /* Cover floral menyesuaikan */
+  #cover{background-size:200px auto, 200px auto}
+
+  /* Floral corner diperkecil */
+  .fc-tl,.fc-tr,.fc-bl,.fc-br{width:140px;height:140px}
+  .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:190px;height:190px}
+  .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:220px;height:220px}
+
+  /* Hero floral diperkecil dan didekati */
+  .hero-floral{width:100px;height:150px}
+  .hero-floral-left{transform:translateY(-50%) translateX(15%)}
+  .hero-floral-right{transform:translateY(-50%) translateX(-15%)}
+
+  /* Timeline lebih ringkas */
+  .timeline{padding-left:26px}
+  .tl-line{left:8px}
+  .tl-dot{left:-23px;top:24px;width:8px;height:8px}
+  .tl-item{padding:18px 16px;gap:10px}
+  .tl-time{min-width:70px}
+
+  /* Countdown lebih ringkas */
+  .cd-wrap{gap:8px}
+  .cd-box{min-width:50px;flex:1 1 50px;padding:12px 4px 10px}
+
+  /* Map lebih pendek */
+  .map-frame iframe{height:220px}
+
+  /* Mempelai card lebih ringkas */
+  .cp{padding:26px 16px}
+  .couple-wrap{max-width:100%}
+
+  /* Bank card lebih ringkas */
+  #amplop .bank-card{padding:16px;gap:12px}
+
+  /* Divider lebih kecil */
+  #ayat .g-rule,
+  #mempelai .g-rule,
+  #jadwal .g-rule,
+  #penutup .ft-rule{
+    width:90px;height:18px;
   }
 
-  .fc-tl,.fc-tr,.fc-bl,.fc-br{width:min(44vw,170px);height:min(44vw,170px)}
-  .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:min(56vw,240px);height:min(56vw,240px)}
-  .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:min(78vw,280px);height:min(78vw,280px)}
+  /* Floating buttons */
+  .fab-group{bottom:18px;right:16px;gap:8px}
+  #aBtn{width:42px;height:42px}
+  #toTop{width:32px;height:32px}
+  #toTop svg{width:14px;height:14px}
+}
 
-  .hero-floral{width:min(40vw,150px);height:min(58vw,220px)}
-  .hero-floral-left{transform:translateY(-50%) translateX(20%)}
-  .hero-floral-right{transform:translateY(-50%) translateX(-20%)}
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE — Ponsel sangat kecil (360px ke bawah)
+   ═══════════════════════════════════════════════════════════ */
+@media(max-width:360px){
+  section{padding:64px 14px}
+  #penutup{padding:56px 14px 48px}
 
-  section{padding:72px 20px}
-  .h-name{font-size:2.8rem}
-  .cv-couple{font-size:2.6rem}
-  h2.st{font-size:1.7rem}
-  #mempelai h2.st{font-size:1.3rem}
-  .cp-name{font-size:1.6rem}
-  #toTop{right:78px}
+  #cover{
+    background-size:160px auto, 160px auto;
+    padding:36px 16px;
+  }
 
-  /* Timeline */
-  .timeline{padding-left:24px}
-  .tl-line{left:7px}
-  .tl-dot{left:-22px}
-  .tl-item{padding:20px 18px;gap:14px}
-  .tl-time{min-width:72px}
+  .fc-tl,.fc-tr,.fc-bl,.fc-br{width:110px;height:110px}
+  .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:150px;height:150px}
+  .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:180px;height:180px}
+
+  .hero-floral{width:70px;height:105px}
+  .hero-floral-left{transform:translateY(-50%) translateX(25%)}
+  .hero-floral-right{transform:translateY(-50%) translateX(-25%)}
+
+  .cv-btn{padding:12px 22px;font-size:.78rem}
+
+  .timeline{padding-left:22px}
+  .tl-line{left:6px}
+  .tl-dot{left:-20px;top:22px}
+  .tl-item{padding:16px 14px;gap:8px}
+
+  .cd-box{min-width:46px;padding:10px 3px 8px}
+
+  .map-frame iframe{height:180px}
+
+  .cp{padding:22px 14px}
+
+  #amplop .bank-card{flex-direction:column;align-items:stretch;text-align:center;gap:10px}
+  #amplop .btn-cp{width:100%;text-align:center;justify-content:center}
+
+  .btn-loc{padding:12px 14px;font-size:.8rem}
+
+  #rsvp .fg input,
+  #rsvp .fg textarea,
+  #rsvp .select-wrap select{padding:11px 14px}
+
+  .gb-comment{padding:14px 16px}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE — Ponsel ultra kecil (320px ke bawah)
+   ═══════════════════════════════════════════════════════════ */
+@media(max-width:320px){
+  section{padding:52px 12px}
+  #penutup{padding:44px 12px 40px}
+
+  #cover{background-size:130px auto, 130px auto;padding:28px 12px}
+
+  .fc-tl,.fc-tr,.fc-bl,.fc-br{width:90px;height:90px}
+  .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:120px;height:120px}
+  .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:150px;height:150px}
+
+  .hero-floral{width:50px;height:75px}
+
+  .cv-bismillah{font-size:1.1rem;margin-bottom:32px}
+  .cv-couple{font-size:2.2rem}
+
+  .h-name{font-size:2.4rem}
+
+  .cd-box{min-width:42px;padding:8px 2px 6px}
+  .cd-n{font-size:1.1rem}
+
+  .tl-time{min-width:60px}
+  .tl-item{padding:14px 12px}
+
+  .cp{padding:18px 12px}
+
+  .btn-submit{padding:13px;font-size:.8rem}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE — Landscape ponsel
+   ═══════════════════════════════════════════════════════════ */
+@media(max-height:500px) and (orientation:landscape){
+  #cover{padding:24px 32px}
+  .cv-bismillah{margin-bottom:20px}
+  .cv-couple{margin-bottom:8px}
+  .cv-rule{margin:20px auto}
+  .cv-guest{margin-bottom:24px}
+
+  #hero{min-height:auto;padding:60px 24px 80px}
+  .h-greeting{margin-bottom:24px}
+  .h-date{margin-bottom:32px}
+
+  section{padding:48px 24px}
+  #penutup{padding:40px 24px 32px}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE — Hover hanya di perangkat dengan pointer
+   (mencegah sticky hover di touch device)
+   ═══════════════════════════════════════════════════════════ */
+@media(hover:none){
+  .cv-btn:hover,
+  .btn-submit:hover,
+  .btn-loc:hover,
+  .cp-ig:hover,
+  #amplop .btn-cp:hover,
+  #aBtn:hover,
+  #toTop:hover,
+  #amplop .bank-card:hover{
+    transform:none;
+    background:inherit;
+    border-color:inherit;
+    box-shadow:inherit;
+  }
 }
 </style>
 </head>
@@ -952,16 +1134,16 @@ h2.st.dark{color:#4A627D}
 
 </main>
 
-<!-- Tombol musik -->
-<button id="aBtn" class="hidden" aria-label="Putar / hentikan musik">
-  <svg class="note-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l12-2v13M9 18a3 3 0 11-6 0 3 3 0 016 0zm12-2a3 3 0 11-6 0 3 3 0 016 0z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-  <span class="wave-bars"><span></span><span></span><span></span></span>
-</button>
-
-<!-- Tombol kembali ke atas -->
-<button id="toTop" aria-label="Kembali ke atas">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
+<!-- Tombol floating digabung dalam satu group -->
+<div class="fab-group" id="fabGroup" style="display:none">
+  <button id="toTop" aria-label="Kembali ke atas">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <button id="aBtn" class="hidden" aria-label="Putar / hentikan musik">
+    <svg class="note-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l12-2v13M9 18a3 3 0 11-6 0 3 3 0 016 0zm12-2a3 3 0 11-6 0 3 3 0 016 0z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+    <span class="wave-bars"><span></span><span></span><span></span></span>
+  </button>
+</div>
 
 <audio id="bgA" loop preload="none"></audio>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -973,7 +1155,7 @@ h2.st.dark{color:#4A627D}
    KONFIGURASI — EDIT SEMUA DATA DI SINI SAJA
    ══════════════════════════════════════════════════════════════════ */
 
-const C = {
+var C = {
 
   /* ── Urutan tampilan mempelai ── */
   displayOrder: 'bride-groom',
@@ -981,40 +1163,17 @@ const C = {
   /* ── Tampilkan / sembunyikan section Amplop Digital ── */
   showAmplop: false,
 
-  /* ── Tampilkan / sembunyikan akun Instagram mempelai ──
-     true  = tampilkan link Instagram di kartu mempelai
-     false = sembunyikan (tidak ditampilkan sama sekali) */
+  /* ── Tampilkan / sembunyikan akun Instagram mempelai ── */
   showInstagram: true,
 
-  /* ── Tampilkan / sembunyikan floral-left & floral-right
-     yang melingkari nama di section Hero ──
-     true  = tampilkan
-     false = sembunyikan */
-  showHeroFlorals: true,
+  /* ── Tampilkan / sembunyikan floral-left & floral-right di Hero ── */
+  showHeroFlorals: false,
 
-  /* ── Opacity semua bunga (corner & hero) ──
-     0.0 = tak terlihat  |  0.5 = samar  |  0.75 = jelas
-     0.85 = sangat jelas  |  1.0 = penuh tanpa pengurangan */
+  /* ── Opacity semua bunga ── */
   floralOpacity: 1.0,
 
   /* ════════════════════════════════════════════════════════════
      KONFIGURASI BUNGA PER SECTION
-     Atur true/false untuk setiap sudut di setiap section.
-     tl = Top-Left    tr = Top-Right
-     bl = Bottom-Left br = Bottom-Right
-     size = 'sm' (kecil) | 'md' (sedang) | 'lg' (besar)
-
-     Contoh: hanya bunga di atas saja
-       ayat: { tl: true, tr: true, bl: false, br: false, size: 'sm' }
-
-     Contoh: semua sudut aktif
-       mempelai: { tl: true, tr: true, bl: true, br: true, size: 'sm' }
-
-     Contoh: tanpa bunga sama sekali
-       lokasi: { tl: false, tr: false, bl: false, br: false, size: 'sm' }
-
-     Untuk mematikan SEMUA bunga corner di SEMUA section,
-     ganti dengan: floralCorners: {},
      ════════════════════════════════════════════════════════════ */
   floralCorners: {
     ayat:     { tl: true,  tr: true,  bl: false, br: false, size: 'md' },
@@ -1092,12 +1251,13 @@ const C = {
 /* ══════════════════════════════════════════════════════════════
    UTILITIES
    ══════════════════════════════════════════════════════════════ */
-var $ = function(id) { return document.getElementById(id); };
-var esc = function(s) {
+function $(id) { return document.getElementById(id); }
+
+function esc(s) {
   return String(s || '').replace(/[&<>"']/g, function(c) {
     return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
   });
-};
+}
 
 function toast(msg, ms) {
   ms = ms || 2800;
@@ -1109,19 +1269,26 @@ function toast(msg, ms) {
 }
 
 function copyText(text) {
-  return navigator.clipboard.writeText(text).then(function() { return true; }).catch(function(_) {
-    try {
-      var ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      ta.remove();
-      return true;
-    } catch (_) { return false; }
-  });
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text).then(function() { return true; }).catch(function() {
+      return fallbackCopy(text);
+    });
+  }
+  return Promise.resolve(fallbackCopy(text));
+}
+
+function fallbackCopy(text) {
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;opacity:0;left:-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    document.execCommand('copy');
+    ta.remove();
+    return true;
+  } catch (e) { return false; }
 }
 
 function guestName() {
@@ -1133,11 +1300,11 @@ var _m = {};
 var LS = {
   get: function(k, fb) {
     try { var v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : fb; }
-    catch (_) { return _m[k] !== undefined ? _m[k] : fb; }
+    catch (e) { return _m[k] !== undefined ? _m[k] : fb; }
   },
   set: function(k, v) {
     _m[k] = v;
-    try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {}
+    try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {}
   }
 };
 
@@ -1146,9 +1313,7 @@ var MAP_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 
 
 /* ══════════════════════════════════════════════════════════════
-   FLORAL CORNER SYSTEM — Menambahkan bunga sudut berdasarkan
-   konfigurasi C.floralCorners.
-   Opacity diambil dari C.floralOpacity.
+   FLORAL CORNER SYSTEM
    ══════════════════════════════════════════════════════════════ */
 function initFlorals() {
   var positions = ['tl', 'tr', 'bl', 'br'];
@@ -1173,8 +1338,7 @@ function initFlorals() {
     }
   }
 
-  /* Hero: floral-left & floral-right diletakkan di dalam .h-names
-     agar selalu mengikuti posisi nama pasangan */
+  /* Hero: floral-left & floral-right */
   if (C.showHeroFlorals) {
     var hNames = document.querySelector('.h-names');
     if (hNames) {
@@ -1216,7 +1380,7 @@ function initContent() {
   $('hName2').textContent = second.nickname;
   $('hDate').textContent  = C.heroDate;
 
-  /* Instagram: tampilkan atau sembunyikan */
+  /* Instagram */
   function igLink(person) {
     if (!C.showInstagram) return '';
     var handle = person.instagram.replace('@', '');
@@ -1246,7 +1410,7 @@ function initContent() {
   /* Timeline Jadwal */
   var tlItems = [
     { label: 'Akad Nikah', hour: C.akad.timeStr, venue: C.akad.venue, addr: C.akad.address, date: C.akad.date, animClass: 'a-left' },
-    { label: 'Resepsi · Walimah', hour: C.walimah.timeStr, venue: C.walimah.venue, addr: C.walimah.address, date: C.walimah.date, animClass: 'a-right' }
+    { label: 'Resepsi \u00B7 Walimah', hour: C.walimah.timeStr, venue: C.walimah.venue, addr: C.walimah.address, date: C.walimah.date, animClass: 'a-right' }
   ];
   var tlHtml = '<div class="tl-line"></div>';
   for (var i = 0; i < tlItems.length; i++) {
@@ -1272,9 +1436,9 @@ function initContent() {
   /* Lokasi */
   $('mapFrame').src = C.walimah.mapsEmbed || C.akad.mapsEmbed;
   $('locBtns').innerHTML =
-    '<a class="btn-loc a-left" data-d="1" href="' + esc(C.akad.mapsUrl) + '" target="_blank" rel="noopener">' +
+    '<a class="btn-loc" href="' + esc(C.akad.mapsUrl) + '" target="_blank" rel="noopener">' +
       MAP_SVG + ' Arah ke Lokasi Akad</a>' +
-    '<a class="btn-loc a-right" data-d="2" href="' + esc(C.walimah.mapsUrl) + '" target="_blank" rel="noopener">' +
+    '<a class="btn-loc" href="' + esc(C.walimah.mapsUrl) + '" target="_blank" rel="noopener">' +
       MAP_SVG + ' Arah ke Lokasi Resepsi</a>';
 
   /* Amplop Digital */
@@ -1299,7 +1463,7 @@ function initContent() {
   }
 
   $('ftCouple').textContent = first.nickname + ' & ' + second.nickname;
-  document.title = "Undangan Walimatul 'Ursy — " + first.nickname + ' & ' + second.nickname;
+  document.title = "Undangan Walimatul 'Ursy \u2014 " + first.nickname + ' & ' + second.nickname;
 
   if (nama !== C.defaultGuest) $('rNama').value = nama;
 }
@@ -1357,10 +1521,16 @@ function initCountdown() {
 
 
 /* ══════════════════════════════════════════════════════════════
-   SCROLL ANIMATION
+   SCROLL ANIMATION — IntersectionObserver
    ══════════════════════════════════════════════════════════════ */
 function initScrollAnim() {
   var sel = '.a, .a-left, .a-right';
+  if (!('IntersectionObserver' in window)) {
+    /* Fallback: langsung tampilkan semua */
+    var all = document.querySelectorAll(sel);
+    for (var i = 0; i < all.length; i++) all[i].classList.add('visible');
+    return;
+  }
   var obs = new IntersectionObserver(function(entries) {
     for (var i = 0; i < entries.length; i++) {
       if (entries[i].isIntersecting) {
@@ -1371,32 +1541,76 @@ function initScrollAnim() {
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
   var targets = document.querySelectorAll(sel);
-  for (var i = 0; i < targets.length; i++) {
-    obs.observe(targets[i]);
+  for (var j = 0; j < targets.length; j++) {
+    obs.observe(targets[j]);
   }
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   COVER
+   SCROLL PROGRESS BAR
    ══════════════════════════════════════════════════════════════ */
-function initCover() {
-  $('btnBuka').addEventListener('click', function() {
-    $('cover').classList.add('out');
-    $('inv').classList.add('show');
+function initScrollProgress() {
+  var bar = $('prog');
+  var inv = $('inv');
+  function update() {
+    if (!inv) return;
+    var rect = inv.getBoundingClientRect();
+    var total = inv.scrollHeight - window.innerHeight;
+    if (total <= 0) { bar.style.width = '0%'; return; }
+    var scrolled = -rect.top;
+    var pct = Math.max(0, Math.min(100, (scrolled / total) * 100));
+    bar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
 
-    if (C.audioSrc) {
-      var audio = $('bgA');
-      audio.src = C.audioSrc;
-      audio.play().then(function() {
-        $('aBtn').classList.remove('hidden');
-        $('aBtn').classList.add('playing');
-      }).catch(function() {
-        $('aBtn').classList.remove('hidden');
-      });
+
+/* ══════════════════════════════════════════════════════════════
+   BACK TO TOP
+   ══════════════════════════════════════════════════════════════ */
+function initToTop() {
+  var btn = $('toTop');
+  var inv = $('inv');
+  function check() {
+    if (!inv) return;
+    var show = inv.getBoundingClientRect().top < -200;
+    btn.classList.toggle('show', show);
+  }
+  window.addEventListener('scroll', check, { passive: true });
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   AUDIO PLAYER
+   ══════════════════════════════════════════════════════════════ */
+function initAudio() {
+  var btn = $('aBtn');
+  var audio = $('bgA');
+  if (!C.audioSrc) return;
+
+  audio.src = C.audioSrc;
+  var playing = false;
+
+  btn.addEventListener('click', function() {
+    if (playing) {
+      audio.pause();
+      btn.classList.remove('playing');
+      playing = false;
+    } else {
+      var promise = audio.play();
+      if (promise && promise.catch) {
+        promise.catch(function() {
+          toast('Ketuk lagi untuk memutar musik');
+        });
+      }
+      btn.classList.add('playing');
+      playing = true;
     }
-
-    setTimeout(initScrollAnim, 300);
   });
 }
 
@@ -1406,43 +1620,76 @@ function initCover() {
    ══════════════════════════════════════════════════════════════ */
 function initRSVP() {
   var form = $('rsvpForm');
+  var btn  = $('rsvpBtn');
+  var msg  = $('rsvpMsg');
+  if (!form) return;
+
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    var btn = $('rsvpBtn');
-    var msg = $('rsvpMsg');
+
+    var nama      = $('rNama').value.trim();
+    var kehadiran = $('rKehadiran').value;
+    var jumlah    = $('rJumlah').value || '1';
+    var ucapan    = $('rUcapan').value.trim();
+
+    if (!nama) {
+      msg.textContent = 'Mohon isi nama Anda.';
+      msg.style.color = '#c0392b';
+      return;
+    }
+
     btn.disabled = true;
     btn.textContent = 'Mengirim...';
+    msg.textContent = '';
+    msg.style.color = '#7C8DA3';
 
-    var data = {
-      nama: $('rNama').value.trim(),
-      kehadiran: $('rKehadiran').value,
-      jumlah: $('rJumlah').value,
-      ucapan: $('rUcapan').value.trim(),
+    var entry = {
+      nama: nama,
+      kehadiran: kehadiran,
+      jumlah: jumlah,
+      ucapan: ucapan,
       waktu: new Date().toISOString()
     };
 
+    /* Simpan ke localStorage */
+    var rsvps = LS.get('rsvp_list', []);
+    rsvps.push(entry);
+    LS.set('rsvp_list', rsvps);
+
+    /* Kirim ke Google Sheet jika URL tersedia */
     if (C.googleSheetUrl) {
       fetch(C.googleSheetUrl, {
         method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'text/plain' }
-      }).catch(function() {});
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry)
+      }).finally(function() {
+        finishRSVP(entry);
+      });
+    } else {
+      setTimeout(function() { finishRSVP(entry); }, 600);
+    }
+  });
+
+  function finishRSVP(entry) {
+    var btn2 = $('rsvpBtn');
+    var msg2 = $('rsvpMsg');
+
+    btn2.disabled = false;
+    btn2.textContent = 'Kirim RSVP';
+    msg2.textContent = 'Terima kasih, konfirmasi Anda telah diterima!';
+    msg2.style.color = '#4A627D';
+
+    $('rsvpForm').reset();
+    if (guestName() !== C.defaultGuest) {
+      $('rNama').value = guestName();
     }
 
-    var guests = LS.get('guests', []);
-    guests.unshift(data);
-    LS.set('guests', guests);
-
-    msg.textContent = 'Terima kasih! Konfirmasi Anda telah diterima.';
-    btn.textContent = 'Terkirim';
-    form.reset();
+    /* Tambahkan ke buku tamu */
     renderGuestbook();
 
-    setTimeout(function() {
-      btn.disabled = false;
-      btn.textContent = 'Kirim RSVP';
-    }, 3000);
-  });
+    toast('RSVP berhasil dikirim!');
+  }
 }
 
 
@@ -1451,47 +1698,65 @@ function initRSVP() {
    ══════════════════════════════════════════════════════════════ */
 function renderGuestbook() {
   var feed = $('gbFeed');
-  var guests = LS.get('guests', []);
+  if (!feed) return;
 
-  if (!guests.length) {
+  var rsvps = LS.get('rsvp_list', []);
+
+  if (rsvps.length === 0) {
     feed.innerHTML = '<p class="gb-empty">Belum ada ucapan. Jadilah yang pertama!</p>';
     return;
   }
 
   var html = '';
-  for (var i = 0; i < guests.length; i++) {
-    var g = guests[i];
-    var isHadir = g.kehadiran === 'hadir';
-    var time = '';
-    if (g.waktu) {
-      time = new Date(g.waktu).toLocaleDateString('id-ID', {
-        day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
-      });
-    }
+  /* Tampilkan dari terbaru */
+  for (var i = rsvps.length - 1; i >= 0; i--) {
+    var r = rsvps[i];
+    if (!r.ucapan) continue;
+
+    var badgeClass = r.kehadiran === 'hadir' ? 'hadir' : 'tidak';
+    var badgeText  = r.kehadiran === 'hadir' ? 'Hadir' : 'Tidak Hadir';
+    var timeStr = formatTime(r.waktu);
+
     html +=
       '<div class="gb-comment">' +
         '<div class="gb-top">' +
-          '<span class="gb-name">' + esc(g.nama) + '</span>' +
-          '<span class="gb-badge ' + (isHadir ? 'hadir' : 'tidak') + '">' + (isHadir ? 'Hadir' : 'Tidak Hadir') + '</span>' +
+          '<span class="gb-name">' + esc(r.nama) + '</span>' +
+          '<span class="gb-badge ' + badgeClass + '">' + badgeText + '</span>' +
         '</div>' +
-        (g.ucapan ? '<p class="gb-text">' + esc(g.ucapan) + '</p>' : '') +
-        '<span class="gb-time">' + esc(time) + '</span>' +
+        '<p class="gb-text">' + esc(r.ucapan) + '</p>' +
+        '<span class="gb-time">' + esc(timeStr) + '</span>' +
       '</div>';
   }
-  feed.innerHTML = html;
-  feed.scrollTop = 0;
+
+  feed.innerHTML = html || '<p class="gb-empty">Belum ada ucapan. Jadilah yang pertama!</p>';
+}
+
+function formatTime(iso) {
+  if (!iso) return '';
+  try {
+    var d = new Date(iso);
+    var bulan = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    var dd = d.getDate();
+    var mm = bulan[d.getMonth()];
+    var yy = d.getFullYear();
+    var hh = String(d.getHours()).padStart(2, '0');
+    var mi = String(d.getMinutes()).padStart(2, '0');
+    return dd + ' ' + mm + ' ' + yy + ' \u00B7 ' + hh + ':' + mi;
+  } catch (e) { return ''; }
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   AMPLOP — SALIN NOMOR REKENING
+   BANK COPY BUTTON
    ══════════════════════════════════════════════════════════════ */
-function initAmplop() {
+function initBankCopy() {
   document.addEventListener('click', function(e) {
     var btn = e.target.closest('.btn-cp');
     if (!btn) return;
-    var num = btn.dataset.num;
+
+    var num = btn.getAttribute('data-num');
     if (!num) return;
+
     copyText(num).then(function(ok) {
       if (ok) {
         btn.textContent = 'Tersalin';
@@ -1501,6 +1766,8 @@ function initAmplop() {
           btn.textContent = 'Salin';
           btn.classList.remove('ok');
         }, 2000);
+      } else {
+        toast('Gagal menyalin. Silakan salin manual.');
       }
     });
   });
@@ -1508,67 +1775,62 @@ function initAmplop() {
 
 
 /* ══════════════════════════════════════════════════════════════
-   AUDIO TOGGLE
+   COVER — Buka undangan
    ══════════════════════════════════════════════════════════════ */
-function initAudio() {
-  var btn = $('aBtn');
-  var audio = $('bgA');
+function initCover() {
+  var cover = $('cover');
+  var inv   = $('inv');
+  var btn   = $('btnBuka');
+  var fab   = $('fabGroup');
+  var aBtn  = $('aBtn');
+
   btn.addEventListener('click', function() {
-    if (audio.paused) {
-      audio.play().then(function() { btn.classList.add('playing'); }).catch(function() {});
-    } else {
-      audio.pause();
-      btn.classList.remove('playing');
+    cover.classList.add('out');
+
+    /* Tampilkan konten undangan */
+    setTimeout(function() {
+      inv.classList.add('show');
+      fab.style.display = 'flex';
+      if (C.audioSrc) aBtn.classList.remove('hidden');
+    }, 400);
+
+    /* Mulai animasi scroll */
+    setTimeout(function() {
+      initScrollAnim();
+    }, 600);
+
+    /* Mulai audio otomatis jika bisa */
+    if (C.audioSrc) {
+      var audio = $('bgA');
+      setTimeout(function() {
+        var promise = audio.play();
+        if (promise && promise.then) {
+          promise.then(function() {
+            aBtn.classList.add('playing');
+          }).catch(function() {
+            /* Autoplay diblokir, user perlu klik tombol musik */
+          });
+        }
+      }, 800);
     }
   });
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   SCROLL PROGRESS BAR
-   ══════════════════════════════════════════════════════════════ */
-function initScrollProgress() {
-  var bar = $('prog');
-  window.addEventListener('scroll', function() {
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = h > 0 ? ((window.scrollY / h) * 100) + '%' : '0%';
-  }, { passive: true });
-}
-
-
-/* ══════════════════════════════════════════════════════════════
-   BACK TO TOP
-   ══════════════════════════════════════════════════════════════ */
-function initToTop() {
-  var btn = $('toTop');
-  window.addEventListener('scroll', function() {
-    if (window.scrollY > 600) {
-      btn.classList.add('show');
-    } else {
-      btn.classList.remove('show');
-    }
-  }, { passive: true });
-
-  btn.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
-
-
-/* ══════════════════════════════════════════════════════════════
-   INISIALISASI SEMUA
+   INISIALISASI UTAMA
    ══════════════════════════════════════════════════════════════ */
 (function init() {
   initFlorals();
   initContent();
   initCountdown();
-  initCover();
-  initRSVP();
-  renderGuestbook();
-  initAmplop();
-  initAudio();
   initScrollProgress();
   initToTop();
+  initAudio();
+  initRSVP();
+  renderGuestbook();
+  initBankCopy();
+  initCover();
 })();
 </script>
 </body>
