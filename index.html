@@ -38,13 +38,13 @@
   --c-cover:    #F8F7F5;
   --c-ayat:     #FFFFFF;
   --c-hero:     #F8F7F5;
-  --c-mempelai: #F8F7F5;
-  --c-jadwal:   #FFFFFF;
-  --c-lokasi:   #F8F7F5;
-  --c-rsvp:     #FFFFFF;
-  --c-tamu:     #F8F7F5;
-  --c-amplop:   #FFFFFF;
-  --c-penutup:  #FFFFFF;
+  --c-mempelai: #FFFFFF;
+  --c-jadwal:   #F8F7F5;
+  --c-lokasi:   #FFFFFF;
+  --c-rsvp:     #F8F7F5;
+  --c-tamu:     #FFFFFF;
+  --c-amplop:   #F8F7F5;
+  --c-penutup:  #F8F7F5;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -125,11 +125,6 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 }
 
 /* ═══════════════════════════════════════════════════════════
-   FLORAL PATTERN — Diganti aset PNG
-   ═══════════════════════════════════════════════════════════ */
-section::before{display:none}
-
-/* ═══════════════════════════════════════════════════════════
    SECTION BASE
    ═══════════════════════════════════════════════════════════ */
 section{padding:100px 28px;position:relative;overflow:hidden}
@@ -169,15 +164,92 @@ h2.st.dark{color:#4A627D}
 }
 
 /* ═══════════════════════════════════════════════════════════
-   FLORAL CORNER HELPER — Posisi sudut yang konsisten
+   FLORAL CORNER SYSTEM
+   Ditambahkan oleh JavaScript berdasarkan konfigurasi.
+   Setiap sudut bisa diaktifkan/nonaktifkan per section.
+   Ukuran: sm (kecil), md (sedang), lg (besar)
    ═══════════════════════════════════════════════════════════ */
+.floral-corner{
+  position:absolute;
+  pointer-events:none;
+  z-index:0;
+  background-repeat:no-repeat;
+  background-size:contain;
+}
+.fc-tl{top:-6px;left:-6px;background-image:url('assets/floral/top-left.png')}
+.fc-tr{top:-6px;right:-6px;background-image:url('assets/floral/top-right.png')}
+.fc-bl{bottom:-6px;left:-6px;background-image:url('assets/floral/bottom-left.png')}
+.fc-br{bottom:-6px;right:-6px;background-image:url('assets/floral/bottom-right.png')}
 
-/* --- Cover: sudut kiri atas + kanan bawah, besar --- */
+/* Ukuran sm (default) */
+.fc-tl,.fc-tr,.fc-bl,.fc-br{
+  width:min(30vw,200px);
+  height:min(30vw,200px);
+}
+/* Ukuran md */
+.fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{
+  width:min(42vw,300px);
+  height:min(42vw,300px);
+}
+/* Ukuran lg */
+.fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{
+  width:min(56vw,380px);
+  height:min(56vw,380px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HERO FLORAL — floral-left & floral-right MELINGKARI NAMA
+   Ditempatkan di dalam .h-names agar selalu mengikuti posisi
+   ═══════════════════════════════════════════════════════════ */
+#hero{
+  overflow:visible !important;
+}
+.h-names{
+  position:relative;
+  overflow:visible;
+}
+.hero-floral{
+  position:absolute;
+  pointer-events:none;
+  z-index:0;
+  background-repeat:no-repeat;
+  background-size:contain;
+  top:50%;
+  width:min(32vw,230px);
+  height:min(50vw,360px);
+}
+.hero-floral-left{
+  right:100%;
+  transform:translateY(-50%) translateX(5%);
+  background-image:url('assets/floral/floral-left.png');
+}
+.hero-floral-right{
+  left:100%;
+  transform:translateY(-50%) translateX(-5%);
+  background-image:url('assets/floral/floral-right.png');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION BACKGROUND COLORS
+   ═══════════════════════════════════════════════════════════ */
+#ayat{background-color:var(--c-ayat)}
+#hero{background-color:var(--c-hero)}
+#mempelai{background-color:var(--c-mempelai)}
+#jadwal{background-color:var(--c-jadwal)}
+#lokasi{background-color:var(--c-lokasi)}
+#rsvp{background-color:var(--c-rsvp)}
+#bukutamu{background-color:var(--c-tamu)}
+#amplop{background-color:var(--c-amplop)}
+#penutup{background-color:var(--c-penutup);text-align:center;padding:90px 28px 80px}
+
+/* ═══════════════════════════════════════════════════════════
+   1. COVER — Konten
+   ═══════════════════════════════════════════════════════════ */
 #cover{
   position:fixed;inset:0;z-index:50;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  background-color:#F8F7F5;
+  background-color:var(--c-cover);
   background-image:
     url('assets/floral/top-left.png'),
     url('assets/floral/bottom-right.png');
@@ -193,90 +265,6 @@ h2.st.dark{color:#4A627D}
 }
 #cover.out{opacity:0;visibility:hidden;pointer-events:none}
 
-/* --- Penutup: sudut kiri bawah + kanan bawah, sedang --- */
-#penutup{
-  background-color:#FFFFFF;
-  background-image:
-    url('assets/floral/bottom-left.png'),
-    url('assets/floral/bottom-right.png');
-  background-position:
-    -6px calc(100% + 6px),
-    calc(100% + 6px) calc(100% + 6px);
-  background-repeat:no-repeat;
-  background-size:
-    min(46vw, 310px) auto,
-    min(46vw, 310px) auto;
-  text-align:center;
-  padding:90px 28px 80px;
-}
-
-/* --- Ayat: sudut kanan atas kecil sebagai aksen --- */
-#ayat{
-  background-color:#FFFFFF;
-  background-image:url('assets/floral/top-right.png');
-  background-position:calc(100% + 6px) -6px;
-  background-repeat:no-repeat;
-  background-size:min(34vw, 220px) auto;
-  padding:80px 28px;
-}
-
-/* --- Mempelai: sudut kiri atas kecil sebagai aksen --- */
-#mempelai{
-  background-color:#F8F7F5;
-  background-image:url('assets/floral/top-left.png');
-  background-position:-6px -6px;
-  background-repeat:no-repeat;
-  background-size:min(32vw, 210px) auto;
-}
-
-/* --- Jadwal: sudut kanan bawah kecil --- */
-#jadwal{
-  background-color:#FFFFFF;
-  background-image:url('assets/floral/bottom-right.png');
-  background-position:calc(100% + 6px) calc(100% + 6px);
-  background-repeat:no-repeat;
-  background-size:min(32vw, 210px) auto;
-}
-
-/* --- Lokasi: sudut kiri bawah kecil --- */
-#lokasi{
-  background-color:#F8F7F5;
-  background-image:url('assets/floral/bottom-left.png');
-  background-position:-6px calc(100% + 6px);
-  background-repeat:no-repeat;
-  background-size:min(30vw, 200px) auto;
-}
-
-/* --- RSVP: sudut kanan atas kecil --- */
-#rsvp{
-  background-color:#FFFFFF;
-  background-image:url('assets/floral/top-right.png');
-  background-position:calc(100% + 6px) -6px;
-  background-repeat:no-repeat;
-  background-size:min(30vw, 200px) auto;
-}
-
-/* --- Buku Tamu: sudut kiri atas kecil --- */
-#bukutamu{
-  background-color:#F8F7F5;
-  background-image:url('assets/floral/top-left.png');
-  background-position:-6px -6px;
-  background-repeat:no-repeat;
-  background-size:min(28vw, 185px) auto;
-}
-
-/* --- Amplop: sudut kanan bawah kecil --- */
-#amplop{
-  background-color:#FFFFFF;
-  background-image:url('assets/floral/bottom-right.png');
-  background-position:calc(100% + 6px) calc(100% + 6px);
-  background-repeat:no-repeat;
-  background-size:min(28vw, 185px) auto;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   1. COVER — Konten
-   ═══════════════════════════════════════════════════════════ */
 .cv-bismillah{
   font-family:'Amiri',serif;direction:rtl;
   font-size:clamp(1.3rem,4vw,1.6rem);
@@ -358,14 +346,9 @@ h2.st.dark{color:#4A627D}
 }
 
 /* ═══════════════════════════════════════════════════════════
-   3. HERO — Wreath proporsional di belakang nama
+   3. HERO — Konten
    ═══════════════════════════════════════════════════════════ */
 #hero{
-  background-color:#F8F7F5;
-  background-image:url('assets/floral/floral-wreath.png');
-  background-position:center 47%;
-  background-repeat:no-repeat;
-  background-size:min(80vw, 420px) auto;
   padding:100px 28px 120px;text-align:center;
   min-height:90vh;
   display:flex;align-items:center;justify-content:center;
@@ -378,13 +361,13 @@ h2.st.dark{color:#4A627D}
 .h-greeting .tamu{color:#4A627D;font-style:italic}
 .h-names{margin-bottom:22px}
 .h-name{
-  display:block;
+  display:block;position:relative;z-index:1;
   font-family:'Cormorant Garamond',serif;
   font-weight:400;font-size:clamp(3.5rem,12vw,5rem);
   letter-spacing:.03em;line-height:1.0;color:#4A627D;
 }
 .h-amp{
-  display:block;
+  display:block;position:relative;z-index:1;
   font-family:'Cormorant Garamond',serif;
   font-style:italic;font-size:1.6rem;color:#D8C8A0;
   margin:10px 0;opacity:.85;
@@ -472,49 +455,73 @@ h2.st.dark{color:#4A627D}
 }
 
 /* ═══════════════════════════════════════════════════════════
-   5. JADWAL — Konten
+   5. JADWAL — Vertical Timeline (proporsional)
    ═══════════════════════════════════════════════════════════ */
-.timeline{max-width:400px;margin:0 auto;position:relative;padding-left:2px}
+.timeline{
+  max-width:400px;
+  margin:0 auto;
+  position:relative;
+  padding-left:32px;
+}
 .tl-line{
-  position:absolute;left:0;top:14px;bottom:14px;width:1px;
-  background:linear-gradient(to bottom,transparent,rgba(141,165,190,.18) 20%,rgba(141,165,190,.18) 80%,transparent);
+  position:absolute;
+  left:10px;
+  top:8px;
+  bottom:8px;
+  width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(141,165,190,.2) 12%,rgba(141,165,190,.2) 88%,transparent);
 }
 .tl-item{
-  display:flex;gap:22px;padding:20px 20px 20px 24px;position:relative;
+  display:flex;
+  gap:18px;
+  padding:26px 24px;
+  position:relative;
   background:#FFFFFF;
   border:1px solid #D8DCE2;
   border-radius:14px;
   box-shadow:0 2px 12px rgba(74,98,125,.04);
-  margin-bottom:16px;
+  margin-bottom:20px;
 }
 .tl-item:last-child{margin-bottom:0}
 .tl-dot{
-  position:absolute;left:-3.5px;top:24px;
-  width:7px;height:7px;border-radius:50%;
-  border:1.2px solid #8DA5BE;background:#FFFFFF;flex-shrink:0;
+  position:absolute;
+  left:-27px;
+  top:30px;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  border:1.5px solid #8DA5BE;
+  background:#FFFFFF;
+  flex-shrink:0;
 }
-
-.tl-time{flex-shrink:0;width:auto;min-width:80px;padding-top:5px;text-align:right}
+.tl-time{
+  flex-shrink:0;
+  width:auto;
+  min-width:90px;
+  padding-top:4px;
+  text-align:right;
+}
 .tl-time .tl-hour{
   font-family:'Cormorant Garamond',serif;
-  font-size:1.1rem;font-weight:400;color:#4A627D;line-height:1;display:block;
+  font-size:1.15rem;font-weight:400;color:#4A627D;line-height:1;display:block;
 }
 .tl-time .tl-wib{
   font-size:.58rem;letter-spacing:.1em;color:#AAB5C2;
-  text-transform:uppercase;display:block;margin-top:3px;
+  text-transform:uppercase;display:block;margin-top:4px;
 }
-.tl-content{flex:1}
+.tl-content{flex:1;min-width:0}
 .tl-label{
   font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
-  color:#8DA5BE;margin-bottom:7px;display:block;opacity:.85;
+  color:#8DA5BE;margin-bottom:8px;display:block;opacity:.85;
 }
 .tl-event{
   font-family:'Cormorant Garamond',serif;
   font-size:1.18rem;font-weight:400;color:#4A627D;margin-bottom:8px;
+  line-height:1.35;
 }
 .tl-venue{font-size:.82rem;font-weight:300;color:#4A627D;margin-bottom:4px;line-height:1.6}
 .tl-addr{font-size:.74rem;color:#7C8DA3;line-height:1.6}
-#jadwal .tl-addr[style]{color:#AAB5C2 !important}
+.tl-date-sub{font-size:.72rem;color:#AAB5C2;margin-top:8px;letter-spacing:.02em}
 
 /* ═══════════════════════════════════════════════════════════
    6. LOKASI — Konten
@@ -710,37 +717,31 @@ h2.st.dark{color:#4A627D}
 #toTop svg{width:17px;height:17px}
 
 /* ═══════════════════════════════════════════════════════════
-   RESPONSIVE — Floral menyesuaikan layar kecil
+   RESPONSIVE
    ═══════════════════════════════════════════════════════════ */
 @media(max-width:480px){
-  /* Cover: floral lebih besar % agar tetap terlihat */
   #cover{
     background-size:
       min(68vw, 320px) auto,
       min(68vw, 320px) auto;
   }
 
-  /* Hero: wreath lebih kecil agar sesuai nama */
-  #hero{
-    background-size:min(88vw, 310px) auto;
-    background-position:center 45%;
-  }
+  /* Floral corner: sm lebih besar % agar tetap terlihat */
+  .fc-tl,.fc-tr,.fc-bl,.fc-br{width:min(38vw,190px);height:min(38vw,190px)}
+  .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:min(50vw,280px);height:min(50vw,280px)}
+  .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:min(68vw,320px);height:min(68vw,320px)}
 
-  /* Penutup: floral disesuaikan */
-  #penutup{
-    background-size:
-      min(56vw, 260px) auto,
-      min(56vw, 260px) auto;
-  }
+  /* Hero floral: sesuaikan ukuran */
+  .hero-floral{width:min(36vw,180px);height:min(54vw,270px)}
+  .hero-floral-left{transform:translateY(-50%) translateX(12%)}
+  .hero-floral-right{transform:translateY(-50%) translateX(-12%)}
 
-  /* Section accent floral: sedikit diperbesar % */
-  #ayat{background-size:min(42vw, 190px) auto}
-  #mempelai{background-size:min(40vw, 180px) auto}
-  #jadwal{background-size:min(40vw, 180px) auto}
-  #lokasi{background-size:min(38vw, 170px) auto}
-  #rsvp{background-size:min(38vw, 170px) auto}
-  #bukutamu{background-size:min(36vw, 160px) auto}
-  #amplop{background-size:min(36vw, 160px) auto}
+  /* Timeline */
+  .timeline{padding-left:28px}
+  .tl-line{left:9px}
+  .tl-dot{left:-24px}
+  .tl-time{min-width:80px}
+  .tl-item{padding:22px 20px}
 }
 
 @media(max-width:360px){
@@ -749,14 +750,15 @@ h2.st.dark{color:#4A627D}
       min(78vw, 280px) auto,
       min(78vw, 280px) auto;
   }
-  #hero{
-    background-size:min(92vw, 260px) auto;
-  }
-  #penutup{
-    background-size:
-      min(64vw, 230px) auto,
-      min(64vw, 230px) auto;
-  }
+
+  .fc-tl,.fc-tr,.fc-bl,.fc-br{width:min(44vw,170px);height:min(44vw,170px)}
+  .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:min(56vw,240px);height:min(56vw,240px)}
+  .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:min(78vw,280px);height:min(78vw,280px)}
+
+  .hero-floral{width:min(40vw,150px);height:min(58vw,220px)}
+  .hero-floral-left{transform:translateY(-50%) translateX(20%)}
+  .hero-floral-right{transform:translateY(-50%) translateX(-20%)}
+
   section{padding:72px 20px}
   .h-name{font-size:2.8rem}
   .cv-couple{font-size:2.6rem}
@@ -764,6 +766,13 @@ h2.st.dark{color:#4A627D}
   #mempelai h2.st{font-size:1.3rem}
   .cp-name{font-size:1.6rem}
   #toTop{right:78px}
+
+  /* Timeline */
+  .timeline{padding-left:24px}
+  .tl-line{left:7px}
+  .tl-dot{left:-22px}
+  .tl-item{padding:20px 18px;gap:14px}
+  .tl-time{min-width:72px}
 }
 </style>
 </head>
@@ -823,7 +832,7 @@ h2.st.dark{color:#4A627D}
     </div>
   </section>
 
-  <!-- 4. MEMPELAI — Diisi dinamis oleh JavaScript -->
+  <!-- 4. MEMPELAI -->
   <section id="mempelai">
     <div class="sec-inner">
       <div class="a" data-d="0">
@@ -831,9 +840,7 @@ h2.st.dark{color:#4A627D}
         <h2 class="st light">Yang Berbahagia</h2>
         <div class="g-rule"></div>
       </div>
-      <div class="couple-wrap" id="coupleWrap">
-        <!-- Konten diisi oleh JavaScript sesuai displayOrder -->
-      </div>
+      <div class="couple-wrap" id="coupleWrap"></div>
     </div>
   </section>
 
@@ -847,7 +854,6 @@ h2.st.dark{color:#4A627D}
       </div>
       <div class="timeline a-left" data-d="1" id="timelineWrap">
         <div class="tl-line"></div>
-        <!-- Diisi oleh JavaScript -->
       </div>
     </div>
   </section>
@@ -863,9 +869,7 @@ h2.st.dark{color:#4A627D}
       <div class="map-frame a" data-d="1">
         <iframe id="mapFrame" src="" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Peta Lokasi"></iframe>
       </div>
-      <div class="loc-btns a" data-d="2" id="locBtns">
-        <!-- Diisi oleh JavaScript -->
-      </div>
+      <div class="loc-btns a" data-d="2" id="locBtns"></div>
     </div>
   </section>
 
@@ -920,7 +924,7 @@ h2.st.dark{color:#4A627D}
     </div>
   </section>
 
-  <!-- 9. AMPLOP DIGITAL — bisa dimatikan di konfigurasi -->
+  <!-- 9. AMPLOP DIGITAL -->
   <section id="amplop">
     <div class="sec-inner">
       <div class="a" data-d="0">
@@ -971,9 +975,60 @@ h2.st.dark{color:#4A627D}
 
 const C = {
 
+  /* ── Urutan tampilan mempelai ── */
   displayOrder: 'bride-groom',
+
+  /* ── Tampilkan / sembunyikan section Amplop Digital ── */
   showAmplop: false,
 
+  /* ── Tampilkan / sembunyikan akun Instagram mempelai ──
+     true  = tampilkan link Instagram di kartu mempelai
+     false = sembunyikan (tidak ditampilkan sama sekali) */
+  showInstagram: true,
+
+  /* ── Tampilkan / sembunyikan floral-left & floral-right
+     yang melingkari nama di section Hero ──
+     true  = tampilkan
+     false = sembunyikan */
+  showHeroFlorals: true,
+
+  /* ── Opacity semua bunga (corner & hero) ──
+     0.0 = tak terlihat  |  0.5 = samar  |  0.75 = jelas
+     0.85 = sangat jelas  |  1.0 = penuh tanpa pengurangan */
+  floralOpacity: 1.0,
+
+  /* ════════════════════════════════════════════════════════════
+     KONFIGURASI BUNGA PER SECTION
+     Atur true/false untuk setiap sudut di setiap section.
+     tl = Top-Left    tr = Top-Right
+     bl = Bottom-Left br = Bottom-Right
+     size = 'sm' (kecil) | 'md' (sedang) | 'lg' (besar)
+
+     Contoh: hanya bunga di atas saja
+       ayat: { tl: true, tr: true, bl: false, br: false, size: 'sm' }
+
+     Contoh: semua sudut aktif
+       mempelai: { tl: true, tr: true, bl: true, br: true, size: 'sm' }
+
+     Contoh: tanpa bunga sama sekali
+       lokasi: { tl: false, tr: false, bl: false, br: false, size: 'sm' }
+
+     Untuk mematikan SEMUA bunga corner di SEMUA section,
+     ganti dengan: floralCorners: {},
+     ════════════════════════════════════════════════════════════ */
+  floralCorners: {
+    ayat:     { tl: true,  tr: true,  bl: false, br: false, size: 'md' },
+    hero:     { tl: false, tr: false, bl: false, br: false, size: 'md' },
+    mempelai: { tl: true,  tr: true,  bl: true,  br: true,  size: 'md' },
+    jadwal:   { tl: true,  tr: true,  bl: true,  br: true,  size: 'md' },
+    lokasi:   { tl: true,  tr: true,  bl: true,  br: true,  size: 'md' },
+    rsvp:     { tl: true,  tr: true,  bl: true,  br: true,  size: 'md' },
+    bukutamu: { tl: true,  tr: true,  bl: true,  br: true,  size: 'md' },
+    amplop:   { tl: true,  tr: true,  bl: true,  br: true,  size: 'md' },
+    penutup:  { tl: false, tr: false, bl: true,  br: true,  size: 'md' },
+  },
+
+  /* ── Data Mempelai ── */
   groom: {
     fullName : 'Arviadi Anggara',
     nickname : 'Arvi',
@@ -988,10 +1043,12 @@ const C = {
     instagram: '@rahmanniisa'
   },
 
+  /* ── Tanggal ── */
   heroDate       : 'Sabtu, 10 Oktober 2026',
   coverDate      : '10 · 10 · 2026',
   countdownTarget: '2026-10-10T08:00:00',
 
+  /* ── Akad Nikah ── */
   akad: {
     date     : 'Sabtu, 10 Oktober 2026',
     timeStr  : '08.00 - 10.00',
@@ -1001,6 +1058,7 @@ const C = {
     mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.9697609985!2d112.70682!3d-7.34437!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb9a4e50e3c9%3A0x7d71f1e74aab9dde!2sMasjid%20Al-Akbar%20Surabaya!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid'
   },
 
+  /* ── Resepsi / Walimah ── */
   walimah: {
     date     : 'Sabtu, 10 Oktober 2026',
     timeStr  : '11.00 - 14.00',
@@ -1010,18 +1068,21 @@ const C = {
     mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.0!2d112.7323!3d-7.3105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fc48a55cf12d%3A0x4c720f8c51fe01f3!2sGraha%20Pena%20Surabaya!5e0!3m2!1sid!2sid!4v1700000000001!5m2!1sid!2sid'
   },
 
+  /* ── Ayat Al-Quran ── */
   ayat: {
     arabic     : 'وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِّنْ أَنْفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً',
     translation: '"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, agar kamu hidup tenang bersamanya, dan Dia menjadikan di antaramu rasa cinta dan kasih sayang."',
     source     : 'QS. Ar-Rum : 21'
   },
 
+  /* ── Rekening Bank ── */
   bankAccounts: [
     { bank: 'BCA',     number: '1234567890',     holder: 'Rahma Anisa' },
     { bank: 'Mandiri', number: '0987654321',     holder: 'Rahma Anisa' },
     { bank: 'GoPay',   number: '0812-3456-7890', holder: 'Rahma Anisa' }
   ],
 
+  /* ── Audio & Integrasi ── */
   audioSrc: 'assets/audio/musik.mp3',
   googleSheetUrl: '',
   defaultGuest: 'Tamu Undangan'
@@ -1031,60 +1092,118 @@ const C = {
 /* ══════════════════════════════════════════════════════════════
    UTILITIES
    ══════════════════════════════════════════════════════════════ */
-const $ = id => document.getElementById(id);
-const esc = s => String(s||'').replace(/[&<>"']/g, c =>
-  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+var $ = function(id) { return document.getElementById(id); };
+var esc = function(s) {
+  return String(s || '').replace(/[&<>"']/g, function(c) {
+    return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+  });
+};
 
-function toast(msg, ms = 2800) {
-  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+function toast(msg, ms) {
+  ms = ms || 2800;
+  var t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
   clearTimeout(toast._t);
-  toast._t = setTimeout(() => t.classList.remove('show'), ms);
+  toast._t = setTimeout(function() { t.classList.remove('show'); }, ms);
 }
 
-async function copyText(text) {
-  try { await navigator.clipboard.writeText(text); return true; } catch (_) {
+function copyText(text) {
+  return navigator.clipboard.writeText(text).then(function() { return true; }).catch(function(_) {
     try {
-      const ta = Object.assign(document.createElement('textarea'),
-        { value: text, style: 'position:fixed;opacity:0' });
-      document.body.appendChild(ta); ta.select();
-      document.execCommand('copy'); ta.remove(); return true;
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+      return true;
     } catch (_) { return false; }
-  }
+  });
 }
 
 function guestName() {
-  const p = new URLSearchParams(window.location.search).get('nama');
+  var p = new URLSearchParams(window.location.search).get('nama');
   return (p && p.trim()) ? p.trim() : C.defaultGuest;
 }
 
-const _m = {};
-const LS = {
-  get(k, fb) {
-    try { const v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : fb; }
-    catch (_) { return _m[k] ?? fb; }
+var _m = {};
+var LS = {
+  get: function(k, fb) {
+    try { var v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : fb; }
+    catch (_) { return _m[k] !== undefined ? _m[k] : fb; }
   },
-  set(k, v) {
+  set: function(k, v) {
     _m[k] = v;
     try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {}
   }
 };
 
-const IG_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.2"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor"/></svg>';
-const MAP_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>';
+var IG_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.2"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor"/></svg>';
+var MAP_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>';
+
+
+/* ══════════════════════════════════════════════════════════════
+   FLORAL CORNER SYSTEM — Menambahkan bunga sudut berdasarkan
+   konfigurasi C.floralCorners.
+   Opacity diambil dari C.floralOpacity.
+   ══════════════════════════════════════════════════════════════ */
+function initFlorals() {
+  var positions = ['tl', 'tr', 'bl', 'br'];
+  var sections = Object.keys(C.floralCorners);
+
+  for (var s = 0; s < sections.length; s++) {
+    var sectionId = sections[s];
+    var corners = C.floralCorners[sectionId];
+    var section = document.getElementById(sectionId);
+    if (!section) continue;
+
+    var sizeClass = corners.size === 'md' ? 'fc-md' : corners.size === 'lg' ? 'fc-lg' : '';
+
+    for (var p = 0; p < positions.length; p++) {
+      var pos = positions[p];
+      if (corners[pos]) {
+        var div = document.createElement('div');
+        div.className = 'floral-corner fc-' + pos + (sizeClass ? ' ' + sizeClass : '');
+        div.style.opacity = C.floralOpacity;
+        section.appendChild(div);
+      }
+    }
+  }
+
+  /* Hero: floral-left & floral-right diletakkan di dalam .h-names
+     agar selalu mengikuti posisi nama pasangan */
+  if (C.showHeroFlorals) {
+    var hNames = document.querySelector('.h-names');
+    if (hNames) {
+      var leftDiv = document.createElement('div');
+      leftDiv.className = 'hero-floral hero-floral-left';
+      leftDiv.style.opacity = C.floralOpacity;
+      hNames.appendChild(leftDiv);
+
+      var rightDiv = document.createElement('div');
+      rightDiv.className = 'hero-floral hero-floral-right';
+      rightDiv.style.opacity = C.floralOpacity;
+      hNames.appendChild(rightDiv);
+    }
+  }
+}
 
 
 /* ══════════════════════════════════════════════════════════════
    ISI KONTEN
    ══════════════════════════════════════════════════════════════ */
 function initContent() {
-  const nama = guestName();
+  var nama = guestName();
 
-  const first  = C.displayOrder === 'bride-groom' ? C.bride : C.groom;
-  const second = C.displayOrder === 'bride-groom' ? C.groom : C.bride;
-  const firstRole  = C.displayOrder === 'bride-groom' ? 'Putri' : 'Putra';
-  const secondRole = C.displayOrder === 'bride-groom' ? 'Putra' : 'Putri';
+  var first  = C.displayOrder === 'bride-groom' ? C.bride : C.groom;
+  var second = C.displayOrder === 'bride-groom' ? C.groom : C.bride;
+  var firstRole  = C.displayOrder === 'bride-groom' ? 'Putri' : 'Putra';
+  var secondRole = C.displayOrder === 'bride-groom' ? 'Putra' : 'Putri';
 
-  $('cvCouple').textContent = `${first.nickname} & ${second.nickname}`;
+  $('cvCouple').textContent = first.nickname + ' & ' + second.nickname;
   $('cvDate').textContent   = C.coverDate;
   $('cvGuest').textContent  = nama;
 
@@ -1097,82 +1216,91 @@ function initContent() {
   $('hName2').textContent = second.nickname;
   $('hDate').textContent  = C.heroDate;
 
-  $('coupleWrap').innerHTML = `
-    <div class="cp a-left" data-d="1">
-      <p class="cp-name">${esc(first.fullName)}</p>
-      <p class="cp-role">${firstRole}</p>
-      <p class="cp-parents">${first.parents}</p>
-      <a class="cp-ig" href="https://instagram.com/${first.instagram.replace('@','')}" target="_blank" rel="noopener">
-        ${IG_SVG}<span>${esc(first.instagram)}</span>
-      </a>
-    </div>
-    <div class="cp-sep a" data-d="2">
-      <span class="cp-line"></span>
-      <span class="cp-amp">&amp;</span>
-      <span class="cp-line"></span>
-    </div>
-    <div class="cp a-right" data-d="3">
-      <p class="cp-name">${esc(second.fullName)}</p>
-      <p class="cp-role">${secondRole}</p>
-      <p class="cp-parents">${second.parents}</p>
-      <a class="cp-ig" href="https://instagram.com/${second.instagram.replace('@','')}" target="_blank" rel="noopener">
-        ${IG_SVG}<span>${esc(second.instagram)}</span>
-      </a>
-    </div>
-  `;
+  /* Instagram: tampilkan atau sembunyikan */
+  function igLink(person) {
+    if (!C.showInstagram) return '';
+    var handle = person.instagram.replace('@', '');
+    return '<a class="cp-ig" href="https://instagram.com/' + handle + '" target="_blank" rel="noopener">' +
+      IG_SVG + '<span>' + esc(person.instagram) + '</span></a>';
+  }
 
-  const tlItems = [
+  $('coupleWrap').innerHTML =
+    '<div class="cp a-left" data-d="1">' +
+      '<p class="cp-name">' + esc(first.fullName) + '</p>' +
+      '<p class="cp-role">' + firstRole + '</p>' +
+      '<p class="cp-parents">' + first.parents + '</p>' +
+      igLink(first) +
+    '</div>' +
+    '<div class="cp-sep a" data-d="2">' +
+      '<span class="cp-line"></span>' +
+      '<span class="cp-amp">&amp;</span>' +
+      '<span class="cp-line"></span>' +
+    '</div>' +
+    '<div class="cp a-right" data-d="3">' +
+      '<p class="cp-name">' + esc(second.fullName) + '</p>' +
+      '<p class="cp-role">' + secondRole + '</p>' +
+      '<p class="cp-parents">' + second.parents + '</p>' +
+      igLink(second) +
+    '</div>';
+
+  /* Timeline Jadwal */
+  var tlItems = [
     { label: 'Akad Nikah', hour: C.akad.timeStr, venue: C.akad.venue, addr: C.akad.address, date: C.akad.date, animClass: 'a-left' },
     { label: 'Resepsi · Walimah', hour: C.walimah.timeStr, venue: C.walimah.venue, addr: C.walimah.address, date: C.walimah.date, animClass: 'a-right' }
   ];
-  let tlHtml = '<div class="tl-line"></div>';
-  tlItems.forEach((item, i) => {
-    tlHtml += `
-      <div class="tl-item ${item.animClass}" data-d="${i+1}">
-        <div class="tl-dot"></div>
-        <div class="tl-time">
-          <span class="tl-hour">${esc(item.hour)}</span>
-          <span class="tl-wib">WIB</span>
-        </div>
-        <div class="tl-content">
-          <span class="tl-label">${esc(item.label)}</span>
-          <p class="tl-event">${esc(item.venue)}</p>
-          <p class="tl-addr">${esc(item.addr)}</p>
-          <p class="tl-addr" style="margin-top:6px;color:rgba(248,247,245,.35)">${esc(item.date)}</p>
-        </div>
-      </div>`;
-  });
+  var tlHtml = '<div class="tl-line"></div>';
+  for (var i = 0; i < tlItems.length; i++) {
+    var item = tlItems[i];
+    tlHtml +=
+      '<div class="tl-item ' + item.animClass + '" data-d="' + (i + 1) + '">' +
+        '<div class="tl-dot"></div>' +
+        '<div class="tl-time">' +
+          '<span class="tl-hour">' + esc(item.hour) + '</span>' +
+          '<span class="tl-wib">WIB</span>' +
+        '</div>' +
+        '<div class="tl-content">' +
+          '<span class="tl-label">' + esc(item.label) + '</span>' +
+          '<p class="tl-event">' + esc(item.venue) + '</p>' +
+          '<p class="tl-venue">' + esc(item.venue) + '</p>' +
+          '<p class="tl-addr">' + esc(item.addr) + '</p>' +
+          '<p class="tl-date-sub">' + esc(item.date) + '</p>' +
+        '</div>' +
+      '</div>';
+  }
   $('timelineWrap').innerHTML = tlHtml;
 
+  /* Lokasi */
   $('mapFrame').src = C.walimah.mapsEmbed || C.akad.mapsEmbed;
-  $('locBtns').innerHTML = `
-    <a class="btn-loc a-left" data-d="1" href="${esc(C.akad.mapsUrl)}" target="_blank" rel="noopener">
-      ${MAP_SVG} Arah ke Lokasi Akad
-    </a>
-    <a class="btn-loc a-right" data-d="2" href="${esc(C.walimah.mapsUrl)}" target="_blank" rel="noopener">
-      ${MAP_SVG} Arah ke Lokasi Resepsi
-    </a>
-  `;
+  $('locBtns').innerHTML =
+    '<a class="btn-loc a-left" data-d="1" href="' + esc(C.akad.mapsUrl) + '" target="_blank" rel="noopener">' +
+      MAP_SVG + ' Arah ke Lokasi Akad</a>' +
+    '<a class="btn-loc a-right" data-d="2" href="' + esc(C.walimah.mapsUrl) + '" target="_blank" rel="noopener">' +
+      MAP_SVG + ' Arah ke Lokasi Resepsi</a>';
 
+  /* Amplop Digital */
   if (!C.showAmplop) {
-    const amplopEl = $('amplop');
+    var amplopEl = $('amplop');
     if (amplopEl) amplopEl.remove();
   } else {
-    $('bankList').innerHTML = C.bankAccounts.map(a => `
-      <div class="bank-card">
-        <div class="bk-info">
-          <div class="bk-name">${esc(a.bank)}</div>
-          <div class="bk-num">${esc(a.number)}</div>
-          <div class="bk-holder">a.n. ${esc(a.holder)}</div>
-        </div>
-        <button class="btn-cp" data-num="${esc(a.number)}">Salin</button>
-      </div>
-    `).join('');
+    var bankHtml = '';
+    for (var b = 0; b < C.bankAccounts.length; b++) {
+      var a = C.bankAccounts[b];
+      bankHtml +=
+        '<div class="bank-card">' +
+          '<div class="bk-info">' +
+            '<div class="bk-name">' + esc(a.bank) + '</div>' +
+            '<div class="bk-num">' + esc(a.number) + '</div>' +
+            '<div class="bk-holder">a.n. ' + esc(a.holder) + '</div>' +
+          '</div>' +
+          '<button class="btn-cp" data-num="' + esc(a.number) + '">Salin</button>' +
+        '</div>';
+    }
+    $('bankList').innerHTML = bankHtml;
   }
 
-  $('ftCouple').textContent = `${first.nickname} & ${second.nickname}`;
+  $('ftCouple').textContent = first.nickname + ' & ' + second.nickname;
+  document.title = "Undangan Walimatul 'Ursy — " + first.nickname + ' & ' + second.nickname;
 
-  document.title = `Undangan Walimatul 'Ursy — ${first.nickname} & ${second.nickname}`;
   if (nama !== C.defaultGuest) $('rNama').value = nama;
 }
 
@@ -1181,31 +1309,29 @@ function initContent() {
    COUNTDOWN
    ══════════════════════════════════════════════════════════════ */
 function initCountdown() {
-  const wrap = $('cdWrap');
-  const target = new Date(C.countdownTarget).getTime();
-  const labels = ['Hari','Jam','Menit','Detik'];
+  var wrap = $('cdWrap');
+  var target = new Date(C.countdownTarget).getTime();
+  var labels = ['Hari', 'Jam', 'Menit', 'Detik'];
+  var html = '';
+  for (var i = 0; i < labels.length; i++) {
+    html += '<div class="cd-box"><span class="cd-n" data-label="' + labels[i] + '">00</span><span class="cd-l">' + labels[i] + '</span></div>';
+  }
+  wrap.innerHTML = html;
 
-  wrap.innerHTML = labels.map(l => `
-    <div class="cd-box">
-      <span class="cd-n" data-label="${l}">00</span>
-      <span class="cd-l">${l}</span>
-    </div>
-  `).join('');
-
-  const els = labels.map(l => wrap.querySelector(`[data-label="${l}"]`));
+  var els = [];
+  for (var j = 0; j < labels.length; j++) {
+    els.push(wrap.querySelector('[data-label="' + labels[j] + '"]'));
+  }
 
   function setNum(el, val) {
-    const s = String(val).padStart(2, '0');
+    var s = String(val).padStart(2, '0');
     if (el.textContent === s) return;
-
     el.style.opacity = '0';
     el.style.transform = 'translateY(-8px) scale(0.9)';
-
-    setTimeout(() => {
+    setTimeout(function() {
       el.textContent = s;
       el.style.transition = 'none';
       el.style.transform = 'translateY(8px) scale(0.9)';
-
       void el.offsetHeight;
       el.style.transition = 'opacity 0.35s ease-out, transform 0.35s ease-out';
       el.style.opacity = '1';
@@ -1214,23 +1340,15 @@ function initCountdown() {
   }
 
   function tick() {
-    const now = Date.now();
-    const diff = target - now;
-
+    var diff = target - Date.now();
     if (diff <= 0) {
       wrap.innerHTML = '<p class="cd-done">Hari ini telah tiba</p>';
       return;
     }
-
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-
-    setNum(els[0], d);
-    setNum(els[1], h);
-    setNum(els[2], m);
-    setNum(els[3], s);
+    setNum(els[0], Math.floor(diff / 86400000));
+    setNum(els[1], Math.floor((diff % 86400000) / 3600000));
+    setNum(els[2], Math.floor((diff % 3600000) / 60000));
+    setNum(els[3], Math.floor((diff % 60000) / 1000));
   }
 
   tick();
@@ -1242,17 +1360,20 @@ function initCountdown() {
    SCROLL ANIMATION
    ══════════════════════════════════════════════════════════════ */
 function initScrollAnim() {
-  const classes = ['a', 'a-left', 'a-right'];
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        obs.unobserve(e.target);
+  var sel = '.a, .a-left, .a-right';
+  var obs = new IntersectionObserver(function(entries) {
+    for (var i = 0; i < entries.length; i++) {
+      if (entries[i].isIntersecting) {
+        entries[i].target.classList.add('visible');
+        obs.unobserve(entries[i].target);
       }
-    });
+    }
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
-  document.querySelectorAll(classes.map(c => '.' + c).join(',')).forEach(el => obs.observe(el));
+  var targets = document.querySelectorAll(sel);
+  for (var i = 0; i < targets.length; i++) {
+    obs.observe(targets[i]);
+  }
 }
 
 
@@ -1260,17 +1381,17 @@ function initScrollAnim() {
    COVER
    ══════════════════════════════════════════════════════════════ */
 function initCover() {
-  $('btnBuka').addEventListener('click', () => {
+  $('btnBuka').addEventListener('click', function() {
     $('cover').classList.add('out');
     $('inv').classList.add('show');
 
     if (C.audioSrc) {
-      const audio = $('bgA');
+      var audio = $('bgA');
       audio.src = C.audioSrc;
-      audio.play().then(() => {
+      audio.play().then(function() {
         $('aBtn').classList.remove('hidden');
         $('aBtn').classList.add('playing');
-      }).catch(() => {
+      }).catch(function() {
         $('aBtn').classList.remove('hidden');
       });
     }
@@ -1284,15 +1405,15 @@ function initCover() {
    RSVP FORM
    ══════════════════════════════════════════════════════════════ */
 function initRSVP() {
-  const form = $('rsvpForm');
-  form.addEventListener('submit', async (e) => {
+  var form = $('rsvpForm');
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
-    const btn = $('rsvpBtn');
-    const msg = $('rsvpMsg');
+    var btn = $('rsvpBtn');
+    var msg = $('rsvpMsg');
     btn.disabled = true;
     btn.textContent = 'Mengirim...';
 
-    const data = {
+    var data = {
       nama: $('rNama').value.trim(),
       kehadiran: $('rKehadiran').value,
       jumlah: $('rJumlah').value,
@@ -1301,16 +1422,14 @@ function initRSVP() {
     };
 
     if (C.googleSheetUrl) {
-      try {
-        await fetch(C.googleSheetUrl, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'text/plain' }
-        });
-      } catch (_) {}
+      fetch(C.googleSheetUrl, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'text/plain' }
+      }).catch(function() {});
     }
 
-    const guests = LS.get('guests', []);
+    var guests = LS.get('guests', []);
     guests.unshift(data);
     LS.set('guests', guests);
 
@@ -1319,7 +1438,7 @@ function initRSVP() {
     form.reset();
     renderGuestbook();
 
-    setTimeout(() => {
+    setTimeout(function() {
       btn.disabled = false;
       btn.textContent = 'Kirim RSVP';
     }, 3000);
@@ -1331,30 +1450,35 @@ function initRSVP() {
    GUESTBOOK / BUKU TAMU
    ══════════════════════════════════════════════════════════════ */
 function renderGuestbook() {
-  const feed = $('gbFeed');
-  const guests = LS.get('guests', []);
+  var feed = $('gbFeed');
+  var guests = LS.get('guests', []);
 
   if (!guests.length) {
     feed.innerHTML = '<p class="gb-empty">Belum ada ucapan. Jadilah yang pertama!</p>';
     return;
   }
 
-  feed.innerHTML = guests.map(g => {
-    const isHadir = g.kehadiran === 'hadir';
-    const time = g.waktu ? new Date(g.waktu).toLocaleDateString('id-ID', {
-      day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
-    }) : '';
-    return `
-      <div class="gb-comment">
-        <div class="gb-top">
-          <span class="gb-name">${esc(g.nama)}</span>
-          <span class="gb-badge ${isHadir ? 'hadir' : 'tidak'}">${isHadir ? 'Hadir' : 'Tidak Hadir'}</span>
-        </div>
-        ${g.ucapan ? `<p class="gb-text">${esc(g.ucapan)}</p>` : ''}
-        <span class="gb-time">${esc(time)}</span>
-      </div>`;
-  }).join('');
-
+  var html = '';
+  for (var i = 0; i < guests.length; i++) {
+    var g = guests[i];
+    var isHadir = g.kehadiran === 'hadir';
+    var time = '';
+    if (g.waktu) {
+      time = new Date(g.waktu).toLocaleDateString('id-ID', {
+        day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+    }
+    html +=
+      '<div class="gb-comment">' +
+        '<div class="gb-top">' +
+          '<span class="gb-name">' + esc(g.nama) + '</span>' +
+          '<span class="gb-badge ' + (isHadir ? 'hadir' : 'tidak') + '">' + (isHadir ? 'Hadir' : 'Tidak Hadir') + '</span>' +
+        '</div>' +
+        (g.ucapan ? '<p class="gb-text">' + esc(g.ucapan) + '</p>' : '') +
+        '<span class="gb-time">' + esc(time) + '</span>' +
+      '</div>';
+  }
+  feed.innerHTML = html;
   feed.scrollTop = 0;
 }
 
@@ -1363,21 +1487,22 @@ function renderGuestbook() {
    AMPLOP — SALIN NOMOR REKENING
    ══════════════════════════════════════════════════════════════ */
 function initAmplop() {
-  document.addEventListener('click', async (e) => {
-    const btn = e.target.closest('.btn-cp');
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.btn-cp');
     if (!btn) return;
-    const num = btn.dataset.num;
+    var num = btn.dataset.num;
     if (!num) return;
-    const ok = await copyText(num);
-    if (ok) {
-      btn.textContent = 'Tersalin';
-      btn.classList.add('ok');
-      toast('Nomor rekening berhasil disalin');
-      setTimeout(() => {
-        btn.textContent = 'Salin';
-        btn.classList.remove('ok');
-      }, 2000);
-    }
+    copyText(num).then(function(ok) {
+      if (ok) {
+        btn.textContent = 'Tersalin';
+        btn.classList.add('ok');
+        toast('Nomor rekening berhasil disalin');
+        setTimeout(function() {
+          btn.textContent = 'Salin';
+          btn.classList.remove('ok');
+        }, 2000);
+      }
+    });
   });
 }
 
@@ -1386,11 +1511,11 @@ function initAmplop() {
    AUDIO TOGGLE
    ══════════════════════════════════════════════════════════════ */
 function initAudio() {
-  const btn = $('aBtn');
-  const audio = $('bgA');
-  btn.addEventListener('click', () => {
+  var btn = $('aBtn');
+  var audio = $('bgA');
+  btn.addEventListener('click', function() {
     if (audio.paused) {
-      audio.play().then(() => btn.classList.add('playing')).catch(() => {});
+      audio.play().then(function() { btn.classList.add('playing'); }).catch(function() {});
     } else {
       audio.pause();
       btn.classList.remove('playing');
@@ -1402,14 +1527,12 @@ function initAudio() {
 /* ══════════════════════════════════════════════════════════════
    SCROLL PROGRESS BAR
    ══════════════════════════════════════════════════════════════ */
-function initProgress() {
-  const bar = $('prog');
-  const update = () => {
-    const h = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = h > 0 ? (window.scrollY / h * 100) + '%' : '0%';
-  };
-  window.addEventListener('scroll', update, { passive: true });
-  update();
+function initScrollProgress() {
+  var bar = $('prog');
+  window.addEventListener('scroll', function() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = h > 0 ? ((window.scrollY / h) * 100) + '%' : '0%';
+  }, { passive: true });
 }
 
 
@@ -1417,20 +1540,26 @@ function initProgress() {
    BACK TO TOP
    ══════════════════════════════════════════════════════════════ */
 function initToTop() {
-  const btn = $('toTop');
-  window.addEventListener('scroll', () => {
-    btn.classList.toggle('show', window.scrollY > 600);
+  var btn = $('toTop');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 600) {
+      btn.classList.add('show');
+    } else {
+      btn.classList.remove('show');
+    }
   }, { passive: true });
-  btn.addEventListener('click', () => {
+
+  btn.addEventListener('click', function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   INIT
+   INISIALISASI SEMUA
    ══════════════════════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', () => {
+(function init() {
+  initFlorals();
   initContent();
   initCountdown();
   initCover();
@@ -1438,9 +1567,9 @@ document.addEventListener('DOMContentLoaded', () => {
   renderGuestbook();
   initAmplop();
   initAudio();
-  initProgress();
+  initScrollProgress();
   initToTop();
-});
+})();
 </script>
 </body>
 </html>
