@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Undangan Walimatul 'Ursy — Rahma & Arvi</title>
 <meta name="description" content="Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Anda untuk menghadiri hari bahagia kami.">
 <meta property="og:type"         content="website">
@@ -51,17 +51,33 @@
    RESET & BASE
    ═══════════════════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  /* PERBAIKAN: Cegah scroll horizontal di seluruh halaman */
+  overflow-x:hidden;
+  width:100%;
+}
 body{
   font-family:'Jost',sans-serif;
   background:#F8F7F5;
   color:var(--text-d);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  /* PERBAIKAN: Cegah geser kanan/kiri di semua perangkat */
   overflow-x:hidden;
+  width:100%;
+  position:relative;
   /* Safe area untuk ponsel dengan notch */
   padding-left:env(safe-area-inset-left);
   padding-right:env(safe-area-inset-right);
+}
+/* PERBAIKAN: Saat cover aktif, body tidak bisa discroll sama sekali */
+body.cover-open{
+  overflow:hidden;
+  height:100%;
+  position:fixed;
+  width:100%;
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
@@ -133,7 +149,13 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 /* ═══════════════════════════════════════════════════════════
    SECTION BASE
    ═══════════════════════════════════════════════════════════ */
-section{padding:100px 24px;position:relative;overflow:hidden}
+section{
+  padding:100px 24px;
+  position:relative;
+  /* PERBAIKAN: Cegah overflow horizontal di tiap section */
+  overflow:hidden;
+  width:100%;
+}
 .sec-inner{max-width:var(--maxw);margin:0 auto;position:relative;z-index:1}
 .eyebrow{
   display:block;font-family:'Reem Kufi',sans-serif;
@@ -200,7 +222,8 @@ h2.st.dark{color:#4A627D}
 /* ═══════════════════════════════════════════════════════════
    HERO FLORAL — floral-left & floral-right
    ═══════════════════════════════════════════════════════════ */
-#hero{overflow:visible !important}
+/* PERBAIKAN: Hero tidak perlu overflow:visible karena sudah kita handle di section */
+#hero{overflow:hidden !important}
 .h-names{position:relative;overflow:visible}
 .hero-floral{
   position:absolute;
@@ -236,12 +259,18 @@ h2.st.dark{color:#4A627D}
 #penutup{background-color:var(--c-penutup);text-align:center;padding:90px 24px 80px}
 
 /* ═══════════════════════════════════════════════════════════
-   1. COVER — Konten
+   1. COVER — PERBAIKAN TOTAL
+   - Fixed fullscreen, tidak bisa discroll
+   - Touch events diperbaiki
    ═══════════════════════════════════════════════════════════ */
 #cover{
-  position:fixed;inset:0;z-index:50;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
+  position:fixed;
+  inset:0;
+  z-index:50;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
   background-color:var(--c-cover);
   background-image:
     url('assets/floral/top-left.png'),
@@ -252,8 +281,14 @@ h2.st.dark{color:#4A627D}
   background-repeat:no-repeat;
   background-size:280px auto, 280px auto;
   transition:opacity .9s var(--ease),visibility .9s;
-  overflow:hidden;padding:48px 24px;text-align:center;
-  max-width:100vw;
+  /* PERBAIKAN: overflow hidden agar konten tidak keluar */
+  overflow:hidden;
+  padding:48px 24px;
+  text-align:center;
+  /* PERBAIKAN: Pastikan tidak ada scroll di cover */
+  touch-action:none;
+  -webkit-overflow-scrolling:none;
+  overscroll-behavior:none;
 }
 #cover.out{opacity:0;visibility:hidden;pointer-events:none}
 
@@ -282,8 +317,8 @@ h2.st.dark{color:#4A627D}
   opacity:0;animation:fadeUp .8s .58s var(--ease) forwards;
 }
 .cv-rule{
-  width:28px;height:1px;background:#D8DCE2;opacity:.5;
-  margin:36px auto;opacity:0;animation:fadeUp .8s .66s var(--ease) forwards;
+  width:28px;height:1px;background:#D8DCE2;opacity:0;
+  margin:36px auto;animation:fadeUp .8s .66s var(--ease) forwards;
 }
 .cv-to{
   font-size:.72rem;letter-spacing:.1em;color:#AAB5C2;margin-bottom:8px;
@@ -297,6 +332,8 @@ h2.st.dark{color:#4A627D}
   max-width:90vw;
   opacity:0;animation:fadeUp .8s .82s var(--ease) forwards;
 }
+
+/* PERBAIKAN: Tombol "Buka Undangan" — touch-action lebih baik */
 .cv-btn{
   display:inline-flex;align-items:center;gap:10px;
   background:#8DA5BE;color:#FFFFFF;
@@ -305,9 +342,17 @@ h2.st.dark{color:#4A627D}
   transition:background .4s var(--ease),transform .3s var(--ease),box-shadow .3s;
   opacity:0;animation:fadeUp .8s .94s var(--ease) forwards;
   box-shadow:0 4px 16px rgba(141,165,190,.25);
+  /* PERBAIKAN: Pastikan touch terdeteksi dengan benar */
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  cursor:pointer;
+  position:relative;
+  z-index:1;
+  user-select:none;
+  -webkit-user-select:none;
 }
-.cv-btn:hover{background:#7B96B0;transform:translateY(-1px);box-shadow:0 6px 20px rgba(141,165,190,.3)}
-.cv-btn:active{transform:scale(.97)}
+.cv-btn:hover{background:#7B96B0;box-shadow:0 6px 20px rgba(141,165,190,.3)}
+.cv-btn:active{transform:scale(.97);background:#7B96B0}
 .cv-btn svg{width:15px;height:15px;flex-shrink:0}
 
 /* ═══════════════════════════════════════════════════════════
@@ -318,6 +363,9 @@ h2.st.dark{color:#4A627D}
   opacity:0;transform:translateY(16px);
   transition:opacity .8s var(--ease),transform .8s var(--ease);
   pointer-events:none;
+  /* PERBAIKAN: Cegah overflow horizontal */
+  overflow-x:hidden;
+  width:100%;
 }
 #inv.show{opacity:1;transform:translateY(0);pointer-events:all}
 
@@ -537,6 +585,8 @@ h2.st.dark{color:#4A627D}
   background:#FFFFFF;
   transition:background .3s var(--ease),border-color .3s,color .3s,box-shadow .3s;
   box-shadow:0 2px 8px rgba(74,98,125,.03);
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
 }
 .btn-loc:hover{background:rgba(141,165,190,.06);border-color:rgba(141,165,190,.35);color:#4A627D;box-shadow:0 4px 14px rgba(74,98,125,.06)}
 .btn-loc:active{transform:scale(.98)}
@@ -564,6 +614,8 @@ h2.st.dark{color:#4A627D}
   font-size:clamp(.82rem,2.8vw,.88rem);font-weight:300;outline:none;
   transition:border-color .3s,background .3s,box-shadow .3s;
   box-shadow:0 1px 6px rgba(74,98,125,.03);
+  /* PERBAIKAN: Hindari zoom iOS saat focus */
+  font-size:16px;
 }
 #rsvp .fg input::placeholder,
 #rsvp .fg textarea::placeholder{color:#AAB5C2}
@@ -584,7 +636,7 @@ h2.st.dark{color:#4A627D}
   background:#FFFFFF;
   border:1px solid #D8DCE2;border-radius:10px;
   color:#4A627D;font-family:'Jost',sans-serif;
-  font-size:clamp(.82rem,2.8vw,.88rem);font-weight:300;outline:none;
+  font-size:16px;font-weight:300;outline:none;
   appearance:none;-webkit-appearance:none;-moz-appearance:none;
   cursor:pointer;transition:border-color .3s,background .3s,box-shadow .3s;
   box-shadow:0 1px 6px rgba(74,98,125,.03);
@@ -606,6 +658,8 @@ h2.st.dark{color:#4A627D}
   font-weight:500;letter-spacing:.1em;text-transform:uppercase;
   transition:background .3s,transform .3s var(--ease),box-shadow .3s;
   box-shadow:0 4px 16px rgba(141,165,190,.2);
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
 }
 .btn-submit:hover{background:#7B96B0;transform:translateY(-1px);box-shadow:0 6px 20px rgba(141,165,190,.28)}
 .btn-submit:active{transform:scale(.98)}
@@ -662,6 +716,8 @@ h2.st.dark{color:#4A627D}
   padding:9px 14px;border-radius:20px;font-size:.76rem;
   letter-spacing:.06em;flex-shrink:0;white-space:nowrap;
   transition:background .3s,border-color .3s,color .3s;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
 }
 #amplop .btn-cp:hover{background:rgba(141,165,190,.08);border-color:rgba(141,165,190,.35)}
 #amplop .btn-cp.ok{background:rgba(141,165,190,.1);color:#4A627D;border-color:rgba(141,165,190,.35)}
@@ -676,48 +732,116 @@ h2.st.dark{color:#4A627D}
 .ft-credit{font-size:.62rem;color:#AAB5C2;margin-top:36px;letter-spacing:.04em}
 
 /* ═══════════════════════════════════════════════════════════
-   FLOATING BUTTONS
+   FLOATING BUTTONS — PERBAIKAN TOTAL
+   Toggle musik diperbaiki agar responsif di touch device
    ═══════════════════════════════════════════════════════════ */
 .fab-group{
-  position:fixed;bottom:24px;right:24px;z-index:40;
-  display:flex;align-items:flex-end;gap:10px;
-  /* Safe area untuk ponsel dengan home indicator */
+  position:fixed;
   bottom:calc(24px + env(safe-area-inset-bottom));
   right:calc(24px + env(safe-area-inset-right));
+  z-index:40;
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
 }
+
+/* PERBAIKAN UTAMA: Tombol audio diperbaiki total */
 #aBtn{
-  width:46px;height:46px;border-radius:50%;
-  background:rgba(141,165,190,.92);backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.2);color:#FFFFFF;
-  display:flex;align-items:center;justify-content:center;gap:2px;
-  box-shadow:0 4px 16px rgba(141,165,190,.3);
-  transition:transform .3s var(--ease),border-color .3s;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:#8DA5BE;
+  border:none;
+  color:#FFFFFF;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  box-shadow:0 4px 16px rgba(141,165,190,.4);
+  /* PERBAIKAN: transition hanya untuk shadow, bukan opacity */
+  transition:box-shadow .2s ease, transform .2s ease;
   flex-shrink:0;
+  /* PERBAIKAN: Pastikan tombol selalu visible dan clickable */
+  opacity:1 !important;
+  pointer-events:all !important;
+  position:relative;
+  z-index:41;
+  /* PERBAIKAN: Touch yang lebih responsif */
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-appearance:none;
+  cursor:pointer;
+  /* PERBAIKAN: Area sentuh diperbesar tanpa mengubah tampilan */
+  padding:0;
 }
-#aBtn:hover{transform:scale(1.08);border-color:rgba(255,255,255,.35)}
-#aBtn.hidden{display:none}
-#aBtn .note-icon{width:15px;height:15px;flex-shrink:0}
-.wave-bars{display:flex;align-items:center;gap:2px;height:13px}
-.wave-bars span{display:block;width:2px;border-radius:1px;background:#FFFFFF;height:4px;transition:height .25s ease}
+#aBtn::before{
+  content:'';
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+}
+#aBtn.hidden{
+  /* PERBAIKAN: Sembunyikan dengan visibility bukan opacity,
+     supaya tidak ada konflik dengan state lain */
+  visibility:hidden;
+  pointer-events:none;
+  transform:scale(0);
+}
+#aBtn:active{
+  transform:scale(.92);
+  box-shadow:0 2px 8px rgba(141,165,190,.3);
+}
+
+/* Ikon musik (saat pause / default) */
+#aBtn .note-icon{
+  width:18px;
+  height:18px;
+  flex-shrink:0;
+  display:block;
+  transition:opacity .2s ease;
+}
+/* Wave bars (saat playing) */
+.wave-bars{
+  display:none; /* disembunyikan saat tidak playing */
+  align-items:center;
+  gap:2.5px;
+  height:16px;
+}
+.wave-bars span{
+  display:block;
+  width:2.5px;
+  border-radius:2px;
+  background:#FFFFFF;
+  height:4px;
+}
+/* State: playing */
+#aBtn.playing .note-icon{display:none}
+#aBtn.playing .wave-bars{display:flex}
 #aBtn.playing .wave-bars span{animation:waveMove 1s ease-in-out infinite}
 #aBtn.playing .wave-bars span:nth-child(1){animation-delay:0s}
 #aBtn.playing .wave-bars span:nth-child(2){animation-delay:.18s}
-#aBtn.playing .wave-bars span:nth-child(3){animation-delay:.34s}
-#aBtn:not(.playing) .wave-bars span{height:4px;animation:none}
-@keyframes waveMove{0%,100%{height:4px}50%{height:13px}}
+#aBtn.playing .wave-bars span:nth-child(3){animation-delay:.36s}
+
+@keyframes waveMove{
+  0%,100%{height:4px}
+  50%{height:14px}
+}
 
 #toTop{
-  width:36px;height:36px;border-radius:50%;
+  width:38px;height:38px;border-radius:50%;
   background:#8DA5BE;color:#fff;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 3px 12px rgba(141,165,190,.25);
+  box-shadow:0 3px 12px rgba(141,165,190,.3);
   opacity:0;transform:translateY(10px) scale(.9);pointer-events:none;
-  transition:opacity .35s var(--ease),transform .35s var(--ease);
+  transition:opacity .35s var(--ease),transform .35s var(--ease),box-shadow .2s;
   flex-shrink:0;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  border:none;
+  cursor:pointer;
 }
 #toTop.show{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
-#toTop:hover{transform:translateY(-2px) scale(1.05)}
+#toTop:active{transform:scale(.92)}
 #toTop svg{width:17px;height:17px}
 
 /* ═══════════════════════════════════════════════════════════
@@ -725,47 +849,22 @@ h2.st.dark{color:#4A627D}
    ═══════════════════════════════════════════════════════════ */
 @media(min-width:768px){
   section{padding:110px 32px}
-
-  /* Floral corner lebih besar di tablet+ */
   .fc-tl,.fc-tr,.fc-bl,.fc-br{width:220px;height:220px}
   .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:300px;height:300px}
   .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:380px;height:380px}
-
-  /* Hero floral lebih besar */
   .hero-floral{width:220px;height:330px}
-
-  /* Cover floral lebih besar */
-  #cover{
-    background-size:340px auto, 340px auto;
-  }
-
-  /* Divider lebih besar */
-  #ayat .g-rule,
-  #mempelai .g-rule,
-  #jadwal .g-rule,
-  #penutup .ft-rule{
-    width:140px;height:28px;
-  }
-
-  /* Map lebih tinggi */
+  #cover{background-size:340px auto, 340px auto;}
+  #ayat .g-rule,#mempelai .g-rule,#jadwal .g-rule,#penutup .ft-rule{width:140px;height:28px;}
   .map-frame iframe{height:340px}
-
-  /* Timeline lebih lega */
   .timeline{padding-left:36px}
   .tl-line{left:11px}
   .tl-dot{left:-30px;top:32px}
   .tl-item{padding:26px 24px;gap:18px}
   .tl-time{min-width:100px}
-
-  /* Countdown lebih lega */
   .cd-wrap{gap:14px}
   .cd-box{min-width:68px;flex:1 1 68px;max-width:100px;padding:16px 10px 14px}
-
-  /* Mempelai card lebih lega */
   .cp{padding:40px 32px}
-
-  /* Floating buttons sedikit lebih jauh */
-  .fab-group{bottom:32px;right:32px}
+  .fab-group{bottom:calc(32px + env(safe-area-inset-bottom));right:calc(32px + env(safe-area-inset-right))}
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -773,17 +872,12 @@ h2.st.dark{color:#4A627D}
    ═══════════════════════════════════════════════════════════ */
 @media(min-width:1024px){
   :root{--maxw:600px}
-
   section{padding:120px 40px}
-
   .fc-tl,.fc-tr,.fc-bl,.fc-br{width:250px;height:250px}
   .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:340px;height:340px}
   .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:420px;height:420px}
-
   .hero-floral{width:260px;height:390px}
-
   #cover{background-size:380px auto, 380px auto}
-
   .map-frame iframe{height:400px}
 }
 
@@ -793,54 +887,29 @@ h2.st.dark{color:#4A627D}
 @media(max-width:480px){
   section{padding:80px 18px}
   #penutup{padding:72px 18px 60px}
-
-  /* Cover floral menyesuaikan */
   #cover{background-size:200px auto, 200px auto}
-
-  /* Floral corner diperkecil */
   .fc-tl,.fc-tr,.fc-bl,.fc-br{width:140px;height:140px}
   .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:190px;height:190px}
   .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:220px;height:220px}
-
-  /* Hero floral diperkecil dan didekati */
   .hero-floral{width:100px;height:150px}
   .hero-floral-left{transform:translateY(-50%) translateX(15%)}
   .hero-floral-right{transform:translateY(-50%) translateX(-15%)}
-
-  /* Timeline lebih ringkas */
   .timeline{padding-left:26px}
   .tl-line{left:8px}
   .tl-dot{left:-23px;top:24px;width:8px;height:8px}
   .tl-item{padding:18px 16px;gap:10px}
   .tl-time{min-width:70px}
-
-  /* Countdown lebih ringkas */
   .cd-wrap{gap:8px}
   .cd-box{min-width:50px;flex:1 1 50px;padding:12px 4px 10px}
-
-  /* Map lebih pendek */
   .map-frame iframe{height:220px}
-
-  /* Mempelai card lebih ringkas */
   .cp{padding:26px 16px}
   .couple-wrap{max-width:100%}
-
-  /* Bank card lebih ringkas */
   #amplop .bank-card{padding:16px;gap:12px}
-
-  /* Divider lebih kecil */
-  #ayat .g-rule,
-  #mempelai .g-rule,
-  #jadwal .g-rule,
-  #penutup .ft-rule{
-    width:90px;height:18px;
-  }
-
-  /* Floating buttons */
-  .fab-group{bottom:18px;right:16px;gap:8px}
-  #aBtn{width:42px;height:42px}
-  #toTop{width:32px;height:32px}
-  #toTop svg{width:14px;height:14px}
+  #ayat .g-rule,#mempelai .g-rule,#jadwal .g-rule,#penutup .ft-rule{width:90px;height:18px;}
+  .fab-group{bottom:calc(18px + env(safe-area-inset-bottom));right:calc(16px + env(safe-area-inset-right));gap:8px}
+  #aBtn{width:46px;height:46px}
+  #toTop{width:34px;height:34px}
+  #toTop svg{width:15px;height:15px}
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -849,42 +918,25 @@ h2.st.dark{color:#4A627D}
 @media(max-width:360px){
   section{padding:64px 14px}
   #penutup{padding:56px 14px 48px}
-
-  #cover{
-    background-size:160px auto, 160px auto;
-    padding:36px 16px;
-  }
-
+  #cover{background-size:160px auto, 160px auto;padding:36px 16px}
   .fc-tl,.fc-tr,.fc-bl,.fc-br{width:110px;height:110px}
   .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:150px;height:150px}
   .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:180px;height:180px}
-
   .hero-floral{width:70px;height:105px}
   .hero-floral-left{transform:translateY(-50%) translateX(25%)}
   .hero-floral-right{transform:translateY(-50%) translateX(-25%)}
-
   .cv-btn{padding:12px 22px;font-size:.78rem}
-
   .timeline{padding-left:22px}
   .tl-line{left:6px}
   .tl-dot{left:-20px;top:22px}
   .tl-item{padding:16px 14px;gap:8px}
-
   .cd-box{min-width:46px;padding:10px 3px 8px}
-
   .map-frame iframe{height:180px}
-
   .cp{padding:22px 14px}
-
   #amplop .bank-card{flex-direction:column;align-items:stretch;text-align:center;gap:10px}
   #amplop .btn-cp{width:100%;text-align:center;justify-content:center}
-
   .btn-loc{padding:12px 14px;font-size:.8rem}
-
-  #rsvp .fg input,
-  #rsvp .fg textarea,
-  #rsvp .select-wrap select{padding:11px 14px}
-
+  #rsvp .fg input,#rsvp .fg textarea,#rsvp .select-wrap select{padding:11px 14px}
   .gb-comment{padding:14px 16px}
 }
 
@@ -894,28 +946,19 @@ h2.st.dark{color:#4A627D}
 @media(max-width:320px){
   section{padding:52px 12px}
   #penutup{padding:44px 12px 40px}
-
   #cover{background-size:130px auto, 130px auto;padding:28px 12px}
-
   .fc-tl,.fc-tr,.fc-bl,.fc-br{width:90px;height:90px}
   .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:120px;height:120px}
   .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:150px;height:150px}
-
   .hero-floral{width:50px;height:75px}
-
   .cv-bismillah{font-size:1.1rem;margin-bottom:32px}
   .cv-couple{font-size:2.2rem}
-
   .h-name{font-size:2.4rem}
-
   .cd-box{min-width:42px;padding:8px 2px 6px}
   .cd-n{font-size:1.1rem}
-
   .tl-time{min-width:60px}
   .tl-item{padding:14px 12px}
-
   .cp{padding:18px 12px}
-
   .btn-submit{padding:13px;font-size:.8rem}
 }
 
@@ -928,18 +971,15 @@ h2.st.dark{color:#4A627D}
   .cv-couple{margin-bottom:8px}
   .cv-rule{margin:20px auto}
   .cv-guest{margin-bottom:24px}
-
   #hero{min-height:auto;padding:60px 24px 80px}
   .h-greeting{margin-bottom:24px}
   .h-date{margin-bottom:32px}
-
   section{padding:48px 24px}
   #penutup{padding:40px 24px 32px}
 }
 
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE — Hover hanya di perangkat dengan pointer
-   (mencegah sticky hover di touch device)
    ═══════════════════════════════════════════════════════════ */
 @media(hover:none){
   .cv-btn:hover,
@@ -947,7 +987,6 @@ h2.st.dark{color:#4A627D}
   .btn-loc:hover,
   .cp-ig:hover,
   #amplop .btn-cp:hover,
-  #aBtn:hover,
   #toTop:hover,
   #amplop .bank-card:hover{
     transform:none;
@@ -955,10 +994,14 @@ h2.st.dark{color:#4A627D}
     border-color:inherit;
     box-shadow:inherit;
   }
+  /* PERBAIKAN: aBtn tidak terpengaruh hover none supaya tetap kelihatan */
+  #aBtn{
+    background:#8DA5BE;
+  }
 }
 </style>
 </head>
-<body>
+<body class="cover-open">
 
 <div id="prog"></div>
 
@@ -1134,14 +1177,22 @@ h2.st.dark{color:#4A627D}
 
 </main>
 
-<!-- Tombol floating digabung dalam satu group -->
+<!-- Tombol floating -->
 <div class="fab-group" id="fabGroup" style="display:none">
   <button id="toTop" aria-label="Kembali ke atas">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
   <button id="aBtn" class="hidden" aria-label="Putar / hentikan musik">
-    <svg class="note-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l12-2v13M9 18a3 3 0 11-6 0 3 3 0 016 0zm12-2a3 3 0 11-6 0 3 3 0 016 0z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-    <span class="wave-bars"><span></span><span></span><span></span></span>
+    <svg class="note-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="1.6" fill="none"/>
+      <circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="1.6" fill="none"/>
+      <circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="1.6" fill="none"/>
+    </svg>
+    <span class="wave-bars">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
   </button>
 </div>
 
@@ -1177,7 +1228,7 @@ var C = {
      ════════════════════════════════════════════════════════════ */
   floralCorners: {
     ayat:     { tl: true,  tr: true,  bl: false, br: false, size: 'md' },
-    hero:     { tl: false, tr: false, bl: false, br: false, size: 'md' },
+    hero:     { tl: true, tr: true, bl: true, br: true, size: 'md' },
     mempelai: { tl: true,  tr: true,  bl: true,  br: true,  size: 'md' },
     jadwal:   { tl: true,  tr: true,  bl: true,  br: true,  size: 'md' },
     lokasi:   { tl: true,  tr: true,  bl: true,  br: true,  size: 'md' },
@@ -1526,7 +1577,6 @@ function initCountdown() {
 function initScrollAnim() {
   var sel = '.a, .a-left, .a-right';
   if (!('IntersectionObserver' in window)) {
-    /* Fallback: langsung tampilkan semua */
     var all = document.querySelectorAll(sel);
     for (var i = 0; i < all.length; i++) all[i].classList.add('visible');
     return;
@@ -1586,31 +1636,75 @@ function initToTop() {
 
 
 /* ══════════════════════════════════════════════════════════════
-   AUDIO PLAYER
+   AUDIO PLAYER — PERBAIKAN TOTAL
+   Masalah lama: hover CSS dan event listener menyebabkan
+   tombol jadi transparan dan tidak responsif di HP.
+   Solusi: state management yang jelas, pakai touchend bukan click
    ══════════════════════════════════════════════════════════════ */
 function initAudio() {
-  var btn = $('aBtn');
+  var btn   = $('aBtn');
   var audio = $('bgA');
   if (!C.audioSrc) return;
 
   audio.src = C.audioSrc;
-  var playing = false;
 
-  btn.addEventListener('click', function() {
-    if (playing) {
-      audio.pause();
+  /* State tunggal — hanya satu sumber kebenaran */
+  var isPlaying = false;
+
+  function setPlaying(val) {
+    isPlaying = val;
+    if (isPlaying) {
+      btn.classList.add('playing');
+      btn.setAttribute('aria-label', 'Hentikan musik');
+    } else {
       btn.classList.remove('playing');
-      playing = false;
+      btn.setAttribute('aria-label', 'Putar musik');
+    }
+  }
+
+  function toggleAudio() {
+    if (isPlaying) {
+      audio.pause();
+      setPlaying(false);
     } else {
       var promise = audio.play();
-      if (promise && promise.catch) {
-        promise.catch(function() {
+      if (promise && promise.then) {
+        promise.then(function() {
+          setPlaying(true);
+        }).catch(function() {
+          setPlaying(false);
           toast('Ketuk lagi untuk memutar musik');
         });
+      } else {
+        setPlaying(true);
       }
-      btn.classList.add('playing');
-      playing = true;
     }
+  }
+
+  /* PERBAIKAN: Gunakan touchend untuk perangkat touch,
+     dan cegah double-fire dengan click */
+  var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+  if (isTouchDevice) {
+    btn.addEventListener('touchend', function(e) {
+      e.preventDefault(); /* cegah click ikut terpicu */
+      toggleAudio();
+    }, { passive: false });
+  } else {
+    btn.addEventListener('click', function() {
+      toggleAudio();
+    });
+  }
+
+  /* Sinkronisasi state jika audio berhenti karena sebab lain */
+  audio.addEventListener('pause', function() {
+    setPlaying(false);
+  });
+  audio.addEventListener('play', function() {
+    setPlaying(true);
+  });
+  audio.addEventListener('ended', function() {
+    setPlaying(false);
   });
 }
 
@@ -1651,12 +1745,10 @@ function initRSVP() {
       waktu: new Date().toISOString()
     };
 
-    /* Simpan ke localStorage */
     var rsvps = LS.get('rsvp_list', []);
     rsvps.push(entry);
     LS.set('rsvp_list', rsvps);
 
-    /* Kirim ke Google Sheet jika URL tersedia */
     if (C.googleSheetUrl) {
       fetch(C.googleSheetUrl, {
         method: 'POST',
@@ -1685,9 +1777,7 @@ function initRSVP() {
       $('rNama').value = guestName();
     }
 
-    /* Tambahkan ke buku tamu */
     renderGuestbook();
-
     toast('RSVP berhasil dikirim!');
   }
 }
@@ -1708,7 +1798,6 @@ function renderGuestbook() {
   }
 
   var html = '';
-  /* Tampilkan dari terbaru */
   for (var i = rsvps.length - 1; i >= 0; i--) {
     var r = rsvps[i];
     if (!r.ucapan) continue;
@@ -1775,7 +1864,7 @@ function initBankCopy() {
 
 
 /* ══════════════════════════════════════════════════════════════
-   COVER — Buka undangan
+   COVER — PERBAIKAN: body.cover-open dihapus saat buka undangan
    ══════════════════════════════════════════════════════════════ */
 function initCover() {
   var cover = $('cover');
@@ -1785,21 +1874,21 @@ function initCover() {
   var aBtn  = $('aBtn');
 
   btn.addEventListener('click', function() {
+    /* PERBAIKAN: Izinkan scroll kembali sebelum konten tampil */
+    document.body.classList.remove('cover-open');
+
     cover.classList.add('out');
 
-    /* Tampilkan konten undangan */
     setTimeout(function() {
       inv.classList.add('show');
       fab.style.display = 'flex';
-      if (C.audioSrc) aBtn.classList.remove('hidden');
+      aBtn.classList.remove('hidden');
     }, 400);
 
-    /* Mulai animasi scroll */
     setTimeout(function() {
       initScrollAnim();
     }, 600);
 
-    /* Mulai audio otomatis jika bisa */
     if (C.audioSrc) {
       var audio = $('bgA');
       setTimeout(function() {
@@ -1807,6 +1896,7 @@ function initCover() {
         if (promise && promise.then) {
           promise.then(function() {
             aBtn.classList.add('playing');
+            aBtn.setAttribute('aria-label', 'Hentikan musik');
           }).catch(function() {
             /* Autoplay diblokir, user perlu klik tombol musik */
           });
