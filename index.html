@@ -1067,19 +1067,19 @@ var C = {
   akad: {
     date     : 'Sabtu, 10 Oktober 2026',
     timeStr  : '08.00 - 10.00',
-    venue    : 'Masjid Agung Al-Akbar Surabaya',
-    address  : 'Jl. Masjid Al-Akbar Timur No.1, Pagesangan, Surabaya',
-    mapsUrl  : 'https://maps.google.com/?q=Masjid+Al+Akbar+Surabaya',
-    mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.9697609985!2d112.70682!3d-7.34437!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb9a4e50e3c9%3A0x7d71f1e74aab9dde!2sMasjid%20Al-Akbar%20Surabaya!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid'
+    venue    : 'Masjid Putra Buana',
+    address  : 'Dsn. Kebon, Desa Ngunut, Kec. Ngunut - Kab. Tulungagung',
+    mapsUrl  : 'https://maps.app.goo.gl/hM4ayNSWZGPbS9y79',
+    mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d987.4960753304052!2d111.9998632695654!3d-8.10307999949537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOMKwMDYnMTEuMSJTIDExMsKwMDAnMDEuOCJF!5e1!3m2!1sid!2sid!4v1783477602520!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin'
   },
 
   walimah: {
     date     : 'Sabtu, 10 Oktober 2026',
     timeStr  : '11.00 - 14.00',
-    venue    : 'Gedung Graha Pena Surabaya',
-    address  : 'Jl. Ahmad Yani No.88, Gayungan, Surabaya',
-    mapsUrl  : 'https://maps.google.com/?q=Graha+Pena+Surabaya',
-    mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.0!2d112.7323!3d-7.3105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fc48a55cf12d%3A0x4c720f8c51fe01f3!2sGraha%20Pena%20Surabaya!5e0!3m2!1sid!2sid!4v1700000000001!5m2!1sid!2sid'
+    venue    : 'Sky Dome',
+    address  : 'Lingkungan 8, Ngunut, Kec. Ngunut, Kabupaten Tulungagung, Jawa Timur 66292',
+    mapsUrl  : 'https://maps.app.goo.gl/jJLh95xaEUh6hFzt6',
+    mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d493.7481476717919!2d112.00070748389669!3d-8.102990338864611!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78e5005b9d7737%3A0x6a0b0296c1614a74!2sSKY%20DOME!5e1!3m2!1sid!2sid!4v1783476830500!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin'
   },
 
   ayat: {
@@ -1275,7 +1275,7 @@ function initContent() {
   }
   $('timelineWrap').innerHTML = tlHtml;
 
-  // --- Lokasi: Maps iframe + 2 tombol ---
+  // --- Lokasi ---
   $('mapFrame').src = C.walimah.mapsEmbed || C.akad.mapsEmbed;
   $('locBtns').innerHTML =
     '<a class="btn-loc a-left" data-d="1" href="' + esc(C.akad.mapsUrl) + '" target="_blank" rel="noopener">' +
