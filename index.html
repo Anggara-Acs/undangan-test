@@ -1092,8 +1092,8 @@ var C = {
   },
 
   ayat: {
-    arabic     : '\u0648\u064E\u0645\u0650\u0646\u0652 \u0622\u064A\u064E\u0627\u062A\u0650\u0647\u0650\u064A \u0623\u064E\u0646\u0652 \u062E\u064E\u0644\u064E\u0642\u064E \u0644\u064E\u0643\u064F\u0645\u0652 \u0645\u0650\u0646\u0652 \u0623\u064E\u0646\u0641\u064F\u0633\u0650\u0643\u064F\u0645\u0652 \u0623\u064E\u0632\u0652\u0648\u064E\u0627\u062C\u064B\u0627 \u0644\u0650\u062A\u064E\u0633\u0652\u0643\u064F\u0646\u064F\u0648\u0627 \u0625\u0650\u0644\u064E\u064A\u0652\u0647\u064E\u0627 \u0648\u064E\u062C\u064E\u0639\u064E\u0644\u064E \u0628\u064E\u064A\u0652\u0646\u064E\u0643\u064F\u0645\u0652 \u0645\u064E\u0648\u064E\u062F\u0651\u064E\u0629\u064B \u0648\u064E\u0631\u064E\u062D\u0652\u0645\u064E\u0629\u064B',
-    translation: '"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, agar kamu hidup tenang bersamanya, dan Dia menjadikan di antaramu rasa cinta dan kasih sayang."',
+    arabic     : 'وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ',
+    translation: '"Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir"',
     source     : 'QS. Ar-Rum : 21'
   },
 
@@ -1334,6 +1334,9 @@ function initContent() {
 
   document.title = "Undangan Walimatul 'Ursy \u2014 " + first.nickname + ' & ' + second.nickname;
 
+  /* [DIUBAH] Input nama RSVP diisi otomatis dari guestName()
+     yang kini membaca parameter "to" atau "nama"                    */
+  if (nama !== C.defaultGuest) $('rNama').value = nama;
 }
 
 
@@ -1532,6 +1535,13 @@ function initRSVP() {
     msg.style.color = '#4A627D';
 
     form.reset();
+
+    /* [DIUBAH] Setelah reset form, isi ulang nama tamu dari guestName()
+       agar input nama RSVP tetap terisi jika bukan defaultGuest      */
+    var currentGuest = guestName();
+    if (currentGuest !== C.defaultGuest) {
+      $('rNama').value = currentGuest;
+    }
   });
 }
 
