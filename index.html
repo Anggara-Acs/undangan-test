@@ -1334,9 +1334,6 @@ function initContent() {
 
   document.title = "Undangan Walimatul 'Ursy \u2014 " + first.nickname + ' & ' + second.nickname;
 
-  /* [DIUBAH] Input nama RSVP diisi otomatis dari guestName()
-     yang kini membaca parameter "to" atau "nama"                    */
-  if (nama !== C.defaultGuest) $('rNama').value = nama;
 }
 
 
@@ -1535,13 +1532,6 @@ function initRSVP() {
     msg.style.color = '#4A627D';
 
     form.reset();
-
-    /* [DIUBAH] Setelah reset form, isi ulang nama tamu dari guestName()
-       agar input nama RSVP tetap terisi jika bukan defaultGuest      */
-    var currentGuest = guestName();
-    if (currentGuest !== C.defaultGuest) {
-      $('rNama').value = currentGuest;
-    }
   });
 }
 
