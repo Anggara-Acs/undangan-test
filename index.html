@@ -5,14 +5,23 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Undangan Walimatul 'Ursy — Rahma & Arvi</title>
 <meta name="description" content="Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Anda untuk menghadiri hari bahagia kami.">
+
+<!-- [DIUBAH] Open Graph Meta Tag — disesuaikan agar preview WhatsApp menampilkan thumbnail profesional -->
 <meta property="og:type"         content="website">
-<meta property="og:title"        content="Undangan Walimatul 'Ursy — Rahma & Arvi">
-<meta property="og:description"  content="Kami mengundang Anda untuk menghadiri hari bahagia kami.">
-<meta property="og:image"        content="https://username.github.io/nama-repo/assets/og-cover.jpg">
+<meta property="og:title"        content="💍 Undangan Pernikahan Rahma & Arvi">
+<meta property="og:description"  content="Sabtu, 10 Oktober 2026">
+<meta property="og:url"          content="https://anggara-acs.github.io/undangan-test/">
+<meta property="og:image"        content="https://anggara-acs.github.io/undangan-test/assets/og-cover.jpg">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name"    content="Rahma & Arvi Wedding">
 <meta property="og:locale"       content="id_ID">
 <meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="Undangan Walimatul 'Ursy — Rahma & Arvi">
-<meta name="twitter:image"       content="https://username.github.io/nama-repo/assets/og-cover.jpg">
+<!-- [DIUBAH] Twitter Card meta disesuaikan dengan OG -->
+<meta name="twitter:title"       content="💍 Undangan Pernikahan Rahma & Arvi">
+<meta name="twitter:description" content="Sabtu, 10 Oktober 2026">
+<meta name="twitter:image"       content="https://anggara-acs.github.io/undangan-test/assets/og-cover.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500;600&family=Reem+Kufi:wght@400;500&display=swap" rel="stylesheet">
@@ -1032,7 +1041,7 @@ var C = {
   displayOrder: 'bride-groom',
   showAmplop: false,
   showInstagram: false,
-  showHeroFlorals: true,
+  showHeroFlorals: false,
 
   floralCorners: {
     ayat:     { tl: true,  tr: true,  bl: false, br: false, size: 'md' },
@@ -1076,7 +1085,7 @@ var C = {
   walimah: {
     date     : 'Sabtu, 10 Oktober 2026',
     timeStr  : '11.00 - 14.00',
-    venue    : 'Sky Dome',
+    venue    : 'SKY DOME',
     address  : 'Lingkungan 8, Ngunut, Kec. Ngunut, Kabupaten Tulungagung, Jawa Timur 66292',
     mapsUrl  : 'https://maps.app.goo.gl/jJLh95xaEUh6hFzt6',
     mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d493.7481476717919!2d112.00070748389669!3d-8.102990338864611!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78e5005b9d7737%3A0x6a0b0296c1614a74!2sSKY%20DOME!5e1!3m2!1sid!2sid!4v1783476830500!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin'
@@ -1141,9 +1150,18 @@ function fallbackCopy(text) {
   } catch (_) { return false; }
 }
 
+/* [DIUBAH] Fungsi guestName — sekarang membaca parameter "to" terlebih dahulu,
+   dengan fallback ke "nama" (kompatibel parameter lama),
+   lalu ke defaultGuest jika keduanya kosong.
+   Contoh:
+   - ?to=Mas+Arvi       → "Mas Arvi"
+   - ?nama=Mas+Arvi     → "Mas Arvi" (kompatibel lama)
+   - ?to=Mas+Arvi&nama=X → "Mas Arvi" (to diutamakan)
+   - (tanpa parameter)  → "Tamu Undangan"                                   */
 function guestName() {
-  var p = new URLSearchParams(window.location.search).get('nama');
-  return (p && p.trim()) ? p.trim() : C.defaultGuest;
+  var params = new URLSearchParams(window.location.search);
+  var name = params.get('to') || params.get('nama');
+  return (name && name.trim()) ? name.trim() : C.defaultGuest;
 }
 
 var _m = {};
@@ -1204,6 +1222,8 @@ function initFlorals() {
    ISI KONTEN
    ══════════════════════════════════════════════════════════════ */
 function initContent() {
+  /* [DIUBAH] Variabel nama kini menggunakan guestName() yang sudah
+     mendukung parameter "to" dengan fallback ke "nama"               */
   var nama = guestName();
 
   var first  = C.displayOrder === 'bride-groom' ? C.bride : C.groom;
@@ -1211,6 +1231,8 @@ function initContent() {
   var firstRole  = C.displayOrder === 'bride-groom' ? 'Putri' : 'Putra';
   var secondRole = C.displayOrder === 'bride-groom' ? 'Putra' : 'Putri';
 
+  /* [DIUBAH] Nama tamu di cover menggunakan variabel "nama"
+     yang kini membaca dari parameter "to" atau "nama"              */
   $('cvCouple').textContent = first.nickname + ' & ' + second.nickname;
   $('cvDate').textContent   = C.coverDate;
   $('cvGuest').textContent  = nama;
@@ -1219,6 +1241,8 @@ function initContent() {
   $('hAyatTr').textContent  = C.ayat.translation;
   $('hAyatSrc').textContent = C.ayat.source;
 
+  /* [DIUBAH] Nama tamu di hero menggunakan variabel "nama"
+     yang kini membaca dari parameter "to" atau "nama"              */
   $('hGuest').textContent = nama;
   $('hName1').textContent = first.nickname;
   $('hName2').textContent = second.nickname;
@@ -1309,6 +1333,9 @@ function initContent() {
   $('ftCouple').textContent = first.nickname + ' & ' + second.nickname;
 
   document.title = "Undangan Walimatul 'Ursy \u2014 " + first.nickname + ' & ' + second.nickname;
+
+  /* [DIUBAH] Input nama RSVP diisi otomatis dari guestName()
+     yang kini membaca parameter "to" atau "nama"                    */
   if (nama !== C.defaultGuest) $('rNama').value = nama;
 }
 
@@ -1379,8 +1406,7 @@ function initScrollAnim() {
         obs.unobserve(entries[i].target);
       }
     }
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
+  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
   for (var i = 0; i < targets.length; i++) {
     obs.observe(targets[i]);
   }
@@ -1388,15 +1414,22 @@ function initScrollAnim() {
 
 
 /* ══════════════════════════════════════════════════════════════
-   COVER
+   COVER OPENING
    ══════════════════════════════════════════════════════════════ */
 function initCover() {
-  $('btnBuka').addEventListener('click', function() {
-    $('cover').classList.add('out');
-    $('inv').classList.add('show');
+  var btn = $('btnBuka');
+  var cover = $('cover');
+  var inv = $('inv');
+  var audio = $('bgA');
+
+  btn.addEventListener('click', function() {
+    cover.classList.add('out');
+    setTimeout(function() {
+      inv.classList.add('show');
+      window.scrollTo(0, 0);
+    }, 400);
 
     if (C.audioSrc) {
-      var audio = $('bgA');
       audio.src = C.audioSrc;
       audio.play().then(function() {
         $('aBtn').classList.remove('hidden');
@@ -1405,21 +1438,22 @@ function initCover() {
         $('aBtn').classList.remove('hidden');
       });
     }
-
-    window.scrollTo(0, 0);
   });
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   AUDIO TOGGLE
+   MUSIK TOGGLE
    ══════════════════════════════════════════════════════════════ */
-function initAudio() {
+function initMusic() {
   var btn = $('aBtn');
   var audio = $('bgA');
+
   btn.addEventListener('click', function() {
     if (audio.paused) {
-      audio.play().then(function() { btn.classList.add('playing'); }).catch(function() {});
+      audio.play().then(function() {
+        btn.classList.add('playing');
+      }).catch(function() {});
     } else {
       audio.pause();
       btn.classList.remove('playing');
@@ -1429,57 +1463,24 @@ function initAudio() {
 
 
 /* ══════════════════════════════════════════════════════════════
-   SCROLL PROGRESS & TO-TOP
-   ══════════════════════════════════════════════════════════════ */
-function initScrollUI() {
-  var prog = $('prog');
-  var toTop = $('toTop');
-  var ticking = false;
-
-  window.addEventListener('scroll', function() {
-    if (!ticking) {
-      requestAnimationFrame(function() {
-        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        prog.style.width = pct + '%';
-
-        if (scrollTop > 400) {
-          toTop.classList.add('show');
-        } else {
-          toTop.classList.remove('show');
-        }
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, { passive: true });
-
-  toTop.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
-
-
-/* ══════════════════════════════════════════════════════════════
    RSVP FORM
    ══════════════════════════════════════════════════════════════ */
 function initRSVP() {
   var form = $('rsvpForm');
-  var msg = $('rsvpMsg');
-  var btn = $('rsvpBtn');
+  var msg  = $('rsvpMsg');
+  var btn  = $('rsvpBtn');
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    var nama = $('rNama').value.trim();
+    var nama      = $('rNama').value.trim();
     var kehadiran = $('rKehadiran').value;
-    var jumlah = $('rJumlah').value;
-    var ucapan = $('rUcapan').value.trim();
+    var jumlah    = $('rJumlah').value;
+    var ucapan    = $('rUcapan').value.trim();
 
     if (!nama) {
       msg.textContent = 'Mohon isi nama Anda.';
-      msg.style.color = '#B06060';
+      msg.style.color = '#c0392b';
       return;
     }
 
@@ -1494,102 +1495,166 @@ function initRSVP() {
       waktu: new Date().toISOString()
     };
 
+    // Simpan ke localStorage
+    var entries = LS.get('rsvp_entries', []);
+    entries.push(entry);
+    LS.set('rsvp_entries', entries);
+
+    // Jika ada ucapan, tambahkan ke buku tamu
+    if (ucapan) {
+      var comments = LS.get('gb_comments', []);
+      comments.unshift({
+        nama: nama,
+        kehadiran: kehadiran,
+        ucapan: ucapan,
+        waktu: entry.waktu
+      });
+      LS.set('gb_comments', comments);
+      renderGuestBook();
+    }
+
+    // Kirim ke Google Sheet jika URL dikonfigurasi
     if (C.googleSheetUrl) {
+      var formData = new FormData();
+      formData.append('nama', nama);
+      formData.append('kehadiran', kehadiran);
+      formData.append('jumlah', jumlah);
+      formData.append('ucapan', ucapan);
+      formData.append('waktu', entry.waktu);
+
       fetch(C.googleSheetUrl, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(entry)
-      }).then(function() { onRSVPSuccess(entry); })
-        .catch(function() { onRSVPSuccess(entry); });
-    } else {
-      setTimeout(function() { onRSVPSuccess(entry); }, 800);
+        body: formData,
+        mode: 'no-cors'
+      }).catch(function() {});
     }
-  });
 
-  function onRSVPSuccess(entry) {
     btn.disabled = false;
     btn.textContent = 'Kirim RSVP';
-    msg.textContent = 'Terima kasih, konfirmasi Anda telah diterima!';
+    msg.textContent = 'Terima kasih! Konfirmasi Anda telah kami terima.';
     msg.style.color = '#4A627D';
+
     form.reset();
-    var nama = guestName();
-    if (nama !== C.defaultGuest) $('rNama').value = nama;
-    addGuestEntry(entry);
-    toast('RSVP berhasil dikirim!');
+
+    /* [DIUBAH] Setelah reset form, isi ulang nama tamu dari guestName()
+       agar input nama RSVP tetap terisi jika bukan defaultGuest      */
+    var currentGuest = guestName();
+    if (currentGuest !== C.defaultGuest) {
+      $('rNama').value = currentGuest;
+    }
+  });
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   BUKU TAMU (GUEST BOOK)
+   ══════════════════════════════════════════════════════════════ */
+function renderGuestBook() {
+  var feed = $('gbFeed');
+  var comments = LS.get('gb_comments', []);
+
+  if (comments.length === 0) {
+    feed.innerHTML = '<p class="gb-empty">Belum ada ucapan. Jadilah yang pertama!</p>';
+    return;
+  }
+
+  var html = '';
+  for (var i = 0; i < comments.length; i++) {
+    var c = comments[i];
+    var isHadir = c.kehadiran === 'hadir';
+    var time = new Date(c.waktu);
+    var timeStr = time.toLocaleDateString('id-ID', {
+      day: 'numeric', month: 'long', year: 'numeric'
+    }) + ' \u00B7 ' + time.toLocaleTimeString('id-ID', {
+      hour: '2-digit', minute: '2-digit'
+    });
+
+    html +=
+      '<div class="gb-comment">' +
+        '<div class="gb-top">' +
+          '<span class="gb-name">' + esc(c.nama) + '</span>' +
+          '<span class="gb-badge ' + (isHadir ? 'hadir' : 'tidak') + '">' + (isHadir ? 'Hadir' : 'Tidak Hadir') + '</span>' +
+        '</div>' +
+        (c.ucapan ? '<p class="gb-text">' + esc(c.ucapan) + '</p>' : '') +
+        '<span class="gb-time">' + timeStr + '</span>' +
+      '</div>';
+  }
+  feed.innerHTML = html;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   AMPLOP DIGITAL — COPY BUTTON
+   ══════════════════════════════════════════════════════════════ */
+function initAmplop() {
+  if (!C.showAmplop) return;
+
+  var btns = document.querySelectorAll('.btn-cp');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', function() {
+      var num = this.getAttribute('data-num');
+      var self = this;
+      copyText(num).then(function() {
+        self.textContent = 'Tersalin';
+        self.classList.add('ok');
+        toast('Nomor rekening berhasil disalin');
+        setTimeout(function() {
+          self.textContent = 'Salin';
+          self.classList.remove('ok');
+        }, 2000);
+      });
+    });
   }
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   BUKU TAMU
+   SCROLL PROGRESS BAR
    ══════════════════════════════════════════════════════════════ */
-function addGuestEntry(entry) {
-  var feed = $('gbFeed');
-  var empty = feed.querySelector('.gb-empty');
-  if (empty) empty.remove();
-
-  var isHadir = entry.kehadiran === 'hadir';
-  var div = document.createElement('div');
-  div.className = 'gb-comment';
-  div.innerHTML =
-    '<div class="gb-top">' +
-      '<span class="gb-name">' + esc(entry.nama) + '</span>' +
-      '<span class="gb-badge ' + (isHadir ? 'hadir' : 'tidak') + '">' + (isHadir ? 'Hadir' : 'Tidak Hadir') + '</span>' +
-    '</div>' +
-    (entry.ucapan ? '<p class="gb-text">' + esc(entry.ucapan) + '</p>' : '') +
-    '<p class="gb-time">' + formatTime(entry.waktu) + '</p>';
-
-  feed.insertBefore(div, feed.firstChild);
-}
-
-function formatTime(iso) {
-  if (!iso) return '';
-  var d = new Date(iso);
-  var months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-  return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear() + ' \u00B7 ' +
-    String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+function initScrollProgress() {
+  var prog = $('prog');
+  window.addEventListener('scroll', function() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+    prog.style.width = pct + '%';
+  }, { passive: true });
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   BANK COPY
+   BACK TO TOP
    ══════════════════════════════════════════════════════════════ */
-function initBankCopy() {
-  document.addEventListener('click', function(e) {
-    var btn = e.target.closest('.btn-cp');
-    if (!btn) return;
-    var num = btn.getAttribute('data-num');
-    if (!num) return;
+function initToTop() {
+  var btn = $('toTop');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 400) {
+      btn.classList.add('show');
+    } else {
+      btn.classList.remove('show');
+    }
+  }, { passive: true });
 
-    copyText(num).then(function(ok) {
-      if (ok) {
-        btn.textContent = 'Tersalin';
-        btn.classList.add('ok');
-        toast('Nomor rekening berhasil disalin');
-        setTimeout(function() {
-          btn.textContent = 'Salin';
-          btn.classList.remove('ok');
-        }, 2000);
-      }
-    });
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   INIT
+   INISIALISASI UTAMA
    ══════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', function() {
   initFlorals();
   initContent();
   initCountdown();
+  initScrollAnim();
   initCover();
-  initAudio();
-  initScrollUI();
+  initMusic();
   initRSVP();
-  initBankCopy();
-  setTimeout(initScrollAnim, 100);
+  renderGuestBook();
+  initAmplop();
+  initScrollProgress();
+  initToTop();
 });
 </script>
 </body>
