@@ -5,10 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Undangan Walimatul 'Ursy — Rahma & Arvi</title>
 <meta name="description" content="Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Anda untuk menghadiri hari bahagia kami.">
-
-<!-- [DIUBAH] Open Graph Meta Tag — disesuaikan agar preview WhatsApp menampilkan thumbnail profesional -->
 <meta property="og:type"         content="website">
-<meta property="og:title"        content="💍 Undangan Pernikahan Rahma & Arvi">
+<meta property="og:title"        content="The Wedding Of Rahma & Arvi">
 <meta property="og:description"  content="Sabtu, 10 Oktober 2026">
 <meta property="og:url"          content="https://anggara-acs.github.io/undangan-test/">
 <meta property="og:image"        content="https://anggara-acs.github.io/undangan-test/assets/og-cover.jpg">
@@ -17,19 +15,14 @@
 <meta property="og:site_name"    content="Rahma & Arvi Wedding">
 <meta property="og:locale"       content="id_ID">
 <meta name="twitter:card"        content="summary_large_image">
-<!-- [DIUBAH] Twitter Card meta disesuaikan dengan OG -->
-<meta name="twitter:title"       content="💍 Undangan Pernikahan Rahma & Arvi">
+<meta name="twitter:title"       content="The Wedding Of Rahma & Arvi">
 <meta name="twitter:description" content="Sabtu, 10 Oktober 2026">
 <meta name="twitter:image"       content="https://anggara-acs.github.io/undangan-test/assets/og-cover.jpg">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500;600&family=Reem+Kufi:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-/* ═══════════════════════════════════════════════════════════
-   DESIGN TOKENS — Dusty Blue Floral Wedding
-   ═══════════════════════════════════════════════════════════ */
 :root {
   --gold:      #D8C8A0;
   --gold-soft: #D8C8A0;
@@ -43,7 +36,6 @@
   --text-dml:  #AAB5C2;
   --ease:      cubic-bezier(0.22,1,0.36,1);
   --maxw:      560px;
-
   --c-cover:    #F8F7F5;
   --c-ayat:     #FFFFFF;
   --c-hero:     #F8F7F5;
@@ -55,10 +47,6 @@
   --c-amplop:   #F8F7F5;
   --c-penutup:  #F8F7F5;
 }
-
-/* ═══════════════════════════════════════════════════════════
-   RESET & BASE
-   ═══════════════════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
@@ -75,18 +63,10 @@ img{display:block;max-width:100%}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
 a{color:inherit;text-decoration:none}
 button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-
-/* ═══════════════════════════════════════════════════════════
-   SCROLL PROGRESS
-   ═══════════════════════════════════════════════════════════ */
 #prog{
   position:fixed;top:0;left:0;height:1px;width:0;z-index:999;
   background:var(--gold);transition:width .08s linear;
 }
-
-/* ═══════════════════════════════════════════════════════════
-   TOAST
-   ═══════════════════════════════════════════════════════════ */
 #toast{
   position:fixed;bottom:28px;left:50%;
   transform:translate(-50%,14px);opacity:0;pointer-events:none;
@@ -99,10 +79,6 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
   box-shadow:0 4px 20px rgba(74,98,125,.08);
 }
 #toast.show{opacity:1;transform:translate(-50%,0)}
-
-/* ═══════════════════════════════════════════════════════════
-   ANIMATION SYSTEM
-   ═══════════════════════════════════════════════════════════ */
 .a{
   opacity:0;transform:translateY(24px);
   transition:opacity .7s var(--ease),transform .7s var(--ease);
@@ -122,21 +98,15 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
   opacity:1;transform:translate(0);
   will-change:auto;
 }
-
 [data-d="1"]{transition-delay:.1s}
 [data-d="2"]{transition-delay:.2s}
 [data-d="3"]{transition-delay:.3s}
 [data-d="4"]{transition-delay:.4s}
 [data-d="5"]{transition-delay:.5s}
-
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(16px)}
   to{opacity:1;transform:translateY(0)}
 }
-
-/* ═══════════════════════════════════════════════════════════
-   SECTION BASE
-   ═══════════════════════════════════════════════════════════ */
 section{padding:100px 28px;position:relative;overflow:hidden}
 .sec-inner{max-width:var(--maxw);margin:0 auto;position:relative;z-index:1}
 .eyebrow{
@@ -155,10 +125,6 @@ h2.st{
 h2.st.light{color:#4A627D}
 h2.st.dark{color:#4A627D}
 .g-rule{width:32px;height:1px;background:#D8DCE2;opacity:.5;margin:20px auto 0}
-
-/* ═══════════════════════════════════════════════════════════
-   DIVIDER IMAGE — Floral divider dekoratif
-   ═══════════════════════════════════════════════════════════ */
 #ayat .g-rule,
 #mempelai .g-rule,
 #jadwal .g-rule,
@@ -172,10 +138,6 @@ h2.st.dark{color:#4A627D}
   margin:28px auto 0;
   opacity:.5;
 }
-
-/* ═══════════════════════════════════════════════════════════
-   FLORAL CORNER SYSTEM
-   ═══════════════════════════════════════════════════════════ */
 .floral-corner{
   position:absolute;
   pointer-events:none;
@@ -188,7 +150,6 @@ h2.st.dark{color:#4A627D}
 .fc-tr{top:-6px;right:-6px;background-image:url('assets/floral/top-right.png')}
 .fc-bl{bottom:-6px;left:-6px;background-image:url('assets/floral/bottom-left.png')}
 .fc-br{bottom:-6px;right:-6px;background-image:url('assets/floral/bottom-right.png')}
-
 .fc-tl,.fc-tr,.fc-bl,.fc-br{
   width:min(30vw,200px);
   height:min(30vw,200px);
@@ -201,10 +162,6 @@ h2.st.dark{color:#4A627D}
   width:min(56vw,380px);
   height:min(56vw,380px);
 }
-
-/* ═══════════════════════════════════════════════════════════
-   HERO FLORAL
-   ═══════════════════════════════════════════════════════════ */
 .hero-floral{
   position:absolute;
   pointer-events:none;
@@ -226,10 +183,6 @@ h2.st.dark{color:#4A627D}
   transform:translateY(-50%);
   background-image:url('assets/floral/floral-right.png');
 }
-
-/* ═══════════════════════════════════════════════════════════
-   SECTION BACKGROUND COLORS
-   ═══════════════════════════════════════════════════════════ */
 #ayat{background-color:var(--c-ayat)}
 #hero{background-color:var(--c-hero)}
 #mempelai{background-color:var(--c-mempelai)}
@@ -239,17 +192,10 @@ h2.st.dark{color:#4A627D}
 #bukutamu{background-color:var(--c-tamu)}
 #amplop{background-color:var(--c-amplop)}
 #penutup{background-color:var(--c-penutup);text-align:center;padding:90px 28px 80px}
-
-/* ═══════════════════════════════════════════════════════════
-   1. COVER — Konten
-   ═══════════════════════════════════════════════════════════ */
 #cover{
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100vh;
-  height:100dvh;
+  top:0;left:0;width:100%;
+  height:100vh;height:100dvh;
   z-index:50;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
@@ -269,7 +215,6 @@ h2.st.dark{color:#4A627D}
   overflow:hidden;padding:48px 32px;text-align:center;
 }
 #cover.out{opacity:0;visibility:hidden;pointer-events:none;transform:scale(1.03) translateY(-24px)}
-
 .cv-bismillah{
   font-family:'Amiri',serif;direction:rtl;
   font-size:clamp(1.3rem,4vw,1.6rem);
@@ -305,7 +250,7 @@ h2.st.dark{color:#4A627D}
 .cv-guest{
   font-family:'Cormorant Garamond',serif;
   font-size:clamp(1.3rem,4.5vw,1.6rem);
-  font-style:italic;color:#7C8DA3;margin-bottom:44px;
+  font-style:italic;color:#4A627D;margin-bottom:44px;
   word-break:break-word;
   opacity:0;animation:fadeUp .8s .82s var(--ease) forwards;
 }
@@ -320,10 +265,6 @@ h2.st.dark{color:#4A627D}
 }
 .cv-btn:hover{background:#7B96B0;transform:translateY(-1px);box-shadow:0 6px 20px rgba(141,165,190,.3)}
 .cv-btn svg{width:15px;height:15px}
-
-/* ═══════════════════════════════════════════════════════════
-   INVITATION WRAPPER
-   ═══════════════════════════════════════════════════════════ */
 #inv{
   position:relative;z-index:1;
   opacity:0;transform:translateY(16px);
@@ -331,10 +272,6 @@ h2.st.dark{color:#4A627D}
   pointer-events:none;
 }
 #inv.show{opacity:1;transform:translateY(0);pointer-events:all}
-
-/* ═══════════════════════════════════════════════════════════
-   2. AYAT — Konten
-   ═══════════════════════════════════════════════════════════ */
 .ayat-box{max-width:440px;margin:0 auto;text-align:center}
 .ayat-ar{
   font-family:'Amiri',serif;direction:rtl;
@@ -347,12 +284,8 @@ h2.st.dark{color:#4A627D}
 }
 .ayat-src{
   font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
-  color:#AAB5C2;margin-top:12px;
+  color:#7C8DA3;margin-top:12px;
 }
-
-/* ═══════════════════════════════════════════════════════════
-   3. HERO
-   ═══════════════════════════════════════════════════════════ */
 #hero{
   padding:100px 28px 120px;text-align:center;
   min-height:90vh;
@@ -363,7 +296,7 @@ h2.st.dark{color:#4A627D}
   max-width:440px;margin:0 auto 40px;
   font-size:.88rem;font-weight:300;line-height:2;color:#7C8DA3;
 }
-.h-greeting .tamu{color:#4A627D;font-style:italic}
+.h-greeting .tamu{color:#3A5268;font-style:italic}
 .h-names{margin-bottom:22px}
 .h-name{
   display:block;
@@ -381,8 +314,6 @@ h2.st.dark{color:#4A627D}
   font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;
   color:#8DA5BE;margin-bottom:60px;
 }
-
-/* ── SPECIAL NAME REVEAL ── */
 .h-names.a,
 .h-names.a.visible{
   transform:none;
@@ -390,7 +321,6 @@ h2.st.dark{color:#4A627D}
   will-change:opacity;
 }
 .h-names.a.visible{will-change:auto}
-
 .h-amp{
   opacity:0;
   transition:opacity .7s cubic-bezier(0.16,1,0.3,1);
@@ -399,7 +329,6 @@ h2.st.dark{color:#4A627D}
   opacity:.85;
   transition-delay:.5s;
 }
-
 .h-name{
   opacity:0;
   transform:translateY(32px);
@@ -414,21 +343,10 @@ h2.st.dark{color:#4A627D}
 .h-names.visible .h-name:last-child{
   animation-delay:.4s;
 }
-
 @keyframes nameReveal{
-  0%{
-    opacity:0;
-    transform:translateY(32px);
-    letter-spacing:.12em;
-  }
-  100%{
-    opacity:1;
-    transform:translateY(0);
-    letter-spacing:.03em;
-  }
+  0%{opacity:0;transform:translateY(32px);letter-spacing:.12em}
+  100%{opacity:1;transform:translateY(0);letter-spacing:.03em}
 }
-
-/* ── Countdown ── */
 .cd-wrap{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
 .cd-box{
   min-width:60px;padding:14px 8px 12px;
@@ -450,12 +368,7 @@ h2.st.dark{color:#4A627D}
   text-transform:uppercase;color:#7C8DA3;margin-top:6px;
 }
 .cd-done{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#4A627D}
-
-/* ═══════════════════════════════════════════════════════════
-   4. MEMPELAI — Konten
-   ═══════════════════════════════════════════════════════════ */
 #mempelai h2.st{font-size:clamp(1.3rem,4vw,1.6rem)}
-
 .couple-wrap{max-width:420px;margin:0 auto}
 .cp{
   padding:36px 24px;text-align:center;
@@ -493,7 +406,6 @@ h2.st.dark{color:#4A627D}
 }
 .cp-ig:hover{color:#8DA5BE;border-color:#8DA5BE}
 .cp-ig svg{width:12px;height:12px}
-
 .cp-sep{
   display:flex;align-items:center;gap:18px;
   padding:8px 0;
@@ -504,10 +416,6 @@ h2.st.dark{color:#4A627D}
   font-size:1.6rem;color:#D8C8A0;opacity:.85;
   flex-shrink:0;
 }
-
-/* ═══════════════════════════════════════════════════════════
-   5. JADWAL — Vertical Timeline
-   ═══════════════════════════════════════════════════════════ */
 .timeline{
   max-width:400px;
   margin:0 auto;
@@ -545,7 +453,6 @@ h2.st.dark{color:#4A627D}
   background:#FFFFFF;
   flex-shrink:0;
 }
-
 .tl-time{
   flex-shrink:0;
   width:auto;
@@ -574,10 +481,6 @@ h2.st.dark{color:#4A627D}
 .tl-venue{font-size:.82rem;font-weight:300;color:#4A627D;margin-bottom:4px;line-height:1.6}
 .tl-addr{font-size:.74rem;color:#7C8DA3;line-height:1.6}
 .tl-date-sub{font-size:.72rem;color:#AAB5C2;margin-top:8px;letter-spacing:.02em}
-
-/* ═══════════════════════════════════════════════════════════
-   6. LOKASI — Konten
-   ═══════════════════════════════════════════════════════════ */
 .map-frame{
   border-radius:14px;overflow:hidden;
   border:1px solid #D8DCE2;
@@ -597,13 +500,8 @@ h2.st.dark{color:#4A627D}
 }
 .btn-loc:hover{background:rgba(141,165,190,.06);border-color:rgba(141,165,190,.35);color:#4A627D;box-shadow:0 4px 14px rgba(74,98,125,.06)}
 .btn-loc svg{width:15px;height:15px;flex-shrink:0}
-
-/* ═══════════════════════════════════════════════════════════
-   7. RSVP — Konten
-   ═══════════════════════════════════════════════════════════ */
 #rsvp h2.st.light{color:#4A627D}
 #rsvp .eyebrow.gd{color:#7C8DA3}
-
 .rsvp-form{max-width:400px;margin:0 auto}
 .fg{margin-bottom:16px}
 #rsvp .fg label{
@@ -633,7 +531,6 @@ h2.st.dark{color:#4A627D}
 .fg input[type=number]{-moz-appearance:textfield}
 .fg input[type=number]::-webkit-inner-spin-button,
 .fg input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
-
 .select-wrap{position:relative}
 #rsvp .select-wrap select{
   width:100%;padding:13px 40px 13px 16px;
@@ -667,10 +564,6 @@ h2.st.dark{color:#4A627D}
 .btn-submit:active{transform:scale(.98)}
 .btn-submit:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 .form-msg{font-size:.8rem;text-align:center;margin-top:14px;min-height:1.2em;color:#7C8DA3;line-height:1.6}
-
-/* ═══════════════════════════════════════════════════════════
-   8. BUKU TAMU — Konten
-   ═══════════════════════════════════════════════════════════ */
 .gb-feed{max-width:400px;margin:0 auto;max-height:480px;overflow-y:auto;padding-right:2px}
 .gb-feed::-webkit-scrollbar{width:2px}
 .gb-feed::-webkit-scrollbar-thumb{background:rgba(141,165,190,.15);border-radius:2px}
@@ -688,13 +581,8 @@ h2.st.dark{color:#4A627D}
 .gb-badge.tidak{background:rgba(0,0,0,.03);color:#7C8DA3}
 .gb-text{font-size:.84rem;color:#7C8DA3;font-weight:300;line-height:1.75;margin-bottom:8px}
 .gb-time{font-size:.68rem;color:#AAB5C2}
-
-/* ═══════════════════════════════════════════════════════════
-   9. AMPLOP DIGITAL — Konten
-   ═══════════════════════════════════════════════════════════ */
 #amplop h2.st.light{color:#4A627D}
 #amplop .eyebrow.gd{color:#7C8DA3}
-
 .amp-note{
   text-align:center;font-size:.84rem;font-weight:300;
   color:#7C8DA3;line-height:1.9;max-width:400px;margin:0 auto 36px;
@@ -721,19 +609,11 @@ h2.st.dark{color:#4A627D}
 }
 #amplop .btn-cp:hover{background:rgba(141,165,190,.08);border-color:rgba(141,165,190,.35)}
 #amplop .btn-cp.ok{background:rgba(141,165,190,.1);color:#4A627D;border-color:rgba(141,165,190,.35)}
-
-/* ═══════════════════════════════════════════════════════════
-   10. PENUTUP — Konten
-   ═══════════════════════════════════════════════════════════ */
 .ft-ar{font-family:'Amiri',serif;direction:rtl;font-size:1.3rem;color:#8DA5BE;margin-bottom:16px}
 .ft-doa{font-size:.84rem;font-weight:300;font-style:italic;color:#7C8DA3;max-width:360px;margin:0 auto 32px;line-height:1.95}
 .ft-thanks{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:#4A627D;margin-bottom:5px}
 .ft-couple{font-size:.82rem;color:#8DA5BE;letter-spacing:.06em}
 .ft-credit{font-size:.62rem;color:#AAB5C2;margin-top:36px;letter-spacing:.04em}
-
-/* ═══════════════════════════════════════════════════════════
-   FLOATING BUTTONS
-   ═══════════════════════════════════════════════════════════ */
 #aBtn{
   position:fixed;bottom:26px;right:26px;z-index:40;
   width:36px;height:36px;border-radius:50%;
@@ -754,7 +634,6 @@ h2.st.dark{color:#4A627D}
 #aBtn.playing .wave-bars span:nth-child(3){animation-delay:.34s}
 #aBtn:not(.playing) .wave-bars span{height:4px;animation:none}
 @keyframes waveMove{0%,100%{height:4px}50%{height:11px}}
-
 #toTop{
   position:fixed;bottom:26px;right:72px;z-index:40;
   width:36px;height:36px;border-radius:50%;
@@ -767,67 +646,42 @@ h2.st.dark{color:#4A627D}
 #toTop.show{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
 #toTop:hover{transform:translateY(-2px) scale(1.05)}
 #toTop svg{width:17px;height:17px}
-
-/* ═══════════════════════════════════════════════════════════
-   RESPONSIVE — Lebar kecil
-   ═══════════════════════════════════════════════════════════ */
 @media(max-width:480px){
-  #cover{
-    background-size:
-      min(68vw, 320px) auto,
-      min(68vw, 320px) auto;
-  }
-
+  #cover{background-size:min(68vw, 320px) auto,min(68vw, 320px) auto}
   .fc-tl,.fc-tr,.fc-bl,.fc-br{width:min(38vw,190px);height:min(38vw,190px)}
   .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:min(50vw,280px);height:min(50vw,280px)}
   .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:min(68vw,320px);height:min(68vw,320px)}
-
   .hero-floral{width:min(42vw,200px);height:min(58vw,300px)}
-
   .timeline{padding-left:28px}
   .tl-line{left:9px}
   .tl-dot{left:-24px}
   .tl-time{min-width:80px}
   .tl-item{padding:22px 20px}
 }
-
 @media(max-width:360px){
-  #cover{
-    background-size:
-      min(78vw, 280px) auto,
-      min(78vw, 280px) auto;
-  }
-
+  #cover{background-size:min(78vw, 280px) auto,min(78vw, 280px) auto}
   .fc-tl,.fc-tr,.fc-bl,.fc-br{width:min(44vw,170px);height:min(44vw,170px)}
   .fc-md.fc-tl,.fc-md.fc-tr,.fc-md.fc-bl,.fc-md.fc-br{width:min(56vw,240px);height:min(56vw,240px)}
   .fc-lg.fc-tl,.fc-lg.fc-tr,.fc-lg.fc-bl,.fc-lg.fc-br{width:min(78vw,280px);height:min(78vw,280px)}
-
   .hero-floral{width:min(46vw,170px);height:min(62vw,260px)}
-
   section{padding:72px 20px}
   .h-name{font-size:2.8rem}
   h2.st{font-size:1.7rem}
   #mempelai h2.st{font-size:1.3rem}
   .cp-name{font-size:1.6rem}
   #toTop{right:68px}
-
   .timeline{padding-left:24px}
   .tl-line{left:7px}
   .tl-dot{left:-22px}
   .tl-item{padding:20px 18px;gap:14px}
   .tl-time{min-width:72px}
 }
-
-/* ═══════════════════════════════════════════════════════════
-   RESPONSIVE — Tinggi pendek (cover pas 1 layar)
-   ═══════════════════════════════════════════════════════════ */
 @media(max-height:680px){
   #cover{padding:36px 28px}
   .cv-bismillah{margin-bottom:32px}
   .cv-rule{margin:24px auto}
   .cv-guest{margin-bottom:32px}
 }
-
 @media(max-height:580px){
   #cover{padding:24px 24px}
   .cv-bismillah{margin-bottom:20px}
@@ -843,9 +697,6 @@ h2.st.dark{color:#4A627D}
 
 <div id="prog"></div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     1. COVER — Sampul pembuka
-     ═══════════════════════════════════════════════════════════ -->
 <section id="cover">
   <p class="cv-bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
   <p class="cv-eyebrow">Walimatul 'Ursy</p>
@@ -860,12 +711,7 @@ h2.st.dark{color:#4A627D}
   </button>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     ISI UNDANGAN
-     ═══════════════════════════════════════════════════════════ -->
 <main id="inv">
-
-  <!-- 2. AYAT -->
   <section id="ayat">
     <div class="ayat-box a" data-d="0">
       <span class="eyebrow gd">Firman Allah</span>
@@ -876,7 +722,6 @@ h2.st.dark{color:#4A627D}
     </div>
   </section>
 
-  <!-- 3. HERO — Nama pengantin + hitung mundur -->
   <section id="hero">
     <div class="sec-inner">
       <p class="h-greeting a" data-d="0">
@@ -895,7 +740,6 @@ h2.st.dark{color:#4A627D}
     </div>
   </section>
 
-  <!-- 4. MEMPELAI — Diisi dinamis oleh JavaScript -->
   <section id="mempelai">
     <div class="sec-inner">
       <div class="a" data-d="0">
@@ -907,7 +751,6 @@ h2.st.dark{color:#4A627D}
     </div>
   </section>
 
-  <!-- 5. JADWAL -->
   <section id="jadwal">
     <div class="sec-inner">
       <div class="a" data-d="0">
@@ -921,7 +764,6 @@ h2.st.dark{color:#4A627D}
     </div>
   </section>
 
-  <!-- 6. LOKASI -->
   <section id="lokasi">
     <div class="sec-inner">
       <div class="a" data-d="0">
@@ -936,7 +778,6 @@ h2.st.dark{color:#4A627D}
     </div>
   </section>
 
-  <!-- 7. RSVP -->
   <section id="rsvp">
     <div class="sec-inner">
       <div class="a" data-d="0">
@@ -973,7 +814,6 @@ h2.st.dark{color:#4A627D}
     </div>
   </section>
 
-  <!-- 8. BUKU TAMU -->
   <section id="bukutamu">
     <div class="sec-inner">
       <div class="a" data-d="0">
@@ -987,7 +827,6 @@ h2.st.dark{color:#4A627D}
     </div>
   </section>
 
-  <!-- 9. AMPLOP DIGITAL -->
   <section id="amplop">
     <div class="sec-inner">
       <div class="a" data-d="0">
@@ -1003,7 +842,6 @@ h2.st.dark{color:#4A627D}
     </div>
   </section>
 
-  <!-- 10. PENUTUP -->
   <footer id="penutup" class="a">
     <p class="ft-ar">جَزَاكُمُ اللّٰهُ خَيْرًا كَثِيرًا</p>
     <p class="ft-doa">"Atas kehadiran dan doa restu Bapak/Ibu/Saudara/i, kami mengucapkan terima kasih yang sebesar-besarnya."</p>
@@ -1012,16 +850,13 @@ h2.st.dark{color:#4A627D}
     <p class="ft-couple" id="ftCouple"></p>
     <p class="ft-credit">Undangan Digital · dibuat dengan ❤ untuk hari bahagia kami</p>
   </footer>
-
 </main>
 
-<!-- Tombol musik -->
 <button id="aBtn" class="hidden" aria-label="Putar / hentikan musik">
   <svg class="note-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l12-2v13M9 18a3 3 0 11-6 0 3 3 0 016 0zm12-2a3 3 0 11-6 0 3 3 0 016 0z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
   <span class="wave-bars"><span></span><span></span><span></span></span>
 </button>
 
-<!-- Tombol kembali ke atas -->
 <button id="toTop" aria-label="Kembali ke atas">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
 </button>
@@ -1085,15 +920,15 @@ var C = {
   walimah: {
     date     : 'Sabtu, 10 Oktober 2026',
     timeStr  : '11.00 - 14.00',
-    venue    : 'SKY DOME',
+    venue    : 'Sky Dome',
     address  : 'Lingkungan 8, Ngunut, Kec. Ngunut, Kabupaten Tulungagung, Jawa Timur 66292',
     mapsUrl  : 'https://maps.app.goo.gl/jJLh95xaEUh6hFzt6',
     mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d493.7481476717919!2d112.00070748389669!3d-8.102990338864611!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78e5005b9d7737%3A0x6a0b0296c1614a74!2sSKY%20DOME!5e1!3m2!1sid!2sid!4v1783476830500!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin'
   },
 
   ayat: {
-    arabic     : 'وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ',
-    translation: '"Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir"',
+    arabic     : 'وَمِنْ آيَاتِهِي أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلَكَ لَآيَاتٍ لِقَوْمٍ يَتَفَكَّرُونَ',
+    translation: '"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda kebesaran-Nya bagi kaum yang berpikir."',
     source     : 'QS. Ar-Rum : 21'
   },
 
@@ -1104,7 +939,16 @@ var C = {
   ],
 
   audioSrc: 'assets/audio/musik.mp3',
+
+  /* [DIUBAH] ISI URL Google Apps Script Anda di sini.
+     Format: https://script.google.com/macros/s/XXXXXXX/exec
+     Jika kosong (''), RSVP hanya tersimpan di localStorage perangkat. */
   googleSheetUrl: '',
+
+  /* [DIUBAH] Interval auto-refresh buku tamu dalam detik.
+     Set 0 untuk menonaktifkan auto-refresh. */
+  refreshInterval: 15,
+
   defaultGuest: 'Tamu Undangan'
 };
 
@@ -1150,14 +994,6 @@ function fallbackCopy(text) {
   } catch (_) { return false; }
 }
 
-/* [DIUBAH] Fungsi guestName — sekarang membaca parameter "to" terlebih dahulu,
-   dengan fallback ke "nama" (kompatibel parameter lama),
-   lalu ke defaultGuest jika keduanya kosong.
-   Contoh:
-   - ?to=Mas+Arvi       → "Mas Arvi"
-   - ?nama=Mas+Arvi     → "Mas Arvi" (kompatibel lama)
-   - ?to=Mas+Arvi&nama=X → "Mas Arvi" (to diutamakan)
-   - (tanpa parameter)  → "Tamu Undangan"                                   */
 function guestName() {
   var params = new URLSearchParams(window.location.search);
   var name = params.get('to') || params.get('nama');
@@ -1222,8 +1058,6 @@ function initFlorals() {
    ISI KONTEN
    ══════════════════════════════════════════════════════════════ */
 function initContent() {
-  /* [DIUBAH] Variabel nama kini menggunakan guestName() yang sudah
-     mendukung parameter "to" dengan fallback ke "nama"               */
   var nama = guestName();
 
   var first  = C.displayOrder === 'bride-groom' ? C.bride : C.groom;
@@ -1231,8 +1065,6 @@ function initContent() {
   var firstRole  = C.displayOrder === 'bride-groom' ? 'Putri' : 'Putra';
   var secondRole = C.displayOrder === 'bride-groom' ? 'Putra' : 'Putri';
 
-  /* [DIUBAH] Nama tamu di cover menggunakan variabel "nama"
-     yang kini membaca dari parameter "to" atau "nama"              */
   $('cvCouple').textContent = first.nickname + ' & ' + second.nickname;
   $('cvDate').textContent   = C.coverDate;
   $('cvGuest').textContent  = nama;
@@ -1241,8 +1073,6 @@ function initContent() {
   $('hAyatTr').textContent  = C.ayat.translation;
   $('hAyatSrc').textContent = C.ayat.source;
 
-  /* [DIUBAH] Nama tamu di hero menggunakan variabel "nama"
-     yang kini membaca dari parameter "to" atau "nama"              */
   $('hGuest').textContent = nama;
   $('hName1').textContent = first.nickname;
   $('hName2').textContent = second.nickname;
@@ -1273,7 +1103,6 @@ function initContent() {
       igLink(second) +
     '</div>';
 
-  // --- Timeline Jadwal ---
   var tlItems = [
     { label: 'Akad Nikah', hour: C.akad.timeStr, venue: C.akad.venue, addr: C.akad.address, date: C.akad.date, cls: 'a-left' },
     { label: 'Resepsi \u00B7 Walimah', hour: C.walimah.timeStr, venue: C.walimah.venue, addr: C.walimah.address, date: C.walimah.date, cls: 'a-right' }
@@ -1299,7 +1128,6 @@ function initContent() {
   }
   $('timelineWrap').innerHTML = tlHtml;
 
-  // --- Lokasi ---
   $('mapFrame').src = C.walimah.mapsEmbed || C.akad.mapsEmbed;
   $('locBtns').innerHTML =
     '<a class="btn-loc a-left" data-d="1" href="' + esc(C.akad.mapsUrl) + '" target="_blank" rel="noopener">' +
@@ -1309,7 +1137,6 @@ function initContent() {
       MAP_SVG + ' Arah ke Lokasi Resepsi' +
     '</a>';
 
-  // --- Amplop Digital ---
   if (!C.showAmplop) {
     var amplopEl = $('amplop');
     if (amplopEl) amplopEl.remove();
@@ -1331,12 +1158,7 @@ function initContent() {
   }
 
   $('ftCouple').textContent = first.nickname + ' & ' + second.nickname;
-
   document.title = "Undangan Walimatul 'Ursy \u2014 " + first.nickname + ' & ' + second.nickname;
-
-  /* [DIUBAH] Input nama RSVP diisi otomatis dari guestName()
-     yang kini membaca parameter "to" atau "nama"                    */
-  if (nama !== C.defaultGuest) $('rNama').value = nama;
 }
 
 
@@ -1463,7 +1285,7 @@ function initMusic() {
 
 
 /* ══════════════════════════════════════════════════════════════
-   RSVP FORM
+   [DIUBAH] RSVP FORM — Kirim ke Google Sheet
    ══════════════════════════════════════════════════════════════ */
 function initRSVP() {
   var form = $('rsvpForm');
@@ -1492,68 +1314,112 @@ function initRSVP() {
       kehadiran: kehadiran,
       jumlah: jumlah,
       ucapan: ucapan,
-      waktu: new Date().toISOString()
+      waktu: new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })
     };
 
-    // Simpan ke localStorage
-    var entries = LS.get('rsvp_entries', []);
-    entries.push(entry);
-    LS.set('rsvp_entries', entries);
-
-    // Jika ada ucapan, tambahkan ke buku tamu
-    if (ucapan) {
-      var comments = LS.get('gb_comments', []);
-      comments.unshift({
-        nama: nama,
-        kehadiran: kehadiran,
-        ucapan: ucapan,
-        waktu: entry.waktu
-      });
-      LS.set('gb_comments', comments);
-      renderGuestBook();
-    }
-
-    // Kirim ke Google Sheet jika URL dikonfigurasi
+    /* [DIUBAH] Kirim data ke Google Sheet via Apps Script (POST JSON).
+       Jika googleSheetUrl kosong, simpan ke localStorage saja sebagai fallback. */
     if (C.googleSheetUrl) {
-      var formData = new FormData();
-      formData.append('nama', nama);
-      formData.append('kehadiran', kehadiran);
-      formData.append('jumlah', jumlah);
-      formData.append('ucapan', ucapan);
-      formData.append('waktu', entry.waktu);
-
       fetch(C.googleSheetUrl, {
         method: 'POST',
-        body: formData,
-        mode: 'no-cors'
-      }).catch(function() {});
-    }
-
-    btn.disabled = false;
-    btn.textContent = 'Kirim RSVP';
-    msg.textContent = 'Terima kasih! Konfirmasi Anda telah kami terima.';
-    msg.style.color = '#4A627D';
-
-    form.reset();
-
-    /* [DIUBAH] Setelah reset form, isi ulang nama tamu dari guestName()
-       agar input nama RSVP tetap terisi jika bukan defaultGuest      */
-    var currentGuest = guestName();
-    if (currentGuest !== C.defaultGuest) {
-      $('rNama').value = currentGuest;
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(entry)
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
+        showRsvpSuccess(msg, btn, form);
+        /* [DIUBAH] Jika ada ucapan, refresh buku tamu dari server
+           setelah 2 detik agar data sudah tersimpan di sheet */
+        if (ucapan) {
+          setTimeout(function() { fetchGuestBook(); }, 2000);
+        }
+      })
+      .catch(function() {
+        /* Fallback: simpan ke localStorage jika gagal kirim ke server */
+        saveRsvpLocal(entry);
+        showRsvpSuccess(msg, btn, form);
+        if (ucapan) {
+          setTimeout(function() { renderGuestBookFromCache(); }, 500);
+        }
+      });
+    } else {
+      /* Tidak ada URL — simpan lokal saja */
+      saveRsvpLocal(entry);
+      showRsvpSuccess(msg, btn, form);
+      if (ucapan) {
+        setTimeout(function() { renderGuestBookFromCache(); }, 500);
+      }
     }
   });
 }
 
+/* [DIUBAH] Tampilkan pesan sukses setelah RSVP terkirim */
+function showRsvpSuccess(msg, btn, form) {
+  btn.disabled = false;
+  btn.textContent = 'Kirim RSVP';
+  msg.textContent = 'Terima kasih! Konfirmasi Anda telah kami terima.';
+  msg.style.color = '#4A627D';
+  form.reset();
+}
+
+/* [DIUBAH] Simpan RSVP ke localStorage (fallback) */
+function saveRsvpLocal(entry) {
+  var entries = LS.get('rsvp_entries', []);
+  entries.push(entry);
+  LS.set('rsvp_entries', entries);
+  if (entry.ucapan) {
+    var comments = LS.get('gb_comments', []);
+    comments.unshift({
+      nama: entry.nama,
+      kehadiran: entry.kehadiran,
+      ucapan: entry.ucapan,
+      waktu: entry.waktu
+    });
+    LS.set('gb_comments', comments);
+  }
+}
+
 
 /* ══════════════════════════════════════════════════════════════
-   BUKU TAMU (GUEST BOOK)
+   [DIUBAH] BUKU TAMU — Ambil data dari Google Sheet (doGet)
+   Semua tamu melihat ucapan yang sama karena datanya dari
+   satu sumber (Google Sheet), bukan localStorage perangkat.
    ══════════════════════════════════════════════════════════════ */
-function renderGuestBook() {
-  var feed = $('gbFeed');
-  var comments = LS.get('gb_comments', []);
 
-  if (comments.length === 0) {
+/* Fetch data buku tamu dari Google Sheet via Apps Script (GET) */
+function fetchGuestBook() {
+  var feed = $('gbFeed');
+  if (!C.googleSheetUrl) {
+    renderGuestBookFromCache();
+    return;
+  }
+
+  feed.innerHTML = '<p class="gb-empty">Memuat ucapan...</p>';
+
+  fetch(C.googleSheetUrl)
+    .then(function(r) { return r.json(); })
+    .then(function(comments) {
+      /* Simpan ke localStorage sebagai cache */
+      LS.set('gb_comments', comments);
+      renderComments(feed, comments);
+    })
+    .catch(function() {
+      /* Fallback ke cache localStorage jika fetch gagal */
+      renderGuestBookFromCache();
+    });
+}
+
+/* Render dari cache localStorage (fallback / mode offline) */
+function renderGuestBookFromCache() {
+  var comments = LS.get('gb_comments', []);
+  renderComments($('gbFeed'), comments);
+}
+
+/* Render daftar komentar ke elemen feed */
+function renderComments(feed, comments) {
+  if (!feed) feed = $('gbFeed');
+
+  if (!comments || comments.length === 0) {
     feed.innerHTML = '<p class="gb-empty">Belum ada ucapan. Jadilah yang pertama!</p>';
     return;
   }
@@ -1562,13 +1428,10 @@ function renderGuestBook() {
   for (var i = 0; i < comments.length; i++) {
     var c = comments[i];
     var isHadir = c.kehadiran === 'hadir';
-    var time = new Date(c.waktu);
-    var timeStr = time.toLocaleDateString('id-ID', {
-      day: 'numeric', month: 'long', year: 'numeric'
-    }) + ' \u00B7 ' + time.toLocaleTimeString('id-ID', {
-      hour: '2-digit', minute: '2-digit'
-    });
 
+    /* [DIUBAH] Format waktu fleksibel — mendukung format dari Apps Script
+       maupun format ISO string dari localStorage */
+    var displayTime = c.waktu || '';
     html +=
       '<div class="gb-comment">' +
         '<div class="gb-top">' +
@@ -1576,10 +1439,24 @@ function renderGuestBook() {
           '<span class="gb-badge ' + (isHadir ? 'hadir' : 'tidak') + '">' + (isHadir ? 'Hadir' : 'Tidak Hadir') + '</span>' +
         '</div>' +
         (c.ucapan ? '<p class="gb-text">' + esc(c.ucapan) + '</p>' : '') +
-        '<span class="gb-time">' + timeStr + '</span>' +
+        '<span class="gb-time">' + esc(displayTime) + '</span>' +
       '</div>';
   }
   feed.innerHTML = html;
+}
+
+/* [DIUBAH] Alias untuk kompatibilitas — dipanggil saat init */
+function renderGuestBook() {
+  fetchGuestBook();
+}
+
+/* [DIUBAH] Auto-refresh buku tamu secara berkala
+   agar tamu baru melihat ucapan tamu lain secara real-time */
+function startGuestBookRefresh() {
+  if (!C.googleSheetUrl || !C.refreshInterval || C.refreshInterval <= 0) return;
+  setInterval(function() {
+    fetchGuestBook();
+  }, C.refreshInterval * 1000);
 }
 
 
@@ -1655,6 +1532,9 @@ document.addEventListener('DOMContentLoaded', function() {
   initAmplop();
   initScrollProgress();
   initToTop();
+  /* [DIUBAH] Mulai auto-refresh buku tamu agar semua tamu
+     bisa melihat ucapan terbaru secara real-time */
+  startGuestBookRefresh();
 });
 </script>
 </body>
